@@ -68,18 +68,18 @@ public enum PieceGroup{
     		ConstantBoolean.class,
     		Timer.class);
 
-    private Set<Piece> classSet = new HashSet<Piece>();
+    private Set<Class<? extends Piece>> classSet = new HashSet<Class<? extends Piece>>();
 
     @SafeVarargs
 	private PieceGroup(Class<? extends Piece>... classes) {
         for (Class<? extends Piece> pieceClass : classes) {
-           classSet.add(getInstanceOf(pieceClass));
+           classSet.add(pieceClass);
         }
     }
-    public static Piece getInstanceOf(Class<? extends Piece> pieceClass){
+    public static Piece getInstanceOf(Class<? extends Piece> pieceClass, ProgrammingSpace space){
     	 try {
              Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class);
-             return ((Piece) construtor.newInstance(ProgrammingSpace.getX() + ProgrammingSpace.getWidth()/2, ProgrammingSpace.getY() + ProgrammingSpace.getHeight()/2));
+             return ((Piece) construtor.newInstance(space.getX() + ProgrammingSpace.getWidth()/2, space.getY() + ProgrammingSpace.getHeight()/2));
          } catch (NoSuchMethodException ex) {
              processException();
          } catch (SecurityException ex) {
@@ -98,7 +98,7 @@ public enum PieceGroup{
     public static PieceGroup[] getGroups(){
     	return values();
     }
-    public Set<Piece> getClasses () {
+    public Set<Class<? extends Piece>> getClasses () {
         return classSet;
     }
 

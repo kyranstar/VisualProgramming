@@ -18,7 +18,7 @@ public class ProgrammingSpace {
 	List<Piece> pieces;
 	GamePanel component;
 	
-	static int x, y;
+	int x, y;
 	private static final int LINE_SPACING = 80;
 	
 	public ProgrammingSpace(GamePanel component) {
@@ -31,10 +31,10 @@ public class ProgrammingSpace {
 		g.drawString("X: " + x + " Y: " + y, 10, 30);
 		
 		g.setColor(Color.LIGHT_GRAY);
-		for(int i = 0 - (ProgrammingSpace.x % LINE_SPACING); i < GamePanel.WIDTH ; i += LINE_SPACING){
+		for(int i = 0 - (x % LINE_SPACING); i < GamePanel.WIDTH ; i += LINE_SPACING){
 			g.drawLine(i, 0, i , GamePanel.HEIGHT);
 		}
-		for(int i = 0 - (ProgrammingSpace.y % LINE_SPACING); i < GamePanel.HEIGHT ; i += LINE_SPACING){
+		for(int i = 0 - (y % LINE_SPACING); i < GamePanel.HEIGHT ; i += LINE_SPACING){
 			g.drawLine(0, i, GamePanel.WIDTH, i);
 		}
 		
@@ -70,7 +70,7 @@ public class ProgrammingSpace {
 		Point mouse = MouseInfo.getPointerInfo().getLocation();
 		mouse.translate(-component.getLocationOnScreen().x, -component.getLocationOnScreen().y);
 
-		g.drawLine(port.x, port.y, mouse.x + ProgrammingSpace.x, mouse.y + ProgrammingSpace.y);
+		g.drawLine(port.x, port.y, mouse.x + x, mouse.y + y);
 	}
 
 	private Piece selected;
@@ -84,15 +84,15 @@ public class ProgrammingSpace {
 		if (selected != null)
 			selected.setPosition(new Point(e.getPoint().x + relativeLocation.x, e.getPoint().y + relativeLocation.y));
 		if(relativeBackgroundLocation != null){
-			ProgrammingSpace.x = relativeBackgroundLocation.x - e.getPoint().x;
-			ProgrammingSpace.y = relativeBackgroundLocation.y - e.getPoint().y;
+			this.x = relativeBackgroundLocation.x - e.getPoint().x;
+			this.y = relativeBackgroundLocation.y - e.getPoint().y;
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
 		Point point = e.getPoint();
 		for (Piece p : pieces) {
-			if (p.contains(new Point(point.x + ProgrammingSpace.x, point.y + ProgrammingSpace.y))) {
+			if (p.contains(new Point(point.x + x, point.y + y))) {
 				relativeLocation = new Point((int) (p.getX() - point.getX()), (int) (p.getY() - point.getY()));
 				selected = p;
 				relativeBackgroundLocation = null; //we selected something other than the background
@@ -118,7 +118,7 @@ public class ProgrammingSpace {
 	public void mouseClicked(MouseEvent e) { // TODO fix so that connections can be made from inputs to outputs too
 		Point point = e.getPoint();
 		for (Piece p : pieces) {
-			if (p.contains(new Point(point.x + ProgrammingSpace.x, point.y + ProgrammingSpace.y))) {
+			if (p.contains(new Point(point.x + x, point.y + y))) {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					if(portSelectedPiece != null){
 						portSelectedPiece = null;
@@ -141,9 +141,9 @@ public class ProgrammingSpace {
 		}
 		if (p == portSelectedPiece)
 			return;
-		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + ProgrammingSpace.x, e.getPoint().y + ProgrammingSpace.y));
+		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
 		if (portSelectedPiece != null && port == null)
-			port = p.getInputPortFromPoint(new Point(e.getPoint().x + ProgrammingSpace.x, e.getPoint().y + ProgrammingSpace.y));
+			port = p.getInputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
 		if (port != null) {
 			if (portSelectedPiece != null) {
 				portSelectedPiece.disconnect(portSelected);
@@ -158,7 +158,7 @@ public class ProgrammingSpace {
 		return;
 	}
 	public void handleRightClick(Piece p, MouseEvent e){
-		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + ProgrammingSpace.x, e.getPoint().y + ProgrammingSpace.y));
+		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
 		if(port != null){
 			p.disconnect(port);
 			return;
@@ -171,10 +171,10 @@ public class ProgrammingSpace {
 		}
 	}
 
-	public static int getX() {
+	public int getX() {
 		return x;
 	}
-	public static int getY() {
+	public int getY() {
 		return y;
 	}
 	public static int getWidth() {

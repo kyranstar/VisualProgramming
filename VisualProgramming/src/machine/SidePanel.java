@@ -18,7 +18,7 @@ import piece.PieceGroup;
 public class SidePanel extends JPanel {
 	
 	private static final int WIDTH = 200;
-	ProgrammingSpace space;
+	final ProgrammingSpace space;
 	JTree tree;
 	public SidePanel(final ProgrammingSpace game){
 		super();
@@ -38,7 +38,7 @@ public class SidePanel extends JPanel {
 					 return;
 
 				 if (node.isLeaf() && node.getUserObject() instanceof Piece) {
-					 Piece pieceCreated = PieceGroup.getInstanceOf(((Piece)node.getUserObject()).getClass());
+					 Piece pieceCreated = PieceGroup.getInstanceOf(((Piece) node.getUserObject()).getClass(), space);
 					 space.addPiece(pieceCreated);
 					 tree.getSelectionModel().clearSelection();
 				 }
@@ -53,8 +53,8 @@ public class SidePanel extends JPanel {
 		//create the child nodes
 			for(PieceGroup group : PieceGroup.getGroups()){
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(group.toString());
-				for(Piece p : group.getClasses()){
-					node.add(new DefaultMutableTreeNode(PieceGroup.getInstanceOf(p.getClass())));
+				for(Class<? extends Piece> p : group.getClasses()){
+					node.add(new DefaultMutableTreeNode(PieceGroup.getInstanceOf(p, space)));
 				}
 				root.add(node);
 			}

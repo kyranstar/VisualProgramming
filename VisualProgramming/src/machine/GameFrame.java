@@ -14,9 +14,9 @@ public class GameFrame extends JFrame{
 	public GameFrame(){
 		super();
 		GamePanel panel = new GamePanel();
-		JPanel sidebar = new SidePanel(GamePanel.space);
+		JPanel sidebar = new SidePanel(panel.getSpace());
 		this.initComponents(panel, sidebar);
-		GamePanel.thread.start();
+		panel.startThread();
 	}
 	private static void setPLAF(String string) {
 		try {

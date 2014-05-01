@@ -26,9 +26,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	//image
 	private BufferedImage image;
 	private Graphics2D g;
-	static Thread thread;
+	private Thread thread;
 	
-	static ProgrammingSpace space;
+	private ProgrammingSpace space;
 	
 	
 	public GamePanel(){
@@ -93,19 +93,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private void draw() {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		GamePanel.space.draw(g);
+		space.draw(g);
 		g.setColor(Color.GREEN);
 		g.drawString(fps + " fps", 10, 10);
 	}
 	private void update(){
-		GamePanel.space.update();
+		space.update();
 	}
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
 		g2.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
 		g2.dispose();
 	}
-	
+	public void startThread(){
+		this.thread.start();
+	}
 	@Override
 	public void mouseDragged(MouseEvent e) {space.mouseDragged(e);}
 	@Override
@@ -126,4 +128,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public void keyReleased(KeyEvent e) {space.keyReleased(e);}
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
+	public ProgrammingSpace getSpace() {
+		return space;
+	}
 }
