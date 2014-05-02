@@ -6,7 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class GameFrame extends JFrame{
 	private static final long serialVersionUID = -7562412320398374620L;
-	public static void main(String[] args){
+	public static void main(String[] args){//asd
 		setPLAF("Nimbus");
 		new GameFrame();
 	}
