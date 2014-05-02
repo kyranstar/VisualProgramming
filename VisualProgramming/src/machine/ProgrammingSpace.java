@@ -15,8 +15,9 @@ import piece.Piece;
 import piece.Updatable;
 
 public class ProgrammingSpace {	
-	List<Piece> pieces;
-	GamePanel component;
+	private List<Piece> pieces;
+	private GamePanel component;
+	private SidePanel sidePanel;
 	
 	int x, y;
 	private static final int LINE_SPACING = 80;
@@ -24,6 +25,8 @@ public class ProgrammingSpace {
 	public ProgrammingSpace(GamePanel component) {
 		this.component = component;
 		pieces = new ArrayList<Piece>();
+
+		sidePanel = new SidePanel(this);
 	}
 
 	public void draw(Graphics2D g) {
@@ -52,6 +55,8 @@ public class ProgrammingSpace {
 			drawSelected(g);
 			g.translate(noChangeX, noChangeY);
 		}
+
+		sidePanel.draw(g);
 	}
 
 	public void update() {
@@ -81,6 +86,11 @@ public class ProgrammingSpace {
 	private Point relativeBackgroundLocation;
 
 	public void mouseDragged(MouseEvent e) {
+		sidePanel.mouseDragged(e);
+
+		if(sidePanel.containsPoint(e.getPoint()))
+			return;
+		
 		if (selected != null)
 			selected.setPosition(new Point(e.getPoint().x + relativeLocation.x, e.getPoint().y + relativeLocation.y));
 		if(relativeBackgroundLocation != null){
@@ -90,6 +100,10 @@ public class ProgrammingSpace {
 	}
 
 	public void mousePressed(MouseEvent e) {
+		sidePanel.mousePressed(e);
+		
+		if(sidePanel.containsPoint(e.getPoint()))
+			return;
 		Point point = e.getPoint();
 		for (Piece p : pieces) {
 			if (p.contains(new Point(point.x + x, point.y + y))) {
@@ -105,6 +119,7 @@ public class ProgrammingSpace {
 	public void mouseReleased(MouseEvent e) {
 		selected = null;
 		relativeLocation = null;
+		sidePanel.mouseReleased(e);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -116,6 +131,10 @@ public class ProgrammingSpace {
 	}
 
 	public void mouseClicked(MouseEvent e) { // TODO fix so that connections can be made from inputs to outputs too
+		sidePanel.mouseClicked(e);
+		if(sidePanel.containsPoint(e.getPoint()))
+			return;
+		
 		Point point = e.getPoint();
 		for (Piece p : pieces) {
 			if (p.contains(new Point(point.x + x, point.y + y))) {

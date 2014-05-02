@@ -29,7 +29,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private Thread thread;
 	
 	private ProgrammingSpace space;
-	private SidePanel sidePanel;
 	
 	public GamePanel(){
 		super();
@@ -38,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		thread = new Thread(this);
 		this.running = true;
 		space = new ProgrammingSpace(this);
-		sidePanel = new SidePanel(space);
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
@@ -95,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		space.draw(g);
-		sidePanel.draw(g);
 		g.setColor(Color.GREEN);
 		g.drawString(fps + " fps", 10, 10);
 	}
@@ -112,30 +109,25 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		sidePanel.mouseDragged(e);
-		if(!sidePanel.containsPoint(e.getPoint()))
-			space.mouseDragged(e);
-		}
+		space.mouseDragged(e);
+	}
 	@Override
 	public void mouseMoved(MouseEvent e) {}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		sidePanel.mouseClicked(e);
-		if(!sidePanel.containsPoint(e.getPoint()))
+		
 			space.mouseClicked(e); 
-		}
+	}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		sidePanel.mousePressed(e);
-		if(!sidePanel.containsPoint(e.getPoint()))
-			space.mousePressed(e);
+		space.mousePressed(e);
 	}
 	@Override
-	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);sidePanel.mouseReleased(e);}
+	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);}
 	@Override
 	public void keyPressed(KeyEvent e) {space.keyPressed(e);}
 	@Override

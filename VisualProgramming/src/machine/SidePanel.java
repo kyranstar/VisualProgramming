@@ -10,7 +10,7 @@ import java.util.List;
 import piece.Piece;
 import piece.PieceGroup;
 
-public final class SidePanel{
+public final class SidePanel{ //TODO open close w/ animation
 	
 	private static final int WIDTH = 200;
 	private static final int BOX_HEIGHT = 50;
