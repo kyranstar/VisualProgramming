@@ -26,16 +26,16 @@ public final class SidePanel{ //TODO open close w/ animation
 	private final ProgrammingSpace space;
 	private List<Piece> pieces;
 	private List<Color> colors;
-	public SidePanel(final ProgrammingSpace game){
+	public SidePanel(final ProgrammingSpace space){
 		super();
-		this.space = game;
+		this.space = space;
 		positionY = 0;
 		
 		pieces = new ArrayList<Piece>();
 		colors = new ArrayList<Color>();
 		for(PieceGroup group : PieceGroup.getGroups()){
 			for(Class<? extends Piece> p : group.getClasses()){
-				pieces.add(PieceGroup.getInstanceOf(p, space));
+				pieces.add(PieceGroup.getInstanceOf(p, this.space));
 				colors.add(group.getColor());
 			}
 		}
@@ -44,17 +44,21 @@ public final class SidePanel{ //TODO open close w/ animation
 	}
 	public void draw(Graphics2D g){
 		for(int i = 0; i < pieces.size(); i++){
+			if(i*BOX_HEIGHT + i*VERTICAL_SPACING - positionY> ProgrammingSpace.HEIGHT)
+				return;
+
 			Piece p = pieces.get(i);
 			int rgb = colors.get(i).getRGB();
-			 int red = (rgb >> 16) & 0xFF;
-			    int green = (rgb >> 8) & 0xFF;
-			    int blue = rgb & 0xFF;
+			int red = (rgb >> 16) & 0xFF;
+			int green = (rgb >> 8) & 0xFF;
+			int blue = rgb & 0xFF;
 			g.setColor(new Color(red, green, blue, OPACITY));
 			g.fillRoundRect(OPEN_POSITION_X, (int) (-positionY + i*BOX_HEIGHT + i*VERTICAL_SPACING), WIDTH , BOX_HEIGHT, 6, 6);
 			g.setColor(TEXT_COLOR);
 			int x = (WIDTH - (int) g.getFontMetrics().getStringBounds(p.toString(), g).getWidth()) / 2;
 			g.drawString(p.toString(), x + OPEN_POSITION_X, (int) (-positionY + i*BOX_HEIGHT + i*VERTICAL_SPACING) + BOX_HEIGHT/2);
-		}	}
+		}	
+	}
 	public void mouseClicked(MouseEvent e){
 		Point point = e.getPoint();
 		Piece p = getPieceAt(point);

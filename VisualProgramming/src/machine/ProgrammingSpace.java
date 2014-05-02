@@ -15,6 +15,9 @@ import piece.Piece;
 import piece.Updatable;
 
 public class ProgrammingSpace {	
+	public static final int WIDTH = GamePanel.WIDTH;
+	public static final int HEIGHT = 200;
+	
 	private List<Piece> pieces;
 	private GamePanel component;
 	private SidePanel sidePanel;
@@ -34,11 +37,11 @@ public class ProgrammingSpace {
 		g.drawString("X: " + x + " Y: " + y, 10, 30);
 		
 		g.setColor(Color.LIGHT_GRAY);
-		for(int i = 0 - (x % LINE_SPACING); i < GamePanel.WIDTH ; i += LINE_SPACING){
-			g.drawLine(i, 0, i , GamePanel.HEIGHT);
+		for(int i = 0 - (x % LINE_SPACING); i < WIDTH ; i += LINE_SPACING){
+			g.drawLine(i, 0, i , HEIGHT);
 		}
-		for(int i = 0 - (y % LINE_SPACING); i < GamePanel.HEIGHT ; i += LINE_SPACING){
-			g.drawLine(0, i, GamePanel.WIDTH, i);
+		for(int i = 0 - (y % LINE_SPACING); i <HEIGHT ; i += LINE_SPACING){
+			g.drawLine(0, i, WIDTH, i);
 		}
 		
 		int noChangeX = x; 
@@ -197,9 +200,9 @@ public class ProgrammingSpace {
 		return y;
 	}
 	public static int getWidth() {
-		return GamePanel.WIDTH;
+		return WIDTH;
 	}
 	public static int getHeight() {
-		return GamePanel.HEIGHT;
+		return HEIGHT;
 	}
 }
