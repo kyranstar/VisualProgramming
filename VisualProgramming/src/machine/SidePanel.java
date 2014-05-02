@@ -13,10 +13,11 @@ import piece.PieceGroup;
 public final class SidePanel{ //TODO open close w/ animation
 	
 	private static final int WIDTH = 200;
-	private static final int BOX_HEIGHT = 50;
-	private static final int VERTICAL_SPACING = 25;
-	private static final int OPEN_POSITION_X = GamePanel.WIDTH - WIDTH- 20;
-	private static final int CLOSED_POSITION_X = GamePanel.WIDTH;
+	private static final int BOX_HEIGHT = 25;
+	private static final int VERTICAL_SPACING = 2;
+	private static final int OPACITY = 155;
+	private static final int OPEN_POSITION_X = ProgrammingSpace.WIDTH - WIDTH- 20;
+	private static final int CLOSED_POSITION_X = ProgrammingSpace.WIDTH;
 	private static final Color TEXT_COLOR = new Color(200,200,200);
 	private static float topBound;
 	private static float bottomBound;
@@ -39,12 +40,16 @@ public final class SidePanel{ //TODO open close w/ animation
 			}
 		}
 		topBound = VERTICAL_SPACING - 100;
-		bottomBound = (BOX_HEIGHT + VERTICAL_SPACING) * pieces.size() - GamePanel.HEIGHT + 100;
+		bottomBound = (BOX_HEIGHT + VERTICAL_SPACING) * pieces.size() - ProgrammingSpace.HEIGHT + 100;
 	}
 	public void draw(Graphics2D g){
 		for(int i = 0; i < pieces.size(); i++){
 			Piece p = pieces.get(i);
-			g.setColor(colors.get(i));
+			int rgb = colors.get(i).getRGB();
+			 int red = (rgb >> 16) & 0xFF;
+			    int green = (rgb >> 8) & 0xFF;
+			    int blue = rgb & 0xFF;
+			g.setColor(new Color(red, green, blue, OPACITY));
 			g.fillRoundRect(OPEN_POSITION_X, (int) (-positionY + i*BOX_HEIGHT + i*VERTICAL_SPACING), WIDTH , BOX_HEIGHT, 6, 6);
 			g.setColor(TEXT_COLOR);
 			int x = (WIDTH - (int) g.getFontMetrics().getStringBounds(p.toString(), g).getWidth()) / 2;
