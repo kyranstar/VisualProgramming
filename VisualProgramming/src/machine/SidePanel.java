@@ -44,7 +44,7 @@ public final class SidePanel{ //TODO open close w/ animation
 	}
 	public void draw(Graphics2D g){
 		for(int i = 0; i < pieces.size(); i++){
-			if(i*BOX_HEIGHT + i*VERTICAL_SPACING - positionY> ProgrammingSpace.HEIGHT)
+			if(i*BOX_HEIGHT + i*VERTICAL_SPACING - positionY > ProgrammingSpace.HEIGHT)
 				return;
 
 			Piece p = pieces.get(i);

@@ -18,25 +18,24 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener{
 	public static final double MAX_FPS = 60;
 	private int fps;
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
-	
-	private boolean running;
-	
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 700;
 	//image
 	private BufferedImage image;
 	private Graphics2D g;
 	private Thread thread;
 	
 	private ProgrammingSpace space;
+	private MainGame game;
 	
 	public GamePanel(){
 		super();
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		
 		thread = new Thread(this);
-		this.running = true;
 		space = new ProgrammingSpace(this);
+		game = new MainGame(0,ProgrammingSpace.HEIGHT, WIDTH, HEIGHT-ProgrammingSpace.HEIGHT);
+		
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
@@ -53,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		init();
 		//Game loop
 		
-		while (running){
+		while (true){
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nsPerTick;
 			lastTime = now;
@@ -93,11 +92,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		space.draw(g);
+		game.draw(g);
 		g.setColor(Color.GREEN);
 		g.drawString(fps + " fps", 10, 10);
 	}
 	private void update(){
 		space.update();
+		game.update();
 	}
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
