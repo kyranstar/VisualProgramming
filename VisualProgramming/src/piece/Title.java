@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Title {
-	private static int SIZE = 15;
+	private static final int SIZE = 15;
 	
 	Piece piece;
 	String type;

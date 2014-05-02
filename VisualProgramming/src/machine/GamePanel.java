@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private Thread thread;
 	
 	private ProgrammingSpace space;
-	
+	private SidePanel sidePanel;
 	
 	public GamePanel(){
 		super();
@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		thread = new Thread(this);
 		this.running = true;
 		space = new ProgrammingSpace(this);
+		sidePanel = new SidePanel(space);
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
@@ -94,6 +95,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		space.draw(g);
+		sidePanel.draw(g);
 		g.setColor(Color.GREEN);
 		g.drawString(fps + " fps", 10, 10);
 	}
@@ -109,19 +111,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		this.thread.start();
 	}
 	@Override
-	public void mouseDragged(MouseEvent e) {space.mouseDragged(e);}
+	public void mouseDragged(MouseEvent e) {space.mouseDragged(e);sidePanel.mouseDragged(e);}
 	@Override
 	public void mouseMoved(MouseEvent e) {}
 	@Override
-	public void mouseClicked(MouseEvent e) {space.mouseClicked(e);}
+	public void mouseClicked(MouseEvent e) {space.mouseClicked(e); sidePanel.mouseClicked(e);}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	@Override
-	public void mousePressed(MouseEvent e) {space.mousePressed(e);}
+	public void mousePressed(MouseEvent e) {space.mousePressed(e);sidePanel.mousePressed(e);}
 	@Override
-	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);}
+	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);sidePanel.mouseReleased(e);}
 	@Override
 	public void keyPressed(KeyEvent e) {space.keyPressed(e);}
 	@Override

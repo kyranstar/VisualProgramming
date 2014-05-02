@@ -11,7 +11,7 @@ import values.Value;
 public abstract class Piece implements Serializable{
 	private static final long serialVersionUID = 898344351816270281L;
 
-	private static final Color background = new Color(200,200,200);
+	private static final Color BACKGROUND = new Color(200,200,200);
 	
 	protected int x, y, width, height;
 	protected Input input;
@@ -28,7 +28,7 @@ public abstract class Piece implements Serializable{
 	}
 	public abstract void draw(Graphics2D g);
 	public void drawBackground(Graphics2D g){
-		g.setColor(background);
+		g.setColor(BACKGROUND);
 		g.fillRoundRect(x, y, width, height,10,10);
 		input.draw(g);
 		output.draw(g);
@@ -67,7 +67,6 @@ public abstract class Piece implements Serializable{
 		if(output.contains(p)){
 			if(output.ports == 0)
 				return null;
-			System.out.println(output.getOuputFromY(p.y));
 			return output.getOuputFromY(p.y);
 		}
 		return null;
@@ -77,7 +76,6 @@ public abstract class Piece implements Serializable{
 			if(input.ports == 0)
 				return null;
 
-			System.out.println(input.getInputFromY(p.y));
 			return input.getInputFromY(p.y);
 		}
 		return null;
