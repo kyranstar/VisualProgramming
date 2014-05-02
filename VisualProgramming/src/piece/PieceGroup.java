@@ -1,5 +1,6 @@
 package piece;
 
+import java.awt.Color;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
@@ -38,7 +39,8 @@ import pieces.gates.memory.TFlipFlop;
 
 public enum PieceGroup{
 
-    BITWISE(BitwiseAnd.class, 
+    BITWISE(new Color(200,60,60),
+    		BitwiseAnd.class, 
     		BitwiseNand.class, 
     		BitwiseNor.class, 
     		BitwiseNot.class,
@@ -47,31 +49,37 @@ public enum PieceGroup{
             BitwiseXnor.class, 
             BitwiseLeftshift.class,
             BitwiseRightshift.class),
-    ARITHMETIC(Add.class, 
+    ARITHMETIC(new Color(70,180,180),
+    		Add.class, 
     		Subtract.class,
     		Multiply.class, 
     		Divide.class, 
     		Modulo.class, 
     		Random.class),
-    COMPARISON(LessThan.class,
+    COMPARISON(new Color(150,150,130),
+    		LessThan.class,
     		GreaterThan.class,
     		Equals.class,
     		GreaterThanOrEqual.class,
     		LessThanOrEqual.class),
-    LOGICAL(LogicalNot.class,
+    LOGICAL(new Color(130,80,140),
+    		LogicalNot.class,
     		LogicalAnd.class,
     		LogicalOr.class),
-    MEMORY(RSNor.class,
+    MEMORY(new Color(130,60,130),
+    		RSNor.class,
     		TFlipFlop.class,
     		DFlipFlop.class),
-    MISC(ConstantNumber.class,
+    MISC(new Color(120,120,120),
+    		ConstantNumber.class,
     		ConstantBoolean.class,
     		Timer.class);
 
     private Set<Class<? extends Piece>> classSet = new HashSet<Class<? extends Piece>>();
-
+    private Color c;
     @SafeVarargs
-	private PieceGroup(Class<? extends Piece>... classes) {
+	private PieceGroup(Color c, Class<? extends Piece>... classes) {
+    	this.c = c;
         for (Class<? extends Piece> pieceClass : classes) {
            classSet.add(pieceClass);
         }
@@ -109,4 +117,7 @@ public enum PieceGroup{
     public String toString(){
     	return super.toString().substring(0,1).toUpperCase().concat(super.toString().substring(1).toLowerCase());
     }
+	public Color getColor() {
+		return c;
+	}
 }

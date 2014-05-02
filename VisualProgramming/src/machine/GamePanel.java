@@ -111,17 +111,29 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		this.thread.start();
 	}
 	@Override
-	public void mouseDragged(MouseEvent e) {space.mouseDragged(e);sidePanel.mouseDragged(e);}
+	public void mouseDragged(MouseEvent e) {
+		sidePanel.mouseDragged(e);
+		if(!sidePanel.containsPoint(e.getPoint()))
+			space.mouseDragged(e);
+		}
 	@Override
 	public void mouseMoved(MouseEvent e) {}
 	@Override
-	public void mouseClicked(MouseEvent e) {space.mouseClicked(e); sidePanel.mouseClicked(e);}
+	public void mouseClicked(MouseEvent e) {
+		sidePanel.mouseClicked(e);
+		if(!sidePanel.containsPoint(e.getPoint()))
+			space.mouseClicked(e); 
+		}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	@Override
-	public void mousePressed(MouseEvent e) {space.mousePressed(e);sidePanel.mousePressed(e);}
+	public void mousePressed(MouseEvent e) {
+		sidePanel.mousePressed(e);
+		if(!sidePanel.containsPoint(e.getPoint()))
+			space.mousePressed(e);
+	}
 	@Override
 	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);sidePanel.mouseReleased(e);}
 	@Override
