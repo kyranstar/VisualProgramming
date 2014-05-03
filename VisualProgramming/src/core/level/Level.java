@@ -1,20 +1,16 @@
 package core.level;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import core.entity.Entity;
 import core.object.map.Map;
 import core.object.map.MapViewport;
 
-public class Level {
-	List<Entity> entities;
-	MapViewport mapViewport;
-	Map map;
-	public Level(){
-		entities = new ArrayList<Entity>();
-	}
+public abstract class Level {
+	protected List<Entity> entities;
+	protected MapViewport mapViewport;
+	protected Map map;
 
 	public void draw(Graphics2D g) {
 		mapViewport.draw(g, map);

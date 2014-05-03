@@ -1,26 +1,37 @@
 package core.level;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LevelManager {
-	List<Level> levels;
-	int currentLevel;
+	private static Level[] levels;
+	enum LEVEL{
+		LevelOne(new LevelOne());
+		
+		Level level;
+		private LEVEL(Level level){
+			this.level = level;
+		}
+	}
+	static{
+		final LEVEL[] LEVELS = LEVEL.values();
+		for(int i = 0; i < LEVELS.length; i++){
+			levels[i] = LEVELS[i].level;
+		}			
+	}
+	private int currentLevel;
 	
 	public LevelManager(){
-		levels = new ArrayList<Level>();
 	}
-	public void addLevel(Level level){
-		levels.add(level);
+	public void loadLevel(int level){
+		
 	}
 	public void goToLevel(int level){
 		currentLevel = level;
 	}
 	public void draw(Graphics2D g){
-		levels.get(currentLevel).draw(g);
+		levels[currentLevel].draw(g);
 	}
 	public void update(){
-		levels.get(currentLevel).update();
+		levels[currentLevel].update();
 	}
 }
