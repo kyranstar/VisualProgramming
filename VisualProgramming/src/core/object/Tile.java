@@ -2,6 +2,7 @@ package core.object;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Map;
 
 import core.graphics.ImageLoader;
 
@@ -11,16 +12,15 @@ public enum Tile {
 	GRASS(1, 5, "grass.png", Attribute.SOLID);
 	
 
-	public static final int WIDTH = 32;
-	public static final int HEIGHT = 32;
+	public static final int SIZE = 32;
 	
-	private HashMap<Attribute, Boolean> attributes;
+	private Map<Attribute, Boolean> attributes;
 	private BufferedImage image;
 	private int hardness;
-	private int ID;
+	private int blockID;
 	
-	private Tile(int ID, int hardness, String imageFile, Attribute... attributes){
-		this.ID = ID;
+	private Tile(int blockID, int hardness, String imageFile, Attribute... attributes){
+		this.blockID = blockID;
 		this.hardness = hardness;
 		this.image = ImageLoader.loadImage(imageFile);
 		
@@ -32,9 +32,9 @@ public enum Tile {
 			this.attributes.put(att, true);
 		}
 	}
-	public static Tile getByID(int ID){
+	public static Tile getByID(int blockID){
 		for(Tile t : values()){
-			if(t.ID == ID){
+			if(t.blockID == blockID){
 				return t;
 			}
 		}

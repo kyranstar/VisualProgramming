@@ -2,9 +2,13 @@ package core.level;
 
 import java.awt.Graphics2D;
 
-public class LevelManager {
-	private static Level[] levels;
+import machine.MainGame;
+
+public final class LevelManager {
+	private static AbstractLevel[] levels;
 	private int currentLevel;
+	
+	private static int width = MainGame.WIDTH, height = MainGame.HEIGHT;
 	
 	public LevelManager(){
 		currentLevel = 0;
@@ -21,18 +25,20 @@ public class LevelManager {
 	}
 	
 	enum LEVEL{
-		LevelOne(new LevelOne());
+		LevelOne(new LevelOne(width, height));
 		
-		Level level;
-		private LEVEL(Level level){
+		AbstractLevel level;
+		private LEVEL(AbstractLevel level){
 			this.level = level;
 		}
 	}
 	
 	static{
 		final LEVEL[] LEVELS = LEVEL.values();
+		levels = new AbstractLevel[LEVELS.length];
 		for(int i = 0; i < LEVELS.length; i++){
 			levels[i] = LEVELS[i].level;
 		}			
+
 	}
 }

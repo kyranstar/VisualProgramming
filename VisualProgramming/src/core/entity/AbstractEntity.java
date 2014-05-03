@@ -4,13 +4,13 @@ import java.awt.Graphics2D;
 
 import core.math.Vec2D;
 
-public abstract class Entity {
+public abstract class AbstractEntity {
 
 	protected CollisionBox collisionBox;
 	protected Vec2D velocity;
 	protected boolean isDead;
 	
-	public Entity(int x, int y, int width, int height){
+	public AbstractEntity(int x, int y, int width, int height){
 		collisionBox = new CollisionBox(x, y, width, height);
 		velocity = new Vec2D(0,0);
 	}

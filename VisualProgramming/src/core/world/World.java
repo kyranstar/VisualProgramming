@@ -11,7 +11,7 @@ public class World {
 	public World(int width, int height){
 		this.width = width;
 		this.height = height;
-		levelManager = new LevelManager();
+		this.levelManager = new LevelManager();
 	}
 	public void draw(Graphics2D g){
 		levelManager.draw(g);

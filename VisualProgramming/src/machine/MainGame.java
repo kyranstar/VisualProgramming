@@ -7,16 +7,14 @@ import core.world.World;
 public class MainGame {
 	private final int ON_SCREEN_X;
 	private final int ON_SCREEN_Y;
-	private final int WIDTH;
-	private final int HEIGHT;
+	public static final int WIDTH = GamePanel.WIDTH;
+	public static final int HEIGHT = GamePanel.HEIGHT-ProgrammingSpace.HEIGHT;
 	
 	World world;
 	
-	public MainGame(int onScreenX, int onScreenY, int width, int height){
+	public MainGame(int onScreenX, int onScreenY){
 		this.ON_SCREEN_X = onScreenX;
 		this.ON_SCREEN_Y = onScreenY;
-		this.WIDTH = width;
-		this.HEIGHT = height;
 		world = new World(WIDTH, HEIGHT);
 	}
 	public void draw(Graphics2D g){
