@@ -65,7 +65,7 @@
         </rule>
         <rule>
             <name>CollapsibleIfStatements</name>
-            <ruleset>Basic</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>DontCallThreadRun</name>
@@ -109,7 +109,7 @@
         </rule>
         <rule>
             <name>AssignmentInOperand</name>
-            <ruleset>Basic Ecmascript</ruleset>
+            <ruleset>Controversial</ruleset>
         </rule>
         <rule>
             <name>AvoidTrailingComma</name>
@@ -457,7 +457,7 @@
         </rule>
         <rule>
             <name>UnnecessaryParentheses</name>
-            <ruleset>Controversial</ruleset>
+            <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>
             <name>UseConcurrentHashMap</name>
@@ -509,7 +509,7 @@
         </rule>
         <rule>
             <name>AvoidDeeplyNestedIfStmts</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>AvoidInstanceofChecksInCatchClause</name>
@@ -525,7 +525,7 @@
         </rule>
         <rule>
             <name>AvoidReassigningParameters</name>
-            <ruleset>Design</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>AvoidSynchronizedAtMethodLevel</name>
@@ -721,11 +721,11 @@
         </rule>
         <rule>
             <name>EmptyIfStmt</name>
-            <ruleset>Empty Code</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>EmptyIfStmt</name>
-            <ruleset>Empty Code</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>EmptyInitializer</name>

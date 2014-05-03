@@ -1,6 +1,7 @@
 package core.object;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,11 @@ public enum Tile {
 	private Tile(int blockID, int hardness, String imageFile, Attribute... attributes){
 		this.blockID = blockID;
 		this.hardness = hardness;
-		this.image = ImageLoader.loadImage(imageFile);
+		try {
+			this.image = ImageLoader.loadImage(imageFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		this.attributes = new HashMap<Attribute, Boolean>();
 		for(Attribute att : Attribute.values()) //initialize all to false

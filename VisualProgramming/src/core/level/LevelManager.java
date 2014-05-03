@@ -1,10 +1,12 @@
 package core.level;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import machine.MainGame;
+import core.ui.KeyControllable;
 
-public final class LevelManager {
+public final class LevelManager implements KeyControllable{
 	private static AbstractLevel[] levels;
 	private int currentLevel;
 	
@@ -13,9 +15,13 @@ public final class LevelManager {
 	public LevelManager(){
 		currentLevel = 0;
 	}
-	public void goToLevel(int level){
+	public void goToLevel(LEVEL level){
 		levels[currentLevel].reset();
-		currentLevel = level;
+		for(int i = 0; i < LEVEL.values().length; i++){
+			if(LEVEL.values()[i] == level){
+				currentLevel = i;
+			}
+		}
 	}
 	public void draw(Graphics2D g){
 		levels[currentLevel].draw(g);
@@ -23,8 +29,18 @@ public final class LevelManager {
 	public void update(){
 		levels[currentLevel].update();
 	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(levels[currentLevel] instanceof KeyControllable)
+			((KeyControllable) levels[currentLevel]).keyPressed(e);
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(levels[currentLevel] instanceof KeyControllable)
+			((KeyControllable) levels[currentLevel]).keyReleased(e);
+	}
 	
-	enum LEVEL{
+	public enum LEVEL{
 		LevelOne(new LevelOne(width, height));
 		
 		AbstractLevel level;
@@ -36,6 +52,7 @@ public final class LevelManager {
 	static{
 		final LEVEL[] LEVELS = LEVEL.values();
 		levels = new AbstractLevel[LEVELS.length];
+		
 		for(int i = 0; i < LEVELS.length; i++){
 			levels[i] = LEVELS[i].level;
 		}			

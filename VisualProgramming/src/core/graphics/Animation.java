@@ -31,7 +31,6 @@ public class Animation {
 	public void setNumFrames(int i) { numFrames = i; }
 	
 	public void update() {
-		
 		if(delay <= 0) return;
 		
 		count++;

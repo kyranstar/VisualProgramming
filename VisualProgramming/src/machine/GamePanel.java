@@ -36,9 +36,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		space = new ProgrammingSpace(this);
 		game = new MainGame(0,ProgrammingSpace.HEIGHT);
 		
+		
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
+		this.setFocusable(true);
 	}
 	@Override
 	public void run() {
@@ -130,12 +132,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	@Override
 	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);}
 	@Override
-	public void keyPressed(KeyEvent e) {space.keyPressed(e);}
+	public void keyPressed(KeyEvent e) {space.keyPressed(e);game.keyPressed(e);}
 	@Override
-	public void keyReleased(KeyEvent e) {space.keyReleased(e);}
+	public void keyReleased(KeyEvent e) {space.keyReleased(e);game.keyReleased(e);}
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
-	public ProgrammingSpace getSpace() {
-		return space;
-	}
 }
