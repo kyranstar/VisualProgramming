@@ -13,12 +13,16 @@ public class MapViewport {
 	
 	public void draw(Graphics2D g, GameMap map){
 		g.translate(-bounds.getX(), -bounds.getY());
+		int width = map.getWidth() * Tile.SIZE;
+		int height = map.getHeight() * Tile.SIZE;
+		
 		for(int x = (int) bounds.getX(); x < bounds.getX() + bounds.getWidth(); x += Tile.SIZE){
 			for(int y = (int) bounds.getY(); y < bounds.getY() + bounds.getHeight(); y += Tile.SIZE){ 
+				if(x < 0 || x >= width || y < 0 || y >= height)
+					continue;
 				g.drawImage(map.getTileAt(x/Tile.SIZE, y/Tile.SIZE).getImage(), x, y, null);
 			}
 		}
-		g.translate(bounds.getX(), bounds.getY());
 	}
 	public void setPosition(double x, double y){
 		bounds.setFrame(x, y, bounds.getWidth(), bounds.getHeight());

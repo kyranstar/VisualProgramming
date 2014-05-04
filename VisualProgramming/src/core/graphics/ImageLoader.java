@@ -12,9 +12,9 @@ public final class ImageLoader { //TODO implement image buffer
 		return ImageIO.read(ImageLoader.class.getResourceAsStream(filename));
 	}
 	public static BufferedImage[][] loadTilesheet(String filename, int spriteWidth, int spriteHeight) throws IOException{
-		BufferedImage spritesheet = loadImage(filename);
-		int cols = spritesheet.getWidth() / spriteWidth;
-		int rows = spritesheet.getHeight() / spriteHeight;
+		final BufferedImage spritesheet = loadImage(filename);
+		final int cols = spritesheet.getWidth() / spriteWidth;
+		final int rows = spritesheet.getHeight() / spriteHeight;
 		BufferedImage[][] tiles = new BufferedImage[cols][rows];
 		for(int x = 0; x < cols; x++){
 			for(int y = 0; y < rows; y++){

@@ -17,5 +17,4 @@ public final class AnimationLoader {
 		a.setFrames(images);
 		return a;
 	}
-
 }

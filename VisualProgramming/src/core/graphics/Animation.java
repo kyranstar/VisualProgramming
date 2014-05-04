@@ -17,18 +17,19 @@ public class Animation {
 		timesPlayed = 0;
 	}
 	
-	public void setFrames(BufferedImage[] frames) {
+	public Animation setFrames(BufferedImage[] frames) {
 		this.frames = frames;
 		currentFrame = 0;
 		count = 0;
 		timesPlayed = 0;
 		delay = 1;
 		numFrames = frames.length;
+		return this;
 	}
 	
-	public void setDelay(int i) { delay = i; }
-	public void setFrame(int i) { currentFrame = i; }
-	public void setNumFrames(int i) { numFrames = i; }
+	public Animation setDelay(int i) { delay = i; return this;}
+	public Animation setFrame(int i) { currentFrame = i; return this;}
+	public Animation setNumFrames(int i) { numFrames = i; return this;}
 	
 	public void update() {
 		if(delay <= 0) return;

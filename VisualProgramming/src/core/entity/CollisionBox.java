@@ -4,6 +4,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import core.math.Vec2D;
+
 public class CollisionBox {
 
 	private Rectangle2D rect;
@@ -18,11 +20,14 @@ public class CollisionBox {
 	public boolean isColliding(Line2D line){
 		return line.intersects(rect);
 	}
-	public Point2D getUpperLeft(){
-		return new Point2D.Double(rect.getX(), rect.getY());
+	public Vec2D getUpperLeft(){
+		return new Vec2D(rect.getX(), rect.getY());
 	}
-	public Point2D getCenter(){
-		return new Point2D.Double(rect.getCenterX(), rect.getCenterY());
+	public Vec2D getCenter(){
+		return new Vec2D(rect.getCenterX(), rect.getCenterY());
+	}
+	public void setPosition(Vec2D pos){
+		this.rect.setRect(pos.x, pos.y, rect.getWidth(), rect.getHeight());
 	}
 
 }

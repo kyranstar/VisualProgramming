@@ -9,8 +9,8 @@ import core.graphics.ImageLoader;
 
 public enum Tile {
 	
-	AIR(0, -1, "transparent.png"),
-	GRASS(1, 5, "grass.png", Attribute.SOLID);
+	AIR(42, -1, "/tiles/transparent.png"),
+	DIRT(10, 5, "/tiles/dirt.png", Attribute.SOLID);
 	
 
 	public static final int SIZE = 32;
@@ -18,15 +18,17 @@ public enum Tile {
 	private Map<Attribute, Boolean> attributes;
 	private BufferedImage image;
 	private int hardness;
-	private int blockID;
+	private int gid;
 	
-	private Tile(int blockID, int hardness, String imageFile, Attribute... attributes){
-		this.blockID = blockID;
+	private Tile(int gid, int hardness, String imageFile, Attribute... attributes){
+		this.gid = gid;
 		this.hardness = hardness;
 		try {
 			this.image = ImageLoader.loadImage(imageFile);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch(IllegalArgumentException e){
+			throw new IllegalArgumentException(imageFile, e);
 		}
 		
 		this.attributes = new HashMap<Attribute, Boolean>();
@@ -37,13 +39,13 @@ public enum Tile {
 			this.attributes.put(att, true);
 		}
 	}
-	public static Tile getByID(int blockID){
+	public static Tile getByID(int gid){
 		for(Tile t : values()){
-			if(t.blockID == blockID){
+			if(t.gid == gid){
 				return t;
 			}
 		}
-		return null;
+		throw new TileNotFoundException("Tile not found by id: " + gid);
 	}
 	public int getHardness(){
 		return hardness;
@@ -54,7 +56,16 @@ public enum Tile {
 	public BufferedImage getImage(){
 		return this.image;
 	}
-	enum Attribute{
-		SOLID;
+	public enum Attribute{
+		SOLID; //entities collide with this
+	}
+}
+class TileNotFoundException extends RuntimeException{
+	private static final long serialVersionUID = -710367481963659500L;
+	public TileNotFoundException(){
+		super();
+	}
+	public TileNotFoundException(String s){
+		super(s);
 	}
 }

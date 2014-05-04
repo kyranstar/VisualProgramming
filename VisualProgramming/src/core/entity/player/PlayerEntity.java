@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import core.entity.AbstractEntity;
-import core.graphics.Animation;
 import core.graphics.AnimationLoader;
 import core.graphics.AnimationSet;
 import core.math.Vec2D;
@@ -20,15 +19,12 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 		super(x, y, WIDTH, HEIGHT);
 		animations = new AnimationSet();
 		try {
-			Animation test = AnimationLoader.getFromSpritesheet("/test.png", 128);
-			test.setDelay(6);
-			animations.addAnimation("test", test);
+			animations.addAnimation("test", AnimationLoader.getFromSpritesheet("/sprites/test.png", 100).setDelay(6));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		animations.goToAnimation("test");
 	}
-
 	@Override
 	public void draw(Graphics2D g) {
 		this.animations.draw(g, this.getX(), this.getY());
@@ -36,6 +32,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	@Override
 	public void update() {
+		this.setPosition(this.getPosition().add(velocity));
 		animations.update();
 	}
 

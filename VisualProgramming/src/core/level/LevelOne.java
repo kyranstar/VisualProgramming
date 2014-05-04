@@ -5,10 +5,12 @@ import java.awt.event.KeyEvent;
 
 import core.entity.AbstractEntity;
 import core.entity.player.PlayerEntity;
+import core.math.Vec2D;
 import core.ui.KeyControllable;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{
-	private static final String LEVEL_FILE = "/maps/levelone.map";
+	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
+	PlayerEntity player;
 	
 	public LevelOne(int width, int height) {
 		super(LEVEL_FILE, width, height);
@@ -16,12 +18,14 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void reset() {
-		PlayerEntity e = new PlayerEntity(0, 0);
-		this.entities.add(e);
-		this.controllableEntities.add(e);
+		this.ambientForce = new Vec2D(0, 1);
+		player = new PlayerEntity(0, 0);
+		this.entities.add(player);
+		this.controllableEntities.add(player);
 	}
 	@Override
 	public void draw(Graphics2D g) {
+		this.mapViewport.draw(g, map);
 		for(int i = 0; i < entities.size(); i++){
 			AbstractEntity e = entities.get(i);
 			e.draw(g);
@@ -32,6 +36,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		for(int i = 0; i < entities.size(); i++){
 			AbstractEntity e = entities.get(i);
 			e.update();
+			e.applyAcceleration(ambientForce);
 			if(e.isDead()){
 				entities.remove(i);
 				i--;
