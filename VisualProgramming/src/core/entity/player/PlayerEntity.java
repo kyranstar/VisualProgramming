@@ -15,7 +15,7 @@ import core.ui.KeyControllable;
 public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	private static final float WALK_SPEED = 3;
-	private static final float COEF_FRIC = 0.9f;
+	private static final float COEF_FRIC = 0.1f;
 	AnimationSet animations;
 	private boolean movingLeft, movingRight;
 	

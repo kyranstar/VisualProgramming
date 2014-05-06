@@ -26,14 +26,15 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void draw(Graphics2D g) {
+		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
 		for(AbstractEntity e : this.entities){
 			e.draw(g);
 		}
+		g.translate(mapViewport.getX(), mapViewport.getY());
 	}
 	@Override
 	public void update() {
-		System.out.println(entities.size());
 		for(int i = 0; i < entities.size(); i++){
 			AbstractEntity e = entities.get(i);
 			e.update();
@@ -43,6 +44,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 				i--;
 			}
 		}
+		this.mapViewport.centerX(player.getX());
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
