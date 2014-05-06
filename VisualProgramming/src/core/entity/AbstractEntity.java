@@ -11,15 +11,13 @@ import core.object.map.GameMap;
 
 public abstract class AbstractEntity {
 
-	private static final double COEF_FRICTION = 0.5;
 	private CollisionBox collisionBox;
 	protected Vec2D velocity;
 	protected boolean isDead;
 	protected GameMap map;
 	
-	public AbstractEntity(int x, int y, int width, int height, GameMap map){
+	public AbstractEntity(GameMap map){
 		this.map = map;
-		collisionBox = new CollisionBox(x, y, width, height);
 		velocity = new Vec2D(0,0);
 	}
 	
@@ -41,6 +39,9 @@ public abstract class AbstractEntity {
 	}
 	public Vec2D getSize(){
 		return new Vec2D(collisionBox.getRect2D().getHeight(), collisionBox.getRect2D().getWidth());
+	}
+	public void setRect(double x, double y, double width, double height){
+		this.collisionBox = new CollisionBox(x,y,width,height);
 	}
 	public void setPosition(Vec2D position){
 		this.collisionBox.setPosition(position);
@@ -75,19 +76,19 @@ public abstract class AbstractEntity {
 		boolean bottomLeft;
 		boolean bottomRight;
 		
-		if(leftTile < 0 || leftTile >= map.getWidth() || topTile < 0 || topTile >= map.getHeight())
+		if(leftTile < 0 || topTile < 0 || leftTile >= map.getWidth()  || topTile >= map.getHeight())
 			topLeft = false;
 		else
 			topLeft = map.getTileAt(leftTile, topTile).getAttribute(Attribute.SOLID);
-		if(rightTile < 0 || rightTile >= map.getWidth() || topTile < 0 || topTile >= map.getHeight())
+		if(rightTile < 0 || topTile < 0 || rightTile >= map.getWidth() || topTile >= map.getHeight())
 			topRight = false;
 		else
 			topRight = map.getTileAt(rightTile, topTile).getAttribute(Attribute.SOLID);
-		if(leftTile < 0 || leftTile >= map.getWidth() || bottomTile < 0 || bottomTile >= map.getHeight())
+		if(leftTile < 0 || bottomTile < 0 || leftTile >= map.getWidth() || bottomTile >= map.getHeight())
 			bottomLeft = false;
 		else
 			bottomLeft  = map.getTileAt(leftTile, bottomTile).getAttribute(Attribute.SOLID);
-		if(rightTile < 0 || rightTile >= map.getWidth() || bottomTile < 0 || bottomTile >= map.getHeight())
+		if(rightTile < 0 || bottomTile < 0 || rightTile >= map.getWidth()  || bottomTile >= map.getHeight())
 			bottomRight = false;
 		else
 			bottomRight = map.getTileAt(rightTile, bottomTile).getAttribute(Attribute.SOLID);

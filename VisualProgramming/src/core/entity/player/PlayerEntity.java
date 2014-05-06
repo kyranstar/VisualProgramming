@@ -14,14 +14,13 @@ import core.ui.KeyControllable;
 
 public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
-	private static final int WIDTH = 100, HEIGHT = 100;
 	private static final float WALK_SPEED = 3;
 	private static final float COEF_FRIC = 0.9f;
 	AnimationSet animations;
 	private boolean movingLeft, movingRight;
 	
 	public PlayerEntity(int x, int y, GameMap map) {
-		super(x, y, WIDTH, HEIGHT, map);
+		super(map);
 		animations = new AnimationSet();
 		try {
 			animations.addAnimation("test", AnimationLoader.getFromSpritesheet("/sprites/test.png", 100).setDelay(6));
@@ -29,11 +28,12 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 			e.printStackTrace();
 		}
 		animations.goToAnimation("test");
+		this.setRect(x, y, animations.getCurrentWidth(), animations.getCurrentHeight());
 	}
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
-		g.drawRect((int)this.getX(), (int) this.getY(), this.WIDTH, this.HEIGHT);
+		g.drawRect((int)this.getX(), (int) this.getY(), (int)animations.getCurrentWidth(), (int) animations.getCurrentHeight());
 		this.animations.draw(g, this.getX(), this.getY());
 	}
 

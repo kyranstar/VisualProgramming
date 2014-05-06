@@ -18,7 +18,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void reset() {
-		this.ambientForce = new Vec2D(0, 0.2);
+		super.reset();
+		this.ambientForce = new Vec2D(0, 0.3);
 		player = new PlayerEntity(50, 50, this.map);
 		this.entities.add(player);
 		this.controllableEntities.add(player);
@@ -26,13 +27,13 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	@Override
 	public void draw(Graphics2D g) {
 		this.mapViewport.draw(g, map);
-		for(int i = 0; i < entities.size(); i++){
-			AbstractEntity e = entities.get(i);
+		for(AbstractEntity e : this.entities){
 			e.draw(g);
 		}
 	}
 	@Override
 	public void update() {
+		System.out.println(entities.size());
 		for(int i = 0; i < entities.size(); i++){
 			AbstractEntity e = entities.get(i);
 			e.update();

@@ -26,5 +26,11 @@ import java.util.Map;
 	    }
 	    public void update(){
 	        currentAnimation.update();
-	    }        
+	    }
+		public double getCurrentWidth() {
+			return currentAnimation.getImage().getWidth();
+		}
+		public double getCurrentHeight() {
+			return currentAnimation.getImage().getHeight();
+		}        
 	}
