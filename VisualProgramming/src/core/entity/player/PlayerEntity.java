@@ -36,8 +36,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	@Override
 	public void update() {
-		this.fixCollisions(map);
-		this.setPosition(this.getPosition().add(this.velocity));
+		this.setPosition(this.checkTileMapCollision());
 		animations.update();
 	}
 

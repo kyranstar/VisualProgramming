@@ -1,9 +1,8 @@
-/tiles/
-/Untitled.png
-/core/
-/machine/
-/maps/
-/piece/
-/pieces/
-/sprites/
-/values/
+/maps
+/sprites
+/tiles
+/pieces
+/values
+/machine
+/piece
+/core

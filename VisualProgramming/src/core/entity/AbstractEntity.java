@@ -1,12 +1,8 @@
 package core.entity;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
-import java.util.ArrayList;
-import java.util.List;
 
 import core.math.Vec2D;
 import core.object.Tile;
@@ -66,7 +62,7 @@ public abstract class AbstractEntity {
 
 	public Rectangle2D getRect2D() {
 		return collisionBox.getRect2D();
-	}
+	}/*
 	public boolean isUpperRightTileSolid(){
 		int tileX = (int) (this.collisionBox.getUpperRight().x / Tile.SIZE);
 		int tileY = (int) (this.collisionBox.getUpperRight().y / Tile.SIZE);
@@ -86,8 +82,90 @@ public abstract class AbstractEntity {
 		int tileX = (int) (this.collisionBox.getBottomLeft().x / Tile.SIZE);
 		int tileY = (int) (this.collisionBox.getBottomLeft().y / Tile.SIZE);
 		return this.collisionBox.isColliding(map.getCollisionBoxAt(tileX, tileY));
-	}
-	public void fixCollisions(GameMap map){
+	}*/
+	public boolean[] getCornersAreSolid(double x, double y) {
+		int leftTile = (int)(x / Tile.SIZE);
+		int rightTile = (int)((x + this.collisionBox.getWidth()) / Tile.SIZE);
+		int topTile = (int)(y / Tile.SIZE);
+		int bottomTile = (int)((y + this.collisionBox.getHeight()) / Tile.SIZE);
+		if(topTile < 0 || bottomTile >= map.getHeight() ||
+			leftTile < 0 || rightTile >= map.getWidth()) {
+			return new boolean[]{false, false, false ,false};
+		}
 		
-	}	
+		boolean topLeft = map.getTileAt(leftTile, topTile).getAttribute(Attribute.SOLID);
+		boolean topRight = map.getTileAt(rightTile, topTile).getAttribute(Attribute.SOLID);
+		boolean bottomLeft  = map.getTileAt(leftTile, bottomTile).getAttribute(Attribute.SOLID);
+		boolean bottomRight = map.getTileAt(rightTile, bottomTile).getAttribute(Attribute.SOLID);
+		
+		return new boolean[]{topLeft, topRight, bottomLeft, bottomRight};
+	}
+	/*
+	 * @return next position
+	 */
+	public Vec2D checkTileMapCollision() {
+		
+		int currCol = (int)getX() / Tile.SIZE;
+		int currRow = (int)getY() / Tile.SIZE;
+		
+		double xdest = getX() + this.velocity.x;
+		double ydest = getY() + this.velocity.y;
+		
+		double xtemp = getX();
+		double ytemp = getY();
+		
+		boolean[] corners = getCornersAreSolid(getX(), ydest);
+		boolean topLeft = corners[0];
+		boolean topRight = corners[1];
+		boolean bottomLeft = corners[2];
+		boolean bottomRight = corners[3];
+		
+		if(this.velocity.y < 0) {
+			if(topLeft || topRight) {
+				System.out.println("top");
+				this.velocity.y = 0;
+				ytemp = currRow * Tile.SIZE;
+			}
+			else {
+				ytemp += this.velocity.y;
+			}
+		}
+		else if(this.velocity.y > 0) {
+			if(bottomLeft || bottomRight) {
+				this.velocity.y = 0;
+				System.out.println("bot");
+				ytemp = currRow * Tile.SIZE + this.collisionBox.getHeight()/4;
+			}
+			else {
+				ytemp += this.velocity.y;
+			}
+		}
+		
+		corners = getCornersAreSolid(xdest, getY());
+		topLeft = corners[0];
+		topRight = corners[1];
+		bottomLeft = corners[2];
+		bottomRight = corners[3];
+		if(this.velocity.x < 0) {
+			if(topLeft || bottomLeft) {
+				System.out.println("left");
+				this.velocity.x = 0;
+				xtemp = currCol * Tile.SIZE;
+			}
+			else {
+				xtemp += this.velocity.x;
+			}
+		}
+		if(this.velocity.x > 0) {
+			if(topRight || bottomRight) {
+				System.out.println("right");
+				this.velocity.x = 0;
+				xtemp = currCol * Tile.SIZE + this.collisionBox.getWidth()/4;
+			}
+			else {
+				xtemp += this.velocity.x;
+			}
+		}
+		return new Vec2D(xtemp, ytemp);
+	}		
 }

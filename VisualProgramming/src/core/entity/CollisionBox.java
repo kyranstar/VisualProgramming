@@ -59,4 +59,11 @@ public class CollisionBox {
 		this.rect.setFrame(x, rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
+	public double getWidth() {
+		return rect.getWidth();
+	}
+	public double getHeight(){
+		return rect.getHeight();
+	}
+
 }
