@@ -11,6 +11,7 @@ import core.object.map.GameMap;
 
 public abstract class AbstractEntity {
 
+	private static final double COEF_FRICTION = 0.5;
 	private CollisionBox collisionBox;
 	protected Vec2D velocity;
 	protected boolean isDead;
@@ -62,48 +63,41 @@ public abstract class AbstractEntity {
 
 	public Rectangle2D getRect2D() {
 		return collisionBox.getRect2D();
-	}/*
-	public boolean isUpperRightTileSolid(){
-		int tileX = (int) (this.collisionBox.getUpperRight().x / Tile.SIZE);
-		int tileY = (int) (this.collisionBox.getUpperRight().y / Tile.SIZE);
-		return this.collisionBox.isColliding(map.getCollisionBoxAt(tileX, tileY));
 	}
-	public boolean isBottomRightTileSolid(){
-		int tileX = (int) (this.collisionBox.getBottomRight().x / Tile.SIZE);
-		int tileY = (int) (this.collisionBox.getBottomRight().y / Tile.SIZE);
-		return this.collisionBox.isColliding(map.getCollisionBoxAt(tileX, tileY));
-	}
-	public boolean isUpperLeftTileSolid(){
-		int tileX = (int) (this.collisionBox.getUpperLeft().x / Tile.SIZE);
-		int tileY = (int) (this.collisionBox.getUpperLeft().y / Tile.SIZE);
-		return this.collisionBox.isColliding(map.getCollisionBoxAt(tileX, tileY));
-	}
-	public boolean isBottomLeftTileSolid(){
-		int tileX = (int) (this.collisionBox.getBottomLeft().x / Tile.SIZE);
-		int tileY = (int) (this.collisionBox.getBottomLeft().y / Tile.SIZE);
-		return this.collisionBox.isColliding(map.getCollisionBoxAt(tileX, tileY));
-	}*/
 	public boolean[] getCornersAreSolid(double x, double y) {
 		int leftTile = (int)(x / Tile.SIZE);
 		int rightTile = (int)((x + this.collisionBox.getWidth()) / Tile.SIZE);
 		int topTile = (int)(y / Tile.SIZE);
 		int bottomTile = (int)((y + this.collisionBox.getHeight()) / Tile.SIZE);
-		if(topTile < 0 || bottomTile >= map.getHeight() ||
-			leftTile < 0 || rightTile >= map.getWidth()) {
-			return new boolean[]{false, false, false ,false};
-		}
+
+		boolean topLeft;
+		boolean topRight;
+		boolean bottomLeft;
+		boolean bottomRight;
 		
-		boolean topLeft = map.getTileAt(leftTile, topTile).getAttribute(Attribute.SOLID);
-		boolean topRight = map.getTileAt(rightTile, topTile).getAttribute(Attribute.SOLID);
-		boolean bottomLeft  = map.getTileAt(leftTile, bottomTile).getAttribute(Attribute.SOLID);
-		boolean bottomRight = map.getTileAt(rightTile, bottomTile).getAttribute(Attribute.SOLID);
+		if(leftTile < 0 || leftTile >= map.getWidth() || topTile < 0 || topTile >= map.getHeight())
+			topLeft = false;
+		else
+			topLeft = map.getTileAt(leftTile, topTile).getAttribute(Attribute.SOLID);
+		if(rightTile < 0 || rightTile >= map.getWidth() || topTile < 0 || topTile >= map.getHeight())
+			topRight = false;
+		else
+			topRight = map.getTileAt(rightTile, topTile).getAttribute(Attribute.SOLID);
+		if(leftTile < 0 || leftTile >= map.getWidth() || bottomTile < 0 || bottomTile >= map.getHeight())
+			bottomLeft = false;
+		else
+			bottomLeft  = map.getTileAt(leftTile, bottomTile).getAttribute(Attribute.SOLID);
+		if(rightTile < 0 || rightTile >= map.getWidth() || bottomTile < 0 || bottomTile >= map.getHeight())
+			bottomRight = false;
+		else
+			bottomRight = map.getTileAt(rightTile, bottomTile).getAttribute(Attribute.SOLID);
 		
 		return new boolean[]{topLeft, topRight, bottomLeft, bottomRight};
 	}
 	/*
 	 * @return next position
 	 */
-	public Vec2D checkTileMapCollision() {
+	public Vec2D getNextPosition() {
 		
 		int currCol = (int)getX() / Tile.SIZE;
 		int currRow = (int)getY() / Tile.SIZE;
@@ -122,7 +116,6 @@ public abstract class AbstractEntity {
 		
 		if(this.velocity.y < 0) {
 			if(topLeft || topRight) {
-				System.out.println("top");
 				this.velocity.y = 0;
 				ytemp = currRow * Tile.SIZE;
 			}
@@ -133,8 +126,7 @@ public abstract class AbstractEntity {
 		else if(this.velocity.y > 0) {
 			if(bottomLeft || bottomRight) {
 				this.velocity.y = 0;
-				System.out.println("bot");
-				ytemp = currRow * Tile.SIZE + this.collisionBox.getHeight()/4;
+				ytemp = (currRow + 1) * Tile.SIZE - this.collisionBox.getHeight() % Tile.SIZE - 1 ;
 			}
 			else {
 				ytemp += this.velocity.y;
@@ -148,7 +140,6 @@ public abstract class AbstractEntity {
 		bottomRight = corners[3];
 		if(this.velocity.x < 0) {
 			if(topLeft || bottomLeft) {
-				System.out.println("left");
 				this.velocity.x = 0;
 				xtemp = currCol * Tile.SIZE;
 			}
@@ -158,14 +149,13 @@ public abstract class AbstractEntity {
 		}
 		if(this.velocity.x > 0) {
 			if(topRight || bottomRight) {
-				System.out.println("right");
 				this.velocity.x = 0;
-				xtemp = currCol * Tile.SIZE + this.collisionBox.getWidth()/4;
+				xtemp = (currCol + 1) * Tile.SIZE - this.collisionBox.getWidth() % Tile.SIZE -1 ;
 			}
 			else {
 				xtemp += this.velocity.x;
 			}
 		}
 		return new Vec2D(xtemp, ytemp);
-	}		
+	}
 }

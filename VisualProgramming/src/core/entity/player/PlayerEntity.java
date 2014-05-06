@@ -15,7 +15,10 @@ import core.ui.KeyControllable;
 public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	private static final int WIDTH = 100, HEIGHT = 100;
+	private static final float WALK_SPEED = 3;
+	private static final float COEF_FRIC = 0.9f;
 	AnimationSet animations;
+	private boolean movingLeft, movingRight;
 	
 	public PlayerEntity(int x, int y, GameMap map) {
 		super(x, y, WIDTH, HEIGHT, map);
@@ -36,7 +39,17 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	@Override
 	public void update() {
-		this.setPosition(this.checkTileMapCollision());
+		this.setPosition(this.getNextPosition());
+		if(this.movingLeft)
+			this.velocity.x = -WALK_SPEED;
+		if(!this.movingLeft && this.velocity.x < 0)
+			this.velocity.x *= COEF_FRIC;
+		
+		if(this.movingRight)
+			this.velocity.x = WALK_SPEED;
+		if(!this.movingRight && this.velocity.x > 0)
+			this.velocity.x *= COEF_FRIC;
+		
 		animations.update();
 	}
 
@@ -47,17 +60,29 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_D){
-			this.velocity.x = 1;
-		}else if(e.getKeyCode() == KeyEvent.VK_A){
-			this.velocity.x = -1;
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_A:
+				this.movingLeft = true;
+				break;
+			case KeyEvent.VK_D:
+				this.movingRight = true;
+				break;
+			case KeyEvent.VK_W:
+				this.velocity.y = -5;
+				break;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_A:
+				this.movingLeft = false;
+				break;
+			case KeyEvent.VK_D:
+				this.movingRight = false;
+				break;
+		}
 	}
 
 }
