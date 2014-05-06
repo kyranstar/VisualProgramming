@@ -34,4 +34,7 @@ public class GameMap {
 	public int getHeight() {
 		return height;
 	}
+	public CollisionBox getCollisionBoxAt(int x, int y) {
+		return collisionMap[x][y];
+	}
 }

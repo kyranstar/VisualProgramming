@@ -54,7 +54,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		init();
 		//Game loop
 		
-		while (true){
+		while (true){	
+			
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nsPerTick;
 			lastTime = now;
@@ -72,7 +73,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 				e.printStackTrace();
 			}
 			if (shouldRender){
-
 				draw();
 				drawToScreen();
 				}
@@ -89,6 +89,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 	}
 	private void draw() {
 		g.setColor(Color.DARK_GRAY);
@@ -132,9 +134,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	@Override
 	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);}
 	@Override
-	public void keyPressed(KeyEvent e) {space.keyPressed(e);game.keyPressed(e);}
+	public void keyPressed(KeyEvent e) {
+		space.keyPressed(e);
+		game.keyPressed(e);
+	}
 	@Override
-	public void keyReleased(KeyEvent e) {space.keyReleased(e);game.keyReleased(e);}
+	public void keyReleased(KeyEvent e) {
+		space.keyReleased(e);
+		game.keyReleased(e);
+	}
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
 }

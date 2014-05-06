@@ -8,10 +8,9 @@ import java.util.Map;
 	public class AnimationSet {
 
 	    private Animation currentAnimation;
-	    private final Map<String, Animation> animations;
+	    private final Map<String, Animation> animations = new HashMap<>();
 
 	    public AnimationSet() {
-	        animations = new HashMap<>();
 	    }
 	    public void addAnimation(String title, Animation animation){
 	        animations.put(title, animation);

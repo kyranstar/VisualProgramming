@@ -7,6 +7,7 @@ import machine.MainGame;
 import core.ui.KeyControllable;
 
 public final class LevelManager implements KeyControllable{
+	
 	private static AbstractLevel[] levels;
 	private int currentLevel;
 	

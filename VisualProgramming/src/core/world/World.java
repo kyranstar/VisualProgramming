@@ -2,19 +2,14 @@ package core.world;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import core.level.LevelManager;
-import core.object.map.MapLoader;
 import core.ui.KeyControllable;
 
 public class World implements KeyControllable{
 	LevelManager levelManager;
 	int width, height;
+	
 	
 	public World(int width, int height){
 		this.width = width;

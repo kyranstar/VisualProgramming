@@ -18,8 +18,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void reset() {
-		this.ambientForce = new Vec2D(0, 1);
-		player = new PlayerEntity(0, 0);
+		this.ambientForce = new Vec2D(0, 0.1);
+		player = new PlayerEntity(0, 0, this.map);
 		this.entities.add(player);
 		this.controllableEntities.add(player);
 	}

@@ -1,5 +1,6 @@
 package core.entity.player;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -8,15 +9,16 @@ import core.entity.AbstractEntity;
 import core.graphics.AnimationLoader;
 import core.graphics.AnimationSet;
 import core.math.Vec2D;
+import core.object.map.GameMap;
 import core.ui.KeyControllable;
 
 public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
-	private static final int WIDTH = 50, HEIGHT = 100;
+	private static final int WIDTH = 100, HEIGHT = 100;
 	AnimationSet animations;
 	
-	public PlayerEntity(int x, int y) {
-		super(x, y, WIDTH, HEIGHT);
+	public PlayerEntity(int x, int y, GameMap map) {
+		super(x, y, WIDTH, HEIGHT, map);
 		animations = new AnimationSet();
 		try {
 			animations.addAnimation("test", AnimationLoader.getFromSpritesheet("/sprites/test.png", 100).setDelay(6));
@@ -27,12 +29,15 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	}
 	@Override
 	public void draw(Graphics2D g) {
+		g.setColor(Color.GREEN);
+		g.drawRect((int)this.getX(), (int) this.getY(), this.WIDTH, this.HEIGHT);
 		this.animations.draw(g, this.getX(), this.getY());
 	}
 
 	@Override
 	public void update() {
-		this.setPosition(this.getPosition().add(velocity));
+		this.fixCollisions(map);
+		this.setPosition(this.getPosition().add(this.velocity));
 		animations.update();
 	}
 
@@ -43,8 +48,11 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getKeyCode() == KeyEvent.VK_D){
+			this.velocity.x = 1;
+		}else if(e.getKeyCode() == KeyEvent.VK_A){
+			this.velocity.x = -1;
+		}
 	}
 
 	@Override

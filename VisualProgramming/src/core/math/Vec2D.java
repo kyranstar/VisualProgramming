@@ -19,7 +19,7 @@ public class Vec2D {
 	public Vec2D multiply(Vec2D other){
 		return new Vec2D(x * other.x, y * other.y);
 	}
-	private Vec2D multiply(double d) {
+	public Vec2D multiply(double d) {
 		return new Vec2D(x * d, y * d);
 	}
 	public Vec2D divide(Vec2D other){
