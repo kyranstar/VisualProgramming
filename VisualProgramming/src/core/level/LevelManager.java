@@ -2,22 +2,22 @@ package core.level;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
-import machine.MainGame;
 import core.ui.KeyControllable;
 
 public final class LevelManager implements KeyControllable{
 	
-	private static AbstractLevel[] levels;
+	private LevelList levels;
 	private int currentLevel;
-	
-	private static int width = MainGame.WIDTH, height = MainGame.HEIGHT;
-	
-	public LevelManager(){
+		
+	public LevelManager(int width, int height){
+		levels = new LevelList(width, height);
 		currentLevel = 0;
 	}
 	public void goToLevel(LEVEL level){
-		levels[currentLevel].reset();
+		levels.getLevel(currentLevel).reset();
 		for(int i = 0; i < LEVEL.values().length; i++){
 			if(LEVEL.values()[i] == level){
 				currentLevel = i;
@@ -25,38 +25,49 @@ public final class LevelManager implements KeyControllable{
 		}
 	}
 	public void draw(Graphics2D g){
-		levels[currentLevel].draw(g);
+		levels.getLevel(currentLevel).draw(g);
 	}
 	public void update(){
-		levels[currentLevel].update();
+		levels.getLevel(currentLevel).update();
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(levels[currentLevel] instanceof KeyControllable)
-			((KeyControllable) levels[currentLevel]).keyPressed(e);
+		if(levels.getLevel(currentLevel) instanceof KeyControllable)
+			((KeyControllable) levels.getLevel(currentLevel)).keyPressed(e);
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(levels[currentLevel] instanceof KeyControllable)
-			((KeyControllable) levels[currentLevel]).keyReleased(e);
+		if(levels.getLevel(currentLevel) instanceof KeyControllable)
+			((KeyControllable) levels.getLevel(currentLevel)).keyReleased(e);
 	}
-	
 	public enum LEVEL{
-		LevelOne(new LevelOne(width, height));
+		LEVEL_ONE(LevelOne.class);
 		
-		AbstractLevel level;
-		private LEVEL(AbstractLevel level){
-			this.level = level;
+		Constructor<? extends AbstractLevel> level;
+		private LEVEL(Class<? extends AbstractLevel> level){
+			try {
+				this.level = level.getDeclaredConstructor(int.class, int.class);
+			} catch (NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	static{
-		final LEVEL[] LEVELS = LEVEL.values();
-		levels = new AbstractLevel[LEVELS.length];
-		
-		for(int i = 0; i < LEVELS.length; i++){
-			levels[i] = LEVELS[i].level;
-		}			
-
+	private static class LevelList{
+			private AbstractLevel[] levels;
+			
+			public LevelList(int width, int height){
+				LEVEL[] levelList = LEVEL.values();
+				levels = new AbstractLevel[levelList.length];
+				for(int i = 0; i < levelList.length; i++){
+					try {
+						levels[i] = levelList[i].level.newInstance(width, height);
+					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						e.printStackTrace();
+					}
+				}			
+			}
+			public AbstractLevel getLevel(int i){
+				return levels[i];
+			}
 	}
 }

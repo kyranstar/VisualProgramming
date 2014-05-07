@@ -31,6 +31,7 @@ public abstract class AbstractLevel {
 			Logger.getLogger(AbstractLevel.class.getName()).log(Level.SEVERE, null, e);
 		}
 		mapViewport = new MapViewport(screenWidth, screenHeight);
+		reset(); //not required, but safer
 	}
 	
 	public abstract void draw(Graphics2D g);

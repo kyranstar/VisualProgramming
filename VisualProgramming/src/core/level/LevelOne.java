@@ -5,13 +5,14 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import core.entity.AbstractEntity;
+import core.entity.neutral.BlockEntity;
 import core.entity.player.PlayerEntity;
 import core.math.Vec2D;
 import core.ui.KeyControllable;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
-	PlayerEntity player;
+	private PlayerEntity player;
 	
 	public LevelOne(int width, int height) {
 		super(LEVEL_FILE, width, height);
@@ -23,6 +24,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		
 		this.ambientForce = new Vec2D(0, 0.6);
 		player = new PlayerEntity(50, 50, this.map);
+		this.entities.add(new BlockEntity(32,32,32,32, map));
 		this.entities.add(player);
 		this.controllableEntities.add(player);
 	}

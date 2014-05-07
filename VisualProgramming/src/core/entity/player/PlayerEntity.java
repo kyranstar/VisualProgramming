@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import core.entity.AbstractEntity;
 import core.graphics.AnimationLoader;
 import core.graphics.AnimationSet;
-import core.level.AbstractLevel;
 import core.math.Vec2D;
 import core.object.map.GameMap;
 import core.ui.KeyControllable;
@@ -80,6 +79,8 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				break;
 			case KeyEvent.VK_W:
 				this.getVelocity().y = -JUMP_SPEED;
+				break;
+			default:
 				break;
 		}
 	}

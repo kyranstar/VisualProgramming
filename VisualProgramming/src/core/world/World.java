@@ -8,14 +8,11 @@ import core.ui.KeyControllable;
 
 public class World implements KeyControllable{
 	LevelManager levelManager;
-	int width, height;
 	
 	
 	public World(int width, int height){
-		this.width = width;
-		this.height = height;
-		this.levelManager = new LevelManager();
-		levelManager.goToLevel(LevelManager.LEVEL.LevelOne);
+		this.levelManager = new LevelManager(width, height);
+		levelManager.goToLevel(LevelManager.LEVEL.LEVEL_ONE);
 	}
 	public void draw(Graphics2D g){
 		levelManager.draw(g);
