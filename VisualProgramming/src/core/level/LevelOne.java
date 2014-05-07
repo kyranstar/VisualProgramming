@@ -2,6 +2,7 @@ package core.level;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import core.entity.AbstractEntity;
 import core.entity.player.PlayerEntity;
@@ -14,18 +15,20 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	
 	public LevelOne(int width, int height) {
 		super(LEVEL_FILE, width, height);
-		reset();
 	}
 	@Override
 	public void reset() {
-		super.reset();
-		this.ambientForce = new Vec2D(0, 0.3);
+		this.entities = new ArrayList<AbstractEntity>();
+		controllableEntities = new ArrayList<KeyControllable>();
+		
+		this.ambientForce = new Vec2D(0, 0.6);
 		player = new PlayerEntity(50, 50, this.map);
 		this.entities.add(player);
 		this.controllableEntities.add(player);
 	}
 	@Override
 	public void draw(Graphics2D g) {
+		this.mapViewport.lockFrame(map);
 		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
 		for(AbstractEntity e : this.entities){

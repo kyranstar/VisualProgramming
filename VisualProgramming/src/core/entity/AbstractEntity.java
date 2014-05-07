@@ -11,14 +11,13 @@ import core.object.map.GameMap;
 
 public abstract class AbstractEntity {
 
-	private CollisionBox collisionBox;
-	protected Vec2D velocity;
+	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
 	
 	public AbstractEntity(GameMap map){
 		this.map = map;
-		velocity = new Vec2D(0,0);
+		this.moveData = new MoveData();
 	}
 	
 	public abstract void draw(Graphics2D g);
@@ -29,134 +28,123 @@ public abstract class AbstractEntity {
 	public abstract void applyAcceleration(Vec2D accel);
 	
 	public double getX(){
-		return collisionBox.getUpperLeft().x;
+		return moveData.collisionBox.getUpperLeft().x;
 	}
 	public double getY(){
-		return collisionBox.getUpperLeft().y;
+		return moveData.collisionBox.getUpperLeft().y;
 	}
 	public Vec2D getPosition(){
-		return collisionBox.getUpperLeft();
+		return moveData.collisionBox.getUpperLeft();
 	}
 	public Vec2D getSize(){
-		return new Vec2D(collisionBox.getRect2D().getHeight(), collisionBox.getRect2D().getWidth());
+		return new Vec2D(moveData.collisionBox.getHeight(), moveData.collisionBox.getWidth());
 	}
 	public void setRect(double x, double y, double width, double height){
-		this.collisionBox = new CollisionBox(x,y,width,height);
+		moveData.collisionBox = new CollisionBox(x,y,width,height);
 	}
 	public void setPosition(Vec2D position){
-		this.collisionBox.setPosition(position);
+		moveData.collisionBox.setPosition(position);
 	}
 	public Vec2D getVelocity(){
-		return this.velocity;
+		return moveData.velocity;
 	}
 	public void setVelocity(Vec2D velocity){
-		this.velocity = velocity;
+		moveData.velocity = velocity;
 	}
 	public boolean isColliding(AbstractEntity other){
-		return collisionBox.isColliding(other.collisionBox);
+		return moveData.collisionBox.isColliding(other.moveData.collisionBox);
 	}
 	public boolean isColliding(Line2D other){
-		return collisionBox.isColliding(other);
+		return moveData.collisionBox.isColliding(other);
 	}
 	public Vec2D getCenter(){
-		return collisionBox.getCenter();
+		return moveData.collisionBox.getCenter();
 	}
 
 	public Rectangle2D getRect2D() {
-		return collisionBox.getRect2D();
+		return moveData.collisionBox.getRect2D();
 	}
 	public boolean[] getCornersAreSolid(double x, double y) {
 		int leftTile = (int)(x / Tile.SIZE);
-		int rightTile = (int)((x + this.collisionBox.getWidth()) / Tile.SIZE);
+		int rightTile = (int)((x + moveData.collisionBox.getWidth()) / Tile.SIZE);
 		int topTile = (int)(y / Tile.SIZE);
-		int bottomTile = (int)((y + this.collisionBox.getHeight()) / Tile.SIZE);
-
-		boolean topLeft;
-		boolean topRight;
-		boolean bottomLeft;
-		boolean bottomRight;
+		int bottomTile = (int)((y + moveData.collisionBox.getHeight()) / Tile.SIZE);
 		
-		if(leftTile < 0 || topTile < 0 || leftTile >= map.getWidth()  || topTile >= map.getHeight())
-			topLeft = false;
-		else
-			topLeft = map.getTileAt(leftTile, topTile).getAttribute(Attribute.SOLID);
-		if(rightTile < 0 || topTile < 0 || rightTile >= map.getWidth() || topTile >= map.getHeight())
-			topRight = false;
-		else
-			topRight = map.getTileAt(rightTile, topTile).getAttribute(Attribute.SOLID);
-		if(leftTile < 0 || bottomTile < 0 || leftTile >= map.getWidth() || bottomTile >= map.getHeight())
-			bottomLeft = false;
-		else
-			bottomLeft  = map.getTileAt(leftTile, bottomTile).getAttribute(Attribute.SOLID);
-		if(rightTile < 0 || bottomTile < 0 || rightTile >= map.getWidth()  || bottomTile >= map.getHeight())
-			bottomRight = false;
-		else
-			bottomRight = map.getTileAt(rightTile, bottomTile).getAttribute(Attribute.SOLID);
+		boolean topLeft = hasAttribute(map, Attribute.SOLID, topTile, leftTile);
+		boolean topRight = hasAttribute(map, Attribute.SOLID, topTile, rightTile);
+		boolean bottomLeft = hasAttribute(map, Attribute.SOLID, bottomTile, leftTile);
+		boolean bottomRight = hasAttribute(map, Attribute.SOLID, bottomTile, rightTile);
 		
 		return new boolean[]{topLeft, topRight, bottomLeft, bottomRight};
 	}
-	/*
-	 * @return next position
-	 */
+	private boolean hasAttribute(GameMap map, Attribute attribute, int tileY, int tileX) {
+		  boolean result = false;
+
+		  if (tileX >= 0 && tileX < map.getWidthInTiles() && tileY >= 0 && tileY < map.getHeightInTiles()) {
+		    result = map.getTileAt(tileX, tileY).getAttribute(attribute);
+		  }
+
+		  return result;
+		}
 	public Vec2D getNextPosition() {
 		
-		int currCol = (int)getX() / Tile.SIZE;
-		int currRow = (int)getY() / Tile.SIZE;
+		int currCol = (int) (getX() / Tile.SIZE);
+		int currRow = (int) (getY() / Tile.SIZE);
 		
-		double xdest = getX() + this.velocity.x;
-		double ydest = getY() + this.velocity.y;
+		double destX = getX() + moveData.velocity.x;
+		double destY = getY() + moveData.velocity.y;
 		
-		double xtemp = getX();
-		double ytemp = getY();
+		double tempX = getX();
+		double tempY = getY();
 		
-		boolean[] corners = getCornersAreSolid(getX(), ydest);
+		boolean[] corners = getCornersAreSolid(getX(), destY);
 		boolean topLeft = corners[0];
 		boolean topRight = corners[1];
 		boolean bottomLeft = corners[2];
 		boolean bottomRight = corners[3];
 		
-		if(this.velocity.y < 0) {
+		if(moveData.velocity.y < 0) {
 			if(topLeft || topRight) {
-				this.velocity.y = 0;
-				ytemp = currRow * Tile.SIZE;
+				moveData.velocity.y = 0;
+				tempY = currRow * Tile.SIZE;
 			}
 			else {
-				ytemp += this.velocity.y;
+				tempY += moveData.velocity.y;
 			}
 		}
-		else if(this.velocity.y > 0) {
+		else if(moveData.velocity.y > 0) {
 			if(bottomLeft || bottomRight) {
-				this.velocity.y = 0;
-				ytemp = (currRow + 1) * Tile.SIZE - this.collisionBox.getHeight() % Tile.SIZE - 1 ;
+				moveData.velocity.y = 0;
+				tempY = (currRow + 1) * Tile.SIZE - moveData.collisionBox.getHeight() % Tile.SIZE - 1 ;
 			}
 			else {
-				ytemp += this.velocity.y;
+				tempY += moveData.velocity.y;
 			}
 		}
 		
-		corners = getCornersAreSolid(xdest, getY());
+		corners = getCornersAreSolid(destX, getY());
 		topLeft = corners[0];
 		topRight = corners[1];
 		bottomLeft = corners[2];
 		bottomRight = corners[3];
-		if(this.velocity.x < 0) {
+		if(moveData.velocity.x < 0) {
 			if(topLeft || bottomLeft) {
-				this.velocity.x = 0;
-				xtemp = currCol * Tile.SIZE;
+				moveData.velocity.x = 0;
+				tempX = currCol * Tile.SIZE;
 			}
 			else {
-				xtemp += this.velocity.x;
+				tempX += moveData.velocity.x;
 			}
 		}
-		if(this.velocity.x > 0) {
+		if(moveData.velocity.x > 0) {
 			if(topRight || bottomRight) {
-				this.velocity.x = 0;
-				xtemp = (currCol + 1) * Tile.SIZE - this.collisionBox.getWidth() % Tile.SIZE -1 ;
+				moveData.velocity.x = 0;
+				tempX = (currCol + 1) * Tile.SIZE - moveData.collisionBox.getWidth() % Tile.SIZE -1 ;
 			}
 			else {
-				xtemp += this.velocity.x;
+				tempX += moveData.velocity.x;
 			}
 		}
-		return new Vec2D(xtemp, ytemp);
+		return new Vec2D(tempX, tempY);
 	}
 }

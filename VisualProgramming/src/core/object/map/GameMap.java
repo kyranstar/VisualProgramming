@@ -28,10 +28,10 @@ public class GameMap {
 	public Tile getTileAt(int x, int y){
 		return tiles[x][y];
 	}
-	public int getWidth() {
+	public int getWidthInTiles() {
 		return width;
 	}
-	public int getHeight() {
+	public int getHeightInTiles() {
 		return height;
 	}
 	public CollisionBox getCollisionBoxAt(int x, int y) {

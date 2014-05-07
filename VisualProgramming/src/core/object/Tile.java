@@ -15,10 +15,10 @@ public enum Tile {
 
 	public static final int SIZE = 32;
 	
-	private Map<Attribute, Boolean> attributes;
-	private BufferedImage image;
-	private int hardness;
-	private int gid;
+	private final Map<Attribute, Boolean> attributes;
+	private final BufferedImage image;
+	private final int hardness;
+	private final int gid;
 	
 	private Tile(int gid, int hardness, String imageFile, Attribute... attributes){
 		this.gid = gid;
@@ -26,7 +26,7 @@ public enum Tile {
 		try {
 			this.image = ImageLoader.loadImage(imageFile);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new TileNotFoundException("Tile image not found: " + imageFile);
 		} catch(IllegalArgumentException e){
 			throw new IllegalArgumentException(imageFile, e);
 		}

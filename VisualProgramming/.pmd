@@ -64,10 +64,6 @@
             <ruleset>Basic</ruleset>
         </rule>
         <rule>
-            <name>CollapsibleIfStatements</name>
-            <ruleset>Basic Velocity</ruleset>
-        </rule>
-        <rule>
             <name>DontCallThreadRun</name>
             <ruleset>Basic</ruleset>
         </rule>
@@ -106,10 +102,6 @@
         <rule>
             <name>UnconditionalIfStatement</name>
             <ruleset>Basic</ruleset>
-        </rule>
-        <rule>
-            <name>AssignmentInOperand</name>
-            <ruleset>Controversial</ruleset>
         </rule>
         <rule>
             <name>AvoidTrailingComma</name>
@@ -232,27 +224,11 @@
             <ruleset>Braces</ruleset>
         </rule>
         <rule>
-            <name>ForLoopsMustUseBraces</name>
-            <ruleset>Braces</ruleset>
-        </rule>
-        <rule>
-            <name>IfElseStmtsMustUseBraces</name>
-            <ruleset>Braces</ruleset>
-        </rule>
-        <rule>
             <name>IfElseStmtsMustUseBraces</name>
             <ruleset>Braces</ruleset>
         </rule>
         <rule>
             <name>IfStmtsMustUseBraces</name>
-            <ruleset>Braces</ruleset>
-        </rule>
-        <rule>
-            <name>IfStmtsMustUseBraces</name>
-            <ruleset>Braces</ruleset>
-        </rule>
-        <rule>
-            <name>WhileLoopsMustUseBraces</name>
             <ruleset>Braces</ruleset>
         </rule>
         <rule>
@@ -276,15 +252,7 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>CyclomaticComplexity</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
             <name>ExcessiveClassLength</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>ExcessiveMethodLength</name>
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
@@ -308,10 +276,6 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>ExcessiveParameterList</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
             <name>ExcessivePublicCount</name>
             <ruleset>Code Size</ruleset>
         </rule>
@@ -321,10 +285,6 @@
         </rule>
         <rule>
             <name>NcssConstructorCount</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>NcssMethodCount</name>
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
@@ -344,36 +304,12 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>NPathComplexity</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>TooManyFields</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
             <name>TooManyFields</name>
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
             <name>TooManyMethods</name>
             <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>TooManyMethods</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>CommentContent</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
-            <name>CommentRequired</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
-            <name>CommentSize</name>
-            <ruleset>Comments</ruleset>
         </rule>
         <rule>
             <name>AssignmentInOperand</name>
@@ -456,10 +392,6 @@
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
-            <name>UnnecessaryParentheses</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
             <name>UseConcurrentHashMap</name>
             <ruleset>Controversial</ruleset>
         </rule>
@@ -508,10 +440,6 @@
             <ruleset>Design</ruleset>
         </rule>
         <rule>
-            <name>AvoidDeeplyNestedIfStmts</name>
-            <ruleset>Basic Velocity</ruleset>
-        </rule>
-        <rule>
             <name>AvoidInstanceofChecksInCatchClause</name>
             <ruleset>Design</ruleset>
         </rule>
@@ -522,10 +450,6 @@
         <rule>
             <name>AvoidProtectedMethodInFinalClassNotExtending</name>
             <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidReassigningParameters</name>
-            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>AvoidSynchronizedAtMethodLevel</name>
@@ -708,27 +632,7 @@
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
-            <name>EmptyCatchBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
             <name>EmptyFinallyBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyFinallyBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyIfStmt</name>
-            <ruleset>Basic Velocity</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyIfStmt</name>
-            <ruleset>Basic Velocity</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyInitializer</name>
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
@@ -740,19 +644,7 @@
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
-            <name>EmptyStatementBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
             <name>EmptyStatementNotInLoop</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyStatementNotInLoop</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyStaticInitializer</name>
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
@@ -764,27 +656,11 @@
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
-            <name>EmptySwitchStatements</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptySynchronizedBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
             <name>EmptySynchronizedBlock</name>
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
             <name>EmptyTryBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyTryBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyWhileStmt</name>
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
@@ -1296,14 +1172,6 @@
             <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>
-            <name>UnnecessaryConversionTemporary</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
-            <name>UnnecessaryFinalModifier</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
             <name>UnnecessaryFinalModifier</name>
             <ruleset>Unnecessary</ruleset>
         </rule>
@@ -1316,14 +1184,6 @@
             <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>
-            <name>UnnecessaryReturn</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
-            <name>UnusedNullCheckInEquals</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
             <name>UnusedNullCheckInEquals</name>
             <ruleset>Unnecessary</ruleset>
         </rule>
@@ -1332,19 +1192,7 @@
             <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>
-            <name>UselessOperationOnImmutable</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
             <name>UselessOverridingMethod</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
-            <name>UselessOverridingMethod</name>
-            <ruleset>Unnecessary</ruleset>
-        </rule>
-        <rule>
-            <name>UselessParentheses</name>
             <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>

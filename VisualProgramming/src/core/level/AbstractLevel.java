@@ -2,8 +2,9 @@ package core.level;
 
 import java.awt.Graphics2D;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -23,21 +24,16 @@ public abstract class AbstractLevel {
 	protected MapViewport mapViewport;
 	protected GameMap map;
 	
-	protected AbstractLevel(String filename, int width, int height){
-		reset();
+	protected AbstractLevel(String filename, int screenWidth, int screenHeight){
 		try {
 			map = MapLoader.loadMap(filename);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
+			Logger.getLogger(AbstractLevel.class.getName()).log(Level.SEVERE, null, e);
 		}
-		mapViewport = new MapViewport(width, height);
+		mapViewport = new MapViewport(screenWidth, screenHeight);
 	}
 	
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
-
-	public void reset() {
-		this.entities = new ArrayList<AbstractEntity>();
-		controllableEntities = new ArrayList<KeyControllable>();
-	}
+	public abstract void reset();
 }

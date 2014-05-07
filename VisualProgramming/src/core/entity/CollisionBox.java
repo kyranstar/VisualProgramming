@@ -66,4 +66,8 @@ public class CollisionBox {
 		return rect.getHeight();
 	}
 
+	public void setPosition(double x, double y) {
+		rect.setRect(x, y, rect.getWidth(), rect.getHeight());
+	}
+
 }

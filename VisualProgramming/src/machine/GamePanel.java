@@ -11,8 +11,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
+
+import core.level.AbstractLevel;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener{
@@ -70,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			try {
 				Thread.sleep(2);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, e);
 			}
 			if (shouldRender){
 				draw();
