@@ -14,6 +14,7 @@ public abstract class AbstractEntity {
 	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
+	protected int framesSinceLastCollision;
 	
 	public AbstractEntity(GameMap map){
 		this.map = map;
@@ -81,10 +82,10 @@ public abstract class AbstractEntity {
 		boolean bottomRight = hasAttribute(map, Attribute.SOLID, bottomTile, rightTile);
 		
 		Corners solidCorners = new Corners();
-		solidCorners.setTopLeft(topLeft);
-		solidCorners.setTopRight(topRight);
-		solidCorners.setBottomRight(bottomRight);
-		solidCorners.setBottomLeft(bottomLeft);
+		solidCorners.topLeft = topLeft;
+		solidCorners.topRight = topRight;
+		solidCorners.bottomRight = bottomRight;
+		solidCorners.bottomLeft = bottomLeft;
 		return solidCorners;
 	}
 	private boolean hasAttribute(GameMap map, Attribute attribute, int tileY, int tileX) {
@@ -107,14 +108,17 @@ public abstract class AbstractEntity {
 		double tempY = getY();
 		
 		Corners solidCorners = getCornersAreSolid(getX(), destY);
-		boolean topLeft = solidCorners.getTopLeft();
-		boolean topRight = solidCorners.getTopRight();
-		boolean bottomLeft = solidCorners.getBottomLeft();
-		boolean bottomRight = solidCorners.getBottomRight();
+		boolean topLeft = solidCorners.topLeft;
+		boolean topRight = solidCorners.topRight;
+		boolean bottomLeft = solidCorners.bottomLeft;
+		boolean bottomRight = solidCorners.bottomRight;
+		
+		this.framesSinceLastCollision += 1;
 		if(moveData.velocity.y < 0) {
 			if(topLeft || topRight) {
 				moveData.velocity.y = 0;
 				tempY = currRow * Tile.SIZE;
+				this.framesSinceLastCollision = 0;
 			}
 			else {
 				tempY += moveData.velocity.y;
@@ -124,6 +128,7 @@ public abstract class AbstractEntity {
 			if(bottomLeft || bottomRight) {
 				moveData.velocity.y = 0;
 				tempY = (currRow + 1) * Tile.SIZE - moveData.collisionBox.getHeight() % Tile.SIZE - 1 ;
+				this.framesSinceLastCollision = 0;
 			}
 			else {
 				tempY += moveData.velocity.y;
@@ -131,14 +136,15 @@ public abstract class AbstractEntity {
 		}
 		
 		solidCorners = getCornersAreSolid(destX, getY());
-		topLeft = solidCorners.getTopLeft();
-		topRight = solidCorners.getTopRight();
-		bottomLeft = solidCorners.getBottomLeft();
-		bottomRight = solidCorners.getBottomRight();
+		topLeft = solidCorners.topLeft;
+		topRight = solidCorners.topRight;
+		bottomLeft = solidCorners.bottomLeft;
+		bottomRight = solidCorners.bottomRight;
 		if(moveData.velocity.x < 0) {
 			if(topLeft || bottomLeft) {
 				moveData.velocity.x = 0;
 				tempX = currCol * Tile.SIZE;
+				this.framesSinceLastCollision = 0;
 			}
 			else {
 				tempX += moveData.velocity.x;
@@ -148,6 +154,7 @@ public abstract class AbstractEntity {
 			if(topRight || bottomRight) {
 				moveData.velocity.x = 0;
 				tempX = (currCol + 1) * Tile.SIZE - moveData.collisionBox.getWidth() % Tile.SIZE -1 ;
+				this.framesSinceLastCollision = 0;
 			}
 			else {
 				tempX += moveData.velocity.x;
@@ -156,37 +163,13 @@ public abstract class AbstractEntity {
 		return new Vec2D(tempX, tempY);
 	}
 	private static class Corners{
-		private boolean topLeft, topRight;
-		private boolean bottomLeft, bottomRight;
+		public boolean topLeft, topRight;
+		public boolean bottomLeft, bottomRight;
 		public Corners(){
 			topLeft = false;
 			topRight = false;
 			bottomLeft = false;
 			bottomRight = false;
 		}		
-		public void setTopLeft(boolean topLeft) {
-			this.topLeft = topLeft;
-		}
-		public void setTopRight(boolean topRight) {
-			this.topRight = topRight;
-		}
-		public void setBottomLeft(boolean bottomLeft) {
-			this.bottomLeft = bottomLeft;
-		}
-		public void setBottomRight(boolean bottomRight) {
-			this.bottomRight = bottomRight;
-		}
-		public boolean getTopLeft(){
-			return topLeft;
-		}
-		public boolean getTopRight(){
-			return topRight;
-		}
-		public boolean getBottomLeft(){
-			return bottomLeft;
-		}
-		public boolean getBottomRight(){
-			return bottomRight;
-		}
 	}
 }

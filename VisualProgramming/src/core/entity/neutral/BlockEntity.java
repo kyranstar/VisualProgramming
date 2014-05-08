@@ -4,14 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import core.entity.AbstractEntity;
+import core.entity.ai.AIUpAndDown;
 import core.math.Vec2D;
 import core.object.map.GameMap;
 
 public class BlockEntity extends AbstractEntity{
 
+	AIUpAndDown artificialIntelligence;
 	public BlockEntity(int x, int y, double width, double height, GameMap map) {
 		super(map);
 		this.setRect(x, y, width, height);
+		artificialIntelligence = new AIUpAndDown(y + 100, y - 100);
 	}
 
 	@Override
@@ -22,8 +25,8 @@ public class BlockEntity extends AbstractEntity{
 
 	@Override
 	public void update() {
-		this.setSize(this.getSize().add(new Vec2D(0.1, 0.1)));
 		this.setPosition(this.getNextPosition());
+		this.applyImpulse(this.artificialIntelligence.getNextAIImpulse(this));
 	}
 
 	@Override

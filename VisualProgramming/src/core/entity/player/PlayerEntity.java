@@ -19,6 +19,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	private static final float WALK_SPEED = 3;
 	private static final float JUMP_SPEED = 12;
 	private static final float COEF_FRIC = 0.1f;
+	
 	AnimationSet animations;
 	private boolean movingLeft, movingRight;
 	
@@ -78,7 +79,8 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				this.animations.goToAnimation("moveRight");
 				break;
 			case KeyEvent.VK_W:
-				this.getVelocity().y = -JUMP_SPEED;
+				if(this.framesSinceLastCollision <= 5)
+					this.getVelocity().y = -JUMP_SPEED;
 				break;
 			default:
 				break;

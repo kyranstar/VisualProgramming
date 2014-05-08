@@ -13,6 +13,7 @@ public class MapViewport {
 	}
 	
 	public void draw(Graphics2D g, GameMap map){
+		
 		for(double x =  0; x < map.getWidthInTiles() * Tile.SIZE; x += Tile.SIZE){
 			for(double y =  0; y < map.getHeightInTiles() * Tile.SIZE; y += Tile.SIZE){ 
 				g.drawImage(map.getTileAt((int)(x/Tile.SIZE), (int) (y/Tile.SIZE)).getImage(), (int)x, (int)y, null);
