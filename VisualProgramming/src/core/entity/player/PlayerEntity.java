@@ -62,7 +62,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	}
 
 	@Override
-	public void applyAcceleration(Vec2D accel) {
+	public void applyImpulse(Vec2D accel) {
 		this.setVelocity(this.getVelocity().add(accel));
 	}
 

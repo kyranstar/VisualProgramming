@@ -43,7 +43,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		for(int i = 0; i < entities.size(); i++){
 			AbstractEntity e = entities.get(i);
 			e.update();
-			e.applyAcceleration(ambientForce);
+			e.applyImpulse(ambientForce);
 			if(e.isDead()){
 				entities.remove(i);
 				i--;

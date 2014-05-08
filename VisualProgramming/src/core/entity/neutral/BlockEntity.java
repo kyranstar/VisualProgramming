@@ -22,11 +22,12 @@ public class BlockEntity extends AbstractEntity{
 
 	@Override
 	public void update() {
+		this.setSize(this.getSize().add(new Vec2D(0.1, 0.1)));
 		this.setPosition(this.getNextPosition());
 	}
 
 	@Override
-	public void applyAcceleration(Vec2D accel) {
+	public void applyImpulse(Vec2D accel) {
 		this.setVelocity(this.getVelocity().add(accel));
 	}
 

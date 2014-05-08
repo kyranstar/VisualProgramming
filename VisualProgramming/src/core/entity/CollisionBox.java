@@ -70,4 +70,8 @@ public class CollisionBox {
 		rect.setRect(x, y, rect.getWidth(), rect.getHeight());
 	}
 
+	public void setSize(Vec2D size) {
+		this.rect.setFrame(rect.getX(), rect.getY(), size.x, size.y);
+	}
+
 }

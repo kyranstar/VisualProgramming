@@ -26,7 +26,7 @@ public abstract class AbstractEntity {
 	public boolean isDead() {
 		return isDead;
 	}
-	public abstract void applyAcceleration(Vec2D accel);
+	public abstract void applyImpulse(Vec2D accel);
 	
 	public double getX(){
 		return moveData.collisionBox.getUpperLeft().x;
@@ -40,7 +40,11 @@ public abstract class AbstractEntity {
 	public Vec2D getSize(){
 		return new Vec2D(moveData.collisionBox.getHeight(), moveData.collisionBox.getWidth());
 	}
-	public void setRect(double x, double y, double width, double height){
+
+	protected void setSize(Vec2D size) {
+		this.moveData.collisionBox.setSize(size);
+	}
+	protected void setRect(double x, double y, double width, double height){
 		moveData.collisionBox = new CollisionBox(x,y,width,height);
 	}
 	public void setPosition(Vec2D position){
@@ -49,7 +53,7 @@ public abstract class AbstractEntity {
 	public Vec2D getVelocity(){
 		return moveData.velocity;
 	}
-	public void setVelocity(Vec2D velocity){
+	protected void setVelocity(Vec2D velocity){
 		moveData.velocity = velocity;
 	}
 	public boolean isColliding(AbstractEntity other){
