@@ -34,6 +34,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 		}
 		animations.goToAnimation("moveRight");
 		this.setRect(x, y, animations.getCurrentWidth(), animations.getCurrentHeight());
+		this.affectedByGravity = true;
 	}
 	@Override
 	public void draw(Graphics2D g) {
@@ -79,7 +80,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				this.animations.goToAnimation("moveRight");
 				break;
 			case KeyEvent.VK_W:
-				if(this.framesSinceLastCollision <= 5)
+				if(this.framesSinceLastBottomCollision <= 5)
 					this.getVelocity().y = -JUMP_SPEED;
 				break;
 			default:

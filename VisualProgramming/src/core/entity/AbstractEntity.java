@@ -14,12 +14,18 @@ public abstract class AbstractEntity {
 	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
-	protected int framesSinceLastCollision;
+	protected int framesSinceLastBottomCollision;
+	protected int framesSinceLastTopCollision;
+	protected int framesSinceLastLeftCollision;
+	protected int framesSinceLastRightCollision;
+	protected boolean affectedByGravity;
+	public int quadrant; //never set this internally
 	
 	public AbstractEntity(GameMap map){
 		this.map = map;
 		this.moveData = new MoveData();
 		isDead = false;
+		affectedByGravity = false;
 	}
 	
 	public abstract void draw(Graphics2D g);
@@ -113,12 +119,15 @@ public abstract class AbstractEntity {
 		boolean bottomLeft = solidCorners.bottomLeft;
 		boolean bottomRight = solidCorners.bottomRight;
 		
-		this.framesSinceLastCollision += 1;
+		this.framesSinceLastTopCollision += 1;
+		this.framesSinceLastBottomCollision += 1;
+		this.framesSinceLastLeftCollision += 1;
+		this.framesSinceLastRightCollision += 1;
 		if(moveData.velocity.y < 0) {
 			if(topLeft || topRight) {
 				moveData.velocity.y = 0;
 				tempY = currRow * Tile.SIZE;
-				this.framesSinceLastCollision = 0;
+				this.framesSinceLastTopCollision = 0;
 			}
 			else {
 				tempY += moveData.velocity.y;
@@ -128,7 +137,7 @@ public abstract class AbstractEntity {
 			if(bottomLeft || bottomRight) {
 				moveData.velocity.y = 0;
 				tempY = (currRow + 1) * Tile.SIZE - moveData.collisionBox.getHeight() % Tile.SIZE - 1 ;
-				this.framesSinceLastCollision = 0;
+				this.framesSinceLastBottomCollision = 0;
 			}
 			else {
 				tempY += moveData.velocity.y;
@@ -144,7 +153,7 @@ public abstract class AbstractEntity {
 			if(topLeft || bottomLeft) {
 				moveData.velocity.x = 0;
 				tempX = currCol * Tile.SIZE;
-				this.framesSinceLastCollision = 0;
+				this.framesSinceLastLeftCollision = 0;
 			}
 			else {
 				tempX += moveData.velocity.x;
@@ -154,7 +163,7 @@ public abstract class AbstractEntity {
 			if(topRight || bottomRight) {
 				moveData.velocity.x = 0;
 				tempX = (currCol + 1) * Tile.SIZE - moveData.collisionBox.getWidth() % Tile.SIZE -1 ;
-				this.framesSinceLastCollision = 0;
+				this.framesSinceLastRightCollision = 0;
 			}
 			else {
 				tempX += moveData.velocity.x;
@@ -171,5 +180,8 @@ public abstract class AbstractEntity {
 			bottomLeft = false;
 			bottomRight = false;
 		}		
+	}
+	public boolean isAffectedByGravity() {
+		return affectedByGravity;
 	}
 }

@@ -14,7 +14,8 @@ public class BlockEntity extends AbstractEntity{
 	public BlockEntity(int x, int y, double width, double height, GameMap map) {
 		super(map);
 		this.setRect(x, y, width, height);
-		artificialIntelligence = new AIUpAndDown(y + 100, y - 100);
+		artificialIntelligence = new AIUpAndDown(y, y + 64, 5);
+		this.affectedByGravity = false;
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class BlockEntity extends AbstractEntity{
 	@Override
 	public void update() {
 		this.setPosition(this.getNextPosition());
-		this.applyImpulse(this.artificialIntelligence.getNextAIImpulse(this));
+		this.applyImpulse(this.artificialIntelligence.getNextImpulse(this));
 	}
 
 	@Override
