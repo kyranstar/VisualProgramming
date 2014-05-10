@@ -11,8 +11,8 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import piece.Piece;
-import piece.Updatable;
+import core.ui.programming.piece.Piece;
+import core.ui.programming.piece.Updatable;
 
 public class ProgrammingSpace {	
 	public static final int WIDTH = GamePanel.WIDTH;

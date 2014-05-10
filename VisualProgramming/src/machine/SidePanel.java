@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import piece.Piece;
-import piece.PieceGroup;
+import core.ui.programming.piece.Piece;
+import core.ui.programming.piece.PieceGroup;
 
 public final class SidePanel{ //TODO open close w/ animation
 	

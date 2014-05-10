@@ -16,8 +16,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
-import core.level.AbstractLevel;
-
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener{
 	public static final double MAX_FPS = 60;
