@@ -2,14 +2,12 @@ package core.level;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
 import core.entity.player.PlayerEntity;
 import core.math.Vec2D;
-import core.object.Tile;
 import core.ui.KeyControllable;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{

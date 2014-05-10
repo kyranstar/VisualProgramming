@@ -1,6 +1,5 @@
 package core.entity.player;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -8,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import core.entity.AbstractEntity;
+import core.entity.enemy.EnemyEntity;
+import core.entity.neutral.NeutralEntity;
 import core.graphics.AnimationLoader;
 import core.graphics.AnimationSet;
 import core.math.Vec2D;
@@ -19,6 +20,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	private static final float WALK_SPEED = 3;
 	private static final float JUMP_SPEED = 12;
 	private static final float COEF_FRIC = 0.1f;
+	
 	
 	AnimationSet animations;
 	private boolean movingLeft, movingRight;
@@ -35,11 +37,11 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 		animations.goToAnimation("moveRight");
 		this.setRect(x, y, animations.getCurrentWidth(), animations.getCurrentHeight());
 		this.affectedByGravity = true;
+		this.setRestitution(500f);
 	}
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
-		g.drawRect((int)this.getX(), (int) this.getY(), (int)animations.getCurrentWidth(), (int) animations.getCurrentHeight());
+		this.drawCollisionBox(g);
 		this.animations.draw(g, this.getX(), this.getY());
 	}
 
@@ -101,5 +103,4 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				break;
 		}
 	}
-
 }

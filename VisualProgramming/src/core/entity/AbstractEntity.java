@@ -19,7 +19,7 @@ public abstract class AbstractEntity {
 	protected int framesSinceLastLeftCollision;
 	protected int framesSinceLastRightCollision;
 	protected boolean affectedByGravity;
-	public int quadrant; //never set this internally
+	private double restitution;
 	
 	public AbstractEntity(GameMap map){
 		this.map = map;
@@ -30,6 +30,7 @@ public abstract class AbstractEntity {
 	
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
+	
 	public boolean isDead() {
 		return isDead;
 	}
@@ -181,7 +182,23 @@ public abstract class AbstractEntity {
 			bottomRight = false;
 		}		
 	}
+	public CollisionBox getCollisionBox(){
+		return moveData.collisionBox;
+	}
 	public boolean isAffectedByGravity() {
 		return affectedByGravity;
 	}
+
+	protected void drawCollisionBox(Graphics2D g) {
+		this.moveData.collisionBox.draw(g);
+	}
+
+	public double getRestitution() {
+		return restitution;
+	}
+
+	public void setRestitution(double restitution) {
+		this.restitution = restitution;
+	}
+
 }

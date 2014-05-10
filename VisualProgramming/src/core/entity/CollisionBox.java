@@ -1,5 +1,7 @@
 package core.entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
@@ -72,6 +74,11 @@ public class CollisionBox {
 
 	public void setSize(Vec2D size) {
 		this.rect.setFrame(rect.getX(), rect.getY(), size.x, size.y);
+	}
+
+	public void draw(Graphics2D g) {
+		g.setColor(Color.GREEN);
+		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}
 
 }
