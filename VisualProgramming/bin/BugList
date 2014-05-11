@@ -1,0 +1,2 @@
+Bug list:
+	-Collision only checks corners, so entities clip blocks smaller than then which are not touching the corners
