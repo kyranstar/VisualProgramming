@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
-
-import core.ui.programming.ProgrammingSpace;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener{
@@ -35,23 +32,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public GamePanel(){
 		super();
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		
+
 		thread = new Thread(this);
 		game = new MainGame(0, 0, this);
-		
-		
+
+
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
 		this.setFocusable(true);
 	}
 	@Override
-	public void run() {
+	public final void run() {
 		long lastTime = System.nanoTime();
 		double nsPerTick = 1000000000D/MAX_FPS;
-		
+
 		int ticks = 0; //Every time it runs the game
-		
+
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 		init();
@@ -66,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			while(delta >= 1){
 				ticks++;
 				update();
-				delta-=1;
+				delta -= 1;
 				shouldRender = true;
 			}
 			
