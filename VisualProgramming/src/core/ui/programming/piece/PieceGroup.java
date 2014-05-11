@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import machine.ProgrammingSpace;
+import machine.GamePanel;
+import core.ui.programming.ProgrammingSpace;
 import core.ui.programming.pieces.ConstantBoolean;
 import core.ui.programming.pieces.ConstantNumber;
 import core.ui.programming.pieces.Timer;
@@ -69,7 +70,7 @@ public enum PieceGroup{
     public static Piece getInstanceOf(Class<? extends Piece> pieceClass, ProgrammingSpace space){
     	 try {
              Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class);
-             return ((Piece) construtor.newInstance(space.getX() + ProgrammingSpace.getWidth()/2, space.getY() + ProgrammingSpace.getHeight()/2));
+             return ((Piece) construtor.newInstance(space.getX() + space.getWidth()/2, space.getY() + space.getHeight()/2));
          } catch (NoSuchMethodException ex) {
              processException();
          } catch (SecurityException ex) {

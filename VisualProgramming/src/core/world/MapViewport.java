@@ -25,10 +25,6 @@ public class MapViewport {
 		this.bounds.setX(0);
 		if(this.getX() > map.getWidthInTiles() * Tile.SIZE - bounds.getWidth())
 			this.bounds.setX(map.getWidthInTiles() * Tile.SIZE - bounds.getWidth());
-		if(this.getY() < 0)
-			this.bounds.setY(0);
-		if(this.getY() > map.getHeightInTiles() * Tile.SIZE - bounds.getHeight())
-			this.bounds.setY(map.getHeightInTiles() * Tile.SIZE - bounds.getHeight());
 	}
 	public void setPosition(double x, double y){
 		bounds.setPosition(x, y);

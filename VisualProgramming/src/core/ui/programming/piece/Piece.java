@@ -3,6 +3,7 @@ package core.ui.programming.piece;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 import core.ui.programming.values.Value;
@@ -88,5 +89,8 @@ public abstract class Piece implements Serializable{
 	}
 	public Point getPointFromOutputPort(int portSelected) {
 		return output.getPointFromPort(portSelected);
+	}
+	public Rectangle getRectangle() {
+		return new Rectangle(x, y, width, height);
 	}
 }

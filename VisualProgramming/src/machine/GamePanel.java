@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,6 +17,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
+import core.ui.programming.ProgrammingSpace;
+
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener{
 	public static final double MAX_FPS = 60;
@@ -26,8 +29,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private BufferedImage image;
 	private Graphics2D g;
 	private Thread thread;
-	
-	private ProgrammingSpace space;
+
 	private MainGame game;
 	
 	public GamePanel(){
@@ -35,8 +37,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		
 		thread = new Thread(this);
-		space = new ProgrammingSpace(this);
-		game = new MainGame(0,ProgrammingSpace.HEIGHT);
+		game = new MainGame(0, 0, this);
 		
 		
 		this.addKeyListener(this);
@@ -95,15 +96,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 	}
 	private void draw() {
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		space.draw(g);
 		game.draw(g);
 		g.setColor(Color.GREEN);
 		g.drawString(fps + " fps", 10, 10);
 	}
 	private void update(){
-		space.update();
 		game.update();
 	}
 	private void drawToScreen() {
@@ -116,14 +115,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		space.mouseDragged(e);
+		game.mouseDragged(e);
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-			space.mouseClicked(e); 
+		game.mouseClicked(e); 
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
@@ -131,18 +129,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		space.mousePressed(e);
+		game.mousePressed(e);
 	}
 	@Override
-	public void mouseReleased(MouseEvent e) {space.mouseReleased(e);}
+	public void mouseReleased(MouseEvent e) {game.mouseReleased(e);}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		space.keyPressed(e);
 		game.keyPressed(e);
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		space.keyReleased(e);
 		game.keyReleased(e);
 	}
 	@Override
