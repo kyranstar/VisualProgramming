@@ -10,22 +10,22 @@ public class World implements KeyControllable{
 	LevelManager levelManager;
 	
 	
-	public World(int width, int height){
+	public World(final int width, final int height){
 		this.levelManager = new LevelManager(width, height);
 		levelManager.goToLevel(LevelManager.LEVEL.LEVEL_ONE);
 	}
-	public void draw(Graphics2D g){
+	public final void draw(final Graphics2D g){
 		levelManager.draw(g);
 	}
-	public void update(){
+	public final void update(){
 		levelManager.update();
 	}
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public final void keyPressed(final KeyEvent e) {
 		levelManager.keyPressed(e);
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public final void keyReleased(final KeyEvent e) {
 		levelManager.keyReleased(e);
 		
 	}

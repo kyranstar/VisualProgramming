@@ -24,7 +24,7 @@ public abstract class AbstractLevel {
 	protected MapViewport mapViewport;
 	protected GameMap map;
 	
-	protected AbstractLevel(String filename, int screenWidth, int screenHeight){
+	protected AbstractLevel(final String filename, final int screenWidth, final int screenHeight){
 		try {
 			map = MapLoader.loadMap(filename);
 		} catch (ParserConfigurationException | SAXException | IOException e) {

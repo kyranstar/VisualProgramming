@@ -8,7 +8,7 @@ public class GameMap {
 	
 	private CollisionBox[][] collisionMap;
 	private Tile[][] tiles;
-	public GameMap(Tile[][] tiles){
+	public GameMap(final Tile[][] tiles){
 		this.tiles = tiles;
 		this.width = tiles.length;
 		this.height = tiles[0].length;
@@ -25,16 +25,16 @@ public class GameMap {
 	}	
 	
 	
-	public Tile getTileAt(int x, int y){
+	public final Tile getTileAt(final int x, final int y){
 		return tiles[x][y];
 	}
-	public int getWidthInTiles() {
+	public final int getWidthInTiles() {
 		return width;
 	}
-	public int getHeightInTiles() {
+	public final int getHeightInTiles() {
 		return height;
 	}
-	public CollisionBox getCollisionBoxAt(int x, int y) {
+	public final CollisionBox getCollisionBoxAt(final int x, final int y) {
 		return collisionMap[x][y];
 	}
 }

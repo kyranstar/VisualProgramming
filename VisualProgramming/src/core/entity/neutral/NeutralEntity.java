@@ -5,7 +5,7 @@ import core.object.map.GameMap;
 
 public abstract class NeutralEntity extends AbstractEntity{
 
-	public NeutralEntity(GameMap map) {
+	public NeutralEntity(final GameMap map) {
 		super(map);
 	}
 

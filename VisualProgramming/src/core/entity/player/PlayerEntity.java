@@ -25,7 +25,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	AnimationSet animations;
 	private boolean movingLeft, movingRight;
 	
-	public PlayerEntity(int x, int y, GameMap map) {
+	public PlayerEntity(final int x, final int y, final GameMap map) {
 		super(map);
 		animations = new AnimationSet();
 		try {
@@ -40,13 +40,13 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 		this.setRestitution(500f);
 	}
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		this.drawCollisionBox(g);
 		this.animations.draw(g, this.getX(), this.getY());
 	}
 
 	@Override
-	public void update() {
+	public final void update() {
 		this.setPosition(this.getNextPosition());
 		if(this.movingLeft){
 			this.getVelocity().x = -WALK_SPEED;
@@ -66,12 +66,12 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	}
 
 	@Override
-	public void applyImpulse(Vec2D accel) {
+	public final void applyImpulse(final Vec2D accel) {
 		this.setVelocity(this.getVelocity().add(accel));
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public final void keyPressed(final KeyEvent e) {
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_A:
 				this.movingLeft = true;
@@ -82,8 +82,9 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				this.animations.goToAnimation("moveRight");
 				break;
 			case KeyEvent.VK_W:
-				if(this.framesSinceLastBottomCollision <= 5)
+				if(this.framesSinceLastBottomCollision <= 5) {
 					this.getVelocity().y = -JUMP_SPEED;
+				}
 				break;
 			default:
 				break;
@@ -91,7 +92,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public final void keyReleased(final KeyEvent e) {
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_A:
 				this.movingLeft = false;
@@ -101,6 +102,8 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 				break;
 			case KeyEvent.VK_W:
 				break;
+		default:
+			break;
 		}
 	}
 }

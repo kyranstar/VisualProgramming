@@ -9,16 +9,16 @@ public class Title {
 	
 	Piece piece;
 	String type;
-	public Title(String type, Piece piece){
+	public Title(final String type, final Piece piece){
 		this.type = type;
 		this.piece = piece;
 		
 	}
-	public Title(Title title, Piece p) {
+	public Title(final Title title, final Piece p) {
 		this.type = title.type;
 		this.piece = p;
 	}
-	public void draw(Graphics2D g){
+	public final void draw(final Graphics2D g){
 		g.setFont(new Font(g.getFont().getPSName(), Font.BOLD, SIZE)); 
 		int width = g.getFontMetrics().stringWidth(type) + 10;
 		int height = g.getFontMetrics().getHeight();

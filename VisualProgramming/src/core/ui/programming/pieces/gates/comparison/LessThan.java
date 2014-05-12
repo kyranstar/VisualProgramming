@@ -14,7 +14,7 @@ public class LessThan extends Piece{
 	private ValueInteger input1;
 	private ValueInteger input2;
 	private ValueBoolean output;
-	public LessThan(int x, int y) {
+	public LessThan(final int x, final int y) {
 		super(x,y,150,75, 2, 1);
 		input1 = new ValueInteger(0);
 		output = new ValueBoolean(false);
@@ -22,28 +22,31 @@ public class LessThan extends Piece{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(output != null)
+		if(output != null) {
 			g.drawString(output.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return output;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
-		if(!(v instanceof ValueInteger))
+	public final void recieve(final int inputPort, final Value v) {
+		if(!(v instanceof ValueInteger)) {
 			return;
+		}
 		
-		if(inputPort == 0)
+		if(inputPort == 0) {
 			input1 = (ValueInteger) v;
-		else if (inputPort == 1)
+		} else if (inputPort == 1) {
 			input2 = (ValueInteger) v;
+		}
 		this.output = new ValueBoolean(input1.val < input2.val);
 	}
 

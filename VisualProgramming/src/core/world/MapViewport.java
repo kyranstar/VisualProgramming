@@ -8,11 +8,11 @@ import core.object.map.GameMap;
 
 public class MapViewport {
 	CollisionBox bounds;
-	public MapViewport(double width, double height){
+	public MapViewport(final double width, final double height){
 		bounds = new CollisionBox(0, 0, width, height);
 	}
 	
-	public void draw(Graphics2D g, GameMap map){
+	public final void draw(final Graphics2D g, final GameMap map){
 		
 		for(double x =  0; x < map.getWidthInTiles() * Tile.SIZE; x += Tile.SIZE){
 			for(double y =  0; y < map.getHeightInTiles() * Tile.SIZE; y += Tile.SIZE){ 
@@ -20,26 +20,28 @@ public class MapViewport {
 			}
 		}
 	}
-	public void lockFrame(GameMap map){
-		if(this.getX() < 0)
-		this.bounds.setX(0);
-		if(this.getX() > map.getWidthInTiles() * Tile.SIZE - bounds.getWidth())
+	public final void lockFrame(final GameMap map){
+		if(this.getX() < 0) {
+			this.bounds.setX(0);
+		}
+		if(this.getX() > map.getWidthInTiles() * Tile.SIZE - bounds.getWidth()) {
 			this.bounds.setX(map.getWidthInTiles() * Tile.SIZE - bounds.getWidth());
+		}
 	}
-	public void setPosition(double x, double y){
+	public final void setPosition(final double x, final double y){
 		bounds.setPosition(x, y);
 	}
-	public void centerOn(double x, double y){
+	public final void centerOn(final double x, final double y){
 		bounds.setPosition(x - bounds.getWidth()/2, y - bounds.getWidth()/2);
 	}
-	public void centerX(double x){
+	public final void centerX(final double x){
 		bounds.setX(x - bounds.getWidth()/2);
 	}
 
-	public double getX() {
+	public final double getX() {
 		return bounds.getUpperLeft().x;
 	}
-	public double getY() {
+	public final double getY() {
 		return bounds.getUpperLeft().y;
 	}
 }

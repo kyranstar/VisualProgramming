@@ -20,7 +20,7 @@ public class Timer extends Piece implements Updatable{
 	private boolean outputting;
 	private boolean waiting;
 	private static final int WAITING_SEGMENT = 100; //outputs true for 100 millis
-	public Timer(int x, int y){
+	public Timer(final int x, final int y){
 		super(x,y,150,75, 0, 1);
 		this.current = 0;
 		running = false;
@@ -29,20 +29,21 @@ public class Timer extends Piece implements Updatable{
 	
 	
 	@Override
-	public Value send(int outputPort) {
-		if(outputting)
+	public final Value send(final int outputPort) {
+		if(outputting) {
 			return new ValueBoolean(true);
-		else
+		} else {
 			return new ValueBoolean(false);
+		}
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
+	public void recieve(final int inputPort, final Value v) {
 		
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
@@ -50,10 +51,11 @@ public class Timer extends Piece implements Updatable{
 	}
 
 	@Override
-	public void doubleClicked() {
+	public final void doubleClicked() {
 		String s = JOptionPane.showInputDialog("Value in milliseconds: ");
-		if(s == null)
+		if(s == null) {
 			return;
+		}
 		
 		segment = Integer.parseInt(s);
 		update();
@@ -61,9 +63,10 @@ public class Timer extends Piece implements Updatable{
 	}
 
 	@Override
-	public void updatePiece() {
-		if(!running)
+	public final void updatePiece() {
+		if(!running) {
 			return;
+		}
 		if(waiting){
 			long millis = System.currentTimeMillis();
 			current += (millis - last);

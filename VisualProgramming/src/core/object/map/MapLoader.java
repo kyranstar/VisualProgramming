@@ -21,7 +21,7 @@ import core.object.Tile;
 public final class MapLoader {
 	private MapLoader(){}
 	
-	public static GameMap loadMap(String filename) throws ParserConfigurationException, SAXException, IOException{
+	public static GameMap loadMap(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		Tile[][] tiles;
 		int width, height;
 		
@@ -46,7 +46,7 @@ public final class MapLoader {
 		}
 		return new GameMap(tiles);
 	}
-	private static Document getDocumentFromFile(String filename) throws ParserConfigurationException, SAXException, IOException{
+	private static Document getDocumentFromFile(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = dBuilder.parse(new File(filename));
 		doc.getDocumentElement().normalize();

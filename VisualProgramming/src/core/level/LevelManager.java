@@ -12,11 +12,11 @@ public final class LevelManager implements KeyControllable{
 	private LevelList levels;
 	private int currentLevel;
 		
-	public LevelManager(int width, int height){
+	public LevelManager(final int width, final int height){
 		levels = new LevelList(width, height);
 		currentLevel = 0;
 	}
-	public void goToLevel(LEVEL level){
+	public void goToLevel(final LEVEL level){
 		levels.getLevel(currentLevel).reset();
 		for(int i = 0; i < LEVEL.values().length; i++){
 			if(LEVEL.values()[i] == level){
@@ -24,27 +24,29 @@ public final class LevelManager implements KeyControllable{
 			}
 		}
 	}
-	public void draw(Graphics2D g){
+	public void draw(final Graphics2D g){
 		levels.getLevel(currentLevel).draw(g);
 	}
 	public void update(){
 		levels.getLevel(currentLevel).update();
 	}
 	@Override
-	public void keyPressed(KeyEvent e) {
-		if(levels.getLevel(currentLevel) instanceof KeyControllable)
+	public void keyPressed(final KeyEvent e) {
+		if(levels.getLevel(currentLevel) instanceof KeyControllable) {
 			((KeyControllable) levels.getLevel(currentLevel)).keyPressed(e);
+		}
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {
-		if(levels.getLevel(currentLevel) instanceof KeyControllable)
+	public void keyReleased(final KeyEvent e) {
+		if(levels.getLevel(currentLevel) instanceof KeyControllable) {
 			((KeyControllable) levels.getLevel(currentLevel)).keyReleased(e);
+		}
 	}
 	public enum LEVEL{
 		LEVEL_ONE(LevelOne.class);
 		
 		Constructor<? extends AbstractLevel> level;
-		private LEVEL(Class<? extends AbstractLevel> level){
+		private LEVEL(final Class<? extends AbstractLevel> level){
 			try {
 				this.level = level.getDeclaredConstructor(int.class, int.class);
 			} catch (NoSuchMethodException | SecurityException e) {
@@ -55,7 +57,7 @@ public final class LevelManager implements KeyControllable{
 	private static class LevelList{
 			private AbstractLevel[] levels;
 			
-			public LevelList(int width, int height){
+			public LevelList(final int width, final int height){
 				LEVEL[] levelList = LEVEL.values();
 				levels = new AbstractLevel[levelList.length];
 				for(int i = 0; i < levelList.length; i++){
@@ -66,7 +68,7 @@ public final class LevelManager implements KeyControllable{
 					}
 				}			
 			}
-			public AbstractLevel getLevel(int i){
+			public AbstractLevel getLevel(final int i){
 				return levels[i];
 			}
 	}

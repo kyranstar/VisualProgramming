@@ -11,32 +11,33 @@ public class RSNor extends Piece{
 	private static final long serialVersionUID = 7313371345155882797L;
 	//v1 + v2 = v
 	private ValueBoolean output;
-	public RSNor(int x, int y) {
+	public RSNor(final int x, final int y) {
 		super(x,y,150,75, 2, 1);
 		output = new ValueBoolean(false);
 	}
 	
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(output != null)
+		if(output != null) {
 			g.drawString(output.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return output;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
+	public final void recieve(final int inputPort, final Value v) {
 		if(inputPort == 0){
 			this.output = new ValueBoolean(true);
-		}
-		else
+		} else {
 			this.output = new ValueBoolean(false);
+		}
 	}
 
 	@Override

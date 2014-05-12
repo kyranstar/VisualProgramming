@@ -13,7 +13,7 @@ public class Add extends Piece{
 	private ValueInteger v1;
 	private ValueInteger v2;
 	private ValueInteger v;
-	public Add(int x, int y) {
+	public Add(final int x, final int y) {
 		super(x,y,150,75, 2, 1);
 		v1 = new ValueInteger(0);
 		v = new ValueInteger(0);
@@ -21,28 +21,31 @@ public class Add extends Piece{
 	}
 	
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(v != null)
+		if(v != null) {
 			g.drawString(v.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return v;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
-		if(!(v instanceof ValueInteger))
+	public final void recieve(final int inputPort, final Value v) {
+		if(!(v instanceof ValueInteger)) {
 			return;
+		}
 		
-		if(inputPort == 0)
+		if(inputPort == 0) {
 			v1 = (ValueInteger) v;
-		else if (inputPort == 1)
+		} else if (inputPort == 1) {
 			v2 = (ValueInteger) v;
+		}
 		this.v = new ValueInteger(v1.add(v2));
 	}
 

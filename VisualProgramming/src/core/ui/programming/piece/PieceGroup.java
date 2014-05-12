@@ -61,13 +61,13 @@ public enum PieceGroup{
     private Set<Class<? extends Piece>> classSet = new HashSet<Class<? extends Piece>>();
     private Color c;
     @SafeVarargs
-	private PieceGroup(Color c, Class<? extends Piece>... classes) {
+	private PieceGroup(final Color c, final Class<? extends Piece>... classes) {
     	this.c = c;
         for (Class<? extends Piece> pieceClass : classes) {
            classSet.add(pieceClass);
         }
     }
-    public static Piece getInstanceOf(Class<? extends Piece> pieceClass, ProgrammingSpace space){
+    public static Piece getInstanceOf(final Class<? extends Piece> pieceClass, final ProgrammingSpace space){
     	 try {
              Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class);
              return ((Piece) construtor.newInstance(space.getX() + space.getWidth()/2, space.getY() + space.getHeight()/2));

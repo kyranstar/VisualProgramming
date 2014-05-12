@@ -19,12 +19,12 @@ public class Animation {
 		timesPlayed = 0;
 	}
 	
-	public Animation(BufferedImage[] frames) {
+	public Animation(final BufferedImage[] frames) {
 		timesPlayed = 0;
 		setFrames(frames);
 	}
 
-	public Animation setFrames(BufferedImage[] frames) {
+	public final Animation setFrames(final BufferedImage[] frames) {
 		this.frames = frames;
 		currentFrame = 0;
 		count = 0;
@@ -34,12 +34,14 @@ public class Animation {
 		return this;
 	}
 	
-	public Animation setDelay(int i) { delay = i; return this;}
-	public Animation setFrame(int i) { currentFrame = i; return this;}
-	public Animation setNumFrames(int i) { numFrames = i; return this;}
+	public final Animation setDelay(final int i) { delay = i; return this;}
+	public final Animation setFrame(final int i) { currentFrame = i; return this;}
+	public final Animation setNumFrames(final int i) { numFrames = i; return this;}
 	
-	public void update() {
-		if(delay <= 0) return;
+	public final void update() {
+		if(delay <= 0) {
+			return;
+		}
 		
 		count++;
 		
@@ -54,13 +56,13 @@ public class Animation {
 		
 	}
 	
-	public int getFrame() { return currentFrame; }
-	public int getCount() { return count; }
-	public BufferedImage getImage() { return frames[currentFrame]; }
-	public boolean hasPlayedOnce() { return timesPlayed > 0; }
-	public boolean hasPlayed(int i) { return timesPlayed == i; }
+	public final int getFrame() { return currentFrame; }
+	public final int getCount() { return count; }
+	public final BufferedImage getImage() { return frames[currentFrame]; }
+	public final boolean hasPlayedOnce() { return timesPlayed > 0; }
+	public final boolean hasPlayed(final int i) { return timesPlayed == i; }
 	
-	public Animation getAnimationFlippedOnY(){
+	public final Animation getAnimationFlippedOnY(){
 		BufferedImage[] frames = new BufferedImage[this.frames.length];
 		for(int i = 0; i < this.frames.length; i++){
 			AffineTransform tx=AffineTransform.getScaleInstance(1.0,-1.0);  //scaling
@@ -73,7 +75,7 @@ public class Animation {
 		a.setDelay(this.delay);
 		return a;
 	}
-	public Animation getAnimationFlippedOnX(){
+	public final Animation getAnimationFlippedOnX(){
 		BufferedImage[] frames = new BufferedImage[this.frames.length];
 		for(int i = 0; i < this.frames.length; i++){
 			AffineTransform tx=AffineTransform.getScaleInstance(-1.0,1.0);  //scaling
@@ -87,7 +89,7 @@ public class Animation {
 		return a;
 	}
 
-	public BufferedImage[] getFrames() {
+	public final BufferedImage[] getFrames() {
 		return this.frames;
 	}
 	

@@ -14,7 +14,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
 	private PlayerEntity player;
 	
-	public LevelOne(int width, int height) {
+	public LevelOne(final int width, final int height) {
 		super(LEVEL_FILE, width, height);
 	}
 	@Override
@@ -30,7 +30,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		this.controllableEntities.add(player);
 	}
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(final Graphics2D g) {
 		this.mapViewport.lockFrame(map);
 		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
@@ -45,8 +45,9 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 			for(int i = 0; i < entities.size(); i++){
 				AbstractEntity e = entities.get(i);
 				e.update();
-				if(e.isAffectedByGravity())
+				if(e.isAffectedByGravity()) {
 					e.applyImpulse(ambientForce);
+				}
 				if(e.isDead()){
 					entities.remove(i);
 					i--;
@@ -55,13 +56,13 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		this.mapViewport.centerX(player.getX());
 	}
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 		for(KeyControllable c : controllableEntities){
 			c.keyPressed(e);
 		}
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 		for(KeyControllable c : controllableEntities){
 			c.keyReleased(e);
 		}

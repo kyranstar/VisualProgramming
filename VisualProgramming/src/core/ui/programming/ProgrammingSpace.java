@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,44 +19,53 @@ import core.ui.programming.piece.Piece;
 import core.ui.programming.piece.Updatable;
 
 public class ProgrammingSpace {	
-	public int width, height;
 	
 	private List<Piece> pieces;
 	private GamePanel component;
 	private SidePanel sidePanel;
-	
-	int componentX, componentY;
-	int x, y;
+
+	private Rectangle location;
+	private int x, y;
 	private static final int LINE_SPACING = 80;
 	
-	public ProgrammingSpace(Rectangle pos, GamePanel component) {
+	private static final int MAX_X = 200;
+	private static final int MAX_Y = 200;
+	
+	private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
+	private static final Color BORDER_COLOR = Color.CYAN;
+	private static final Color LINE_COLOR = Color.LIGHT_GRAY;
+	private int opacity;
+	
+	public ProgrammingSpace(Rectangle pos, int opacity, GamePanel component) {
 		this.component = component;
 		pieces = new ArrayList<Piece>();
-		this.componentX = pos.x;
-		this.componentY = pos.y;
-		this.width = pos.width;
-		this.height = pos.height;
-		
+		this.location = new Rectangle(pos.x, pos.y, pos.width, pos.height);
+		this.opacity = opacity;
 		sidePanel = new SidePanel(this, pos.y);
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(componentX, componentY, width, height);
+		final int roundness = 50;
 		
-		g.setColor(Color.CYAN);
-		g.drawRect(componentX - 1, componentY - 1, width + 1, height + 1);
+		g.setColor(new Color(BACKGROUND_COLOR.getRed(), BACKGROUND_COLOR.getGreen(), BACKGROUND_COLOR.getBlue(), opacity));
+		g.fillRoundRect(location.x, location.y, location.width, location.height, roundness, roundness);
 		
-		g.translate(componentX, componentY);
+		g.setColor(new Color(BORDER_COLOR.getRed(), BORDER_COLOR.getGreen(), BORDER_COLOR.getBlue(), opacity));
+		g.drawRoundRect(location.x - 1, location.y - 1, location.width + 1, location.height + 1, roundness, roundness);
+		
+		g.translate(location.x, location.y);
 		g.setColor(Color.GREEN);
 		g.drawString("X: " + x + " Y: " + y, 10, 30);
+
+		Shape originalClip = g.getClip();
+		g.clip(new RoundRectangle2D.Double(0,0, location.width,  location.height, roundness, roundness));
 		
-		g.setColor(Color.LIGHT_GRAY);
-		for(int i = 0 - (x % LINE_SPACING); i < width ; i += LINE_SPACING){
-			g.drawLine(i, 0, i , height);
+		g.setColor(new Color(LINE_COLOR.getRed(), LINE_COLOR.getGreen(), LINE_COLOR.getBlue(), opacity));
+		for(int i = 0 - (x % LINE_SPACING); i < location.width ; i += LINE_SPACING){
+			g.drawLine(i, 0, i , location.height);
 		}
-		for(int i = 0 - (y % LINE_SPACING) + LINE_SPACING; i < height ; i += LINE_SPACING){
-			g.drawLine(0, i, width, i);
+		for(int i = 0 - (y % LINE_SPACING); i < location.height ; i += LINE_SPACING){
+			g.drawLine(0, i, location.width, i);
 		}
 		
 		int noChangeX = x; 
@@ -63,7 +74,7 @@ public class ProgrammingSpace {
 			g.translate(-noChangeX, -noChangeY);
 			g.setColor(Color.GREEN);
 			for (Piece p : pieces) {
-					p.draw(g);
+				p.draw(g);
 			}
 			for (Piece p : pieces) {
 				p.drawConnections(g);
@@ -73,7 +84,9 @@ public class ProgrammingSpace {
 		}
 
 		sidePanel.draw(g);
-		g.translate(-componentX, -componentY);
+
+		g.setClip(originalClip);
+		g.translate(-location.x, -location.y);
 	}
 
 	public void update() {
@@ -92,7 +105,7 @@ public class ProgrammingSpace {
 		Point mouse = MouseInfo.getPointerInfo().getLocation();
 		mouse.translate(-component.getLocationOnScreen().x, -component.getLocationOnScreen().y);
 
-		g.drawLine(port.x, port.y, mouse.x + x - this.componentX, mouse.y + y - this.componentY);
+		g.drawLine(port.x, port.y, mouse.x + x - this.location.x, mouse.y + y - this.location.y);
 	}
 
 	private Piece selected;
@@ -103,22 +116,35 @@ public class ProgrammingSpace {
 	private Point relativeBackgroundLocation;
 
 	public void mouseDragged(MouseEvent e) {
-		e.translatePoint(-componentX, -componentY);
+		e.translatePoint(-location.x, -location.y);
 		sidePanel.mouseDragged(e);
 
-		if(sidePanel.containsPoint(e.getPoint()))
+		if(sidePanel.containsPoint(e.getPoint())){
 			return;
-		
-		if (selected != null)
+		}		
+		if (selected != null && relativeLocation != null){
 			selected.setPosition(new Point(e.getPoint().x + relativeLocation.x, e.getPoint().y + relativeLocation.y));
+		}
 		if(relativeBackgroundLocation != null){
 			this.x = relativeBackgroundLocation.x - e.getPoint().x;
 			this.y = relativeBackgroundLocation.y - e.getPoint().y;
+			
+			if(this.x > MAX_X){
+				this.x = MAX_X;
+			}else if(this.x < -MAX_X){
+				this.x = -MAX_X;
+			}
+			
+			if(this.y > MAX_Y){
+				this.y = MAX_Y;
+			}else if(this.y < -MAX_Y){
+				this.y = -MAX_Y;
+			}
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
-		e.translatePoint(-componentX, -componentY);
+		e.translatePoint(-location.x, -location.y);
 		sidePanel.mousePressed(e);
 		
 		if(sidePanel.containsPoint(e.getPoint()))
@@ -150,7 +176,7 @@ public class ProgrammingSpace {
 	}
 
 	public void mouseClicked(MouseEvent e) { // TODO fix so that connections can be made from inputs to outputs too
-		e.translatePoint(-componentX, -componentY);
+		e.translatePoint(-location.x, -location.y);
 		sidePanel.mouseClicked(e);
 		if(sidePanel.containsPoint(e.getPoint()))
 			return;
@@ -217,9 +243,9 @@ public class ProgrammingSpace {
 		return y;
 	}
 	public int getWidth() {
-		return width;
+		return location.width;
 	}
 	public int getHeight() {
-		return height;
+		return location.height;
 	}
 }

@@ -15,16 +15,17 @@ public class Random extends Piece{
 	
 	private ValueInteger max;
 	private ValueInteger[] last;
-	public Random(int x, int y) {
+	public Random(final int x, final int y) {
 		super(x,y,150,75, 2, 5);
 		max = new ValueInteger(0);
 		last = new ValueInteger[5];
-		for(int i = 0; i < last.length; i++)
+		for(int i = 0; i < last.length; i++) {
 			last[i] = new ValueInteger(0);
+		}
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
@@ -33,30 +34,32 @@ public class Random extends Piece{
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return last[outputPort];
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
+	public final void recieve(final int inputPort, final Value v) {
 		if(inputPort == 0){
 			if(v instanceof ValueBoolean && ((ValueBoolean)v).val == true){
-				if(max.val != 0)
+				if(max.val != 0) {
 					for(int i = 0; i < last.length; i++)
 						last[i] = new ValueInteger(rand.nextInt(max.val));
+				}
 				update();
 			}
 		}
 		else if (inputPort == 1){
-			if(!(v instanceof ValueInteger))
+			if(!(v instanceof ValueInteger)) {
 				return;
+			}
 			
 			this.max = (ValueInteger) v;
 		}
 	}
 
 	@Override
-	public void doubleClicked() {
+	public final void doubleClicked() {
 		update();
 	}
 

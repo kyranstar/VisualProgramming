@@ -14,10 +14,11 @@ public final class ImageLoader { //TODO implement image buffer
 	private static int imagesInBuffer = 0;
 	private static final int MAX_IMAGES_IN_BUFFER = 50;
 	
-	public static BufferedImage loadImage(String filename) throws IOException{
+	public static BufferedImage loadImage(final String filename) throws IOException{
 		BufferedImage inBuffer = buffer.get(filename);
-		if(inBuffer != null) //if it is in the buffer
+		if(inBuffer != null) {
 			return inBuffer;
+		}
 		
 		BufferedImage loaded = ImageIO.read(ImageLoader.class.getResourceAsStream(filename));
 		if(imagesInBuffer < MAX_IMAGES_IN_BUFFER){
@@ -26,7 +27,7 @@ public final class ImageLoader { //TODO implement image buffer
 		}
 		return loaded;
 	}
-	public static BufferedImage[][] loadTilesheet(String filename, int spriteWidth, int spriteHeight) throws IOException{
+	public static BufferedImage[][] loadTilesheet(final String filename, final int spriteWidth, final int spriteHeight) throws IOException{
 		final BufferedImage spritesheet = loadImage(filename);
 		final int cols = spritesheet.getWidth() / spriteWidth;
 		final int rows = spritesheet.getHeight() / spriteHeight;

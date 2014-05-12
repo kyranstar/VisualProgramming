@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 				delta -= 1;
 				shouldRender = true;
 			}
-			
+
 			try {
 				Thread.sleep(2);
 			} catch (InterruptedException e) {

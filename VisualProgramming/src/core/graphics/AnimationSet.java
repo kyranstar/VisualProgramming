@@ -12,25 +12,25 @@ import java.util.Map;
 
 	    public AnimationSet() {
 	    }
-	    public void addAnimation(String title, Animation animation){
+	    public final void addAnimation(final String title, final Animation animation){
 	        animations.put(title, animation);
 	    }
-	    public void goToAnimation(String title){
+	    public final void goToAnimation(final String title){
 	        currentAnimation = animations.get(title);
 	    }
-	    public void removeAnimation(String title){
+	    public final void removeAnimation(final String title){
 	        animations.remove(title);
 	    }
-	    public void draw(Graphics2D g, double d, double e){
+	    public final void draw(final Graphics2D g, final double d, final double e){
 	        g.drawImage(currentAnimation.getImage(), (int)d, (int)e, null);
 	    }
-	    public void update(){
+	    public final void update(){
 	        currentAnimation.update();
 	    }
-		public double getCurrentWidth() {
+		public final double getCurrentWidth() {
 			return currentAnimation.getImage().getWidth();
 		}
-		public double getCurrentHeight() {
+		public final double getCurrentHeight() {
 			return currentAnimation.getImage().getHeight();
 		}        
 	}

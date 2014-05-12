@@ -3,7 +3,6 @@ package core.entity.neutral;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import core.entity.AbstractEntity;
 import core.entity.ai.AIUpAndDown;
 import core.math.Vec2D;
 import core.object.map.GameMap;
@@ -11,7 +10,7 @@ import core.object.map.GameMap;
 public class BlockEntity extends NeutralEntity{
 
 	AIUpAndDown artificialIntelligence;
-	public BlockEntity(int x, int y, double width, double height, GameMap map) {
+	public BlockEntity(final int x, final int y, final double width, final double height, final GameMap map) {
 		super(map);
 		this.setRect(x, y, width, height);
 		artificialIntelligence = new AIUpAndDown(y, y + 64, 5);
@@ -20,20 +19,20 @@ public class BlockEntity extends NeutralEntity{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		g.setColor(Color.RED);
 		g.fillRect((int)this.getX(), (int) this.getY(), (int)this.getSize().x, (int) this.getSize().y);
 		this.drawCollisionBox(g);
 	}
 
 	@Override
-	public void update() {
+	public final void update() {
 		this.setPosition(this.getNextPosition());
 		this.applyImpulse(this.artificialIntelligence.getNextImpulse(this));
 	}
 
 	@Override
-	public void applyImpulse(Vec2D accel) {
+	public final void applyImpulse(final Vec2D accel) {
 		this.setVelocity(this.getVelocity().add(accel));
 	}
 

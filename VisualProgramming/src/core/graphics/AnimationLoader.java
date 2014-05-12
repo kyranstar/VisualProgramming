@@ -12,7 +12,7 @@ public final class AnimationLoader {
 	private static int animationsInBuffer = 0;
 	private static final int MAX_ANIMATIONS_IN_BUFFER = 20;
 
-	public static Animation getFromSpritesheet(String spritesheet, int spriteWidth) throws IOException {
+	public static Animation getFromSpritesheet(final String spritesheet, final int spriteWidth) throws IOException {
 		BufferedImage[] inBuffer = buffer.get(spritesheet);
 		if(inBuffer != null){ //if we already have it in the buffer
 			return new Animation(inBuffer);
@@ -24,11 +24,12 @@ public final class AnimationLoader {
 		}
 		return loaded;
 	}
-	private static Animation loadAnimationFromSpritesheet(String spritesheet, int spriteWidth) throws IOException{
+	private static Animation loadAnimationFromSpritesheet(final String spritesheet, final int spriteWidth) throws IOException{
 		BufferedImage sheetImage = ImageLoader.loadImage(spritesheet);
 		BufferedImage[] images = new BufferedImage[sheetImage.getWidth() / spriteWidth];
-		for(int i = 0; i < images.length; i++)
+		for(int i = 0; i < images.length; i++) {
 			images[i] = sheetImage.getSubimage(i * spriteWidth, 0, spriteWidth, sheetImage.getHeight());
+		}
 		Animation a = new Animation();
 		a.setFrames(images);
 		return a;

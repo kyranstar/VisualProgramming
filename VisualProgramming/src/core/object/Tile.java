@@ -20,7 +20,7 @@ public enum Tile {
 	private final int hardness;
 	private final int gid;
 	
-	private Tile(int gid, int hardness, String imageFile, Attribute... attributes){
+	private Tile(final int gid, final int hardness, final String imageFile, final Attribute... attributes){
 		this.gid = gid;
 		this.hardness = hardness;
 		try {
@@ -39,7 +39,7 @@ public enum Tile {
 			this.attributes.put(att, true);
 		}
 	}
-	public static Tile getByID(int gid){
+	public static Tile getByID(final int gid){
 		for(Tile t : values()){
 			if(t.gid == gid){
 				return t;
@@ -50,7 +50,7 @@ public enum Tile {
 	public int getHardness(){
 		return hardness;
 	}
-	public boolean getAttribute(Attribute at){
+	public boolean getAttribute(final Attribute at){
 		return attributes.get(at);
 	}
 	public BufferedImage getImage(){
@@ -65,7 +65,7 @@ class TileNotFoundException extends RuntimeException{
 	public TileNotFoundException(){
 		super();
 	}
-	public TileNotFoundException(String s){
+	public TileNotFoundException(final String s){
 		super(s);
 	}
 }

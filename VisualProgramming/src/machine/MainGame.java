@@ -18,42 +18,42 @@ public class MainGame implements KeyControllable{
 	
 	private World world;
 	
-	public MainGame(int onScreenX, int onScreenY, GamePanel gamePanel){
+	public MainGame(final int onScreenX, final int onScreenY, final GamePanel gamePanel){
 		this.ON_SCREEN_X = onScreenX;
 		this.ON_SCREEN_Y = onScreenY;
 		world = new World(WIDTH, HEIGHT);
-		userInterface = new UserHud(new Rectangle(0, HEIGHT- 200, 500,200), gamePanel);
+		userInterface = new UserHud(new Rectangle(50, HEIGHT- 250, 500,200), 150, gamePanel);
 	}
-	public void draw(Graphics2D g){
+	public final void draw(final Graphics2D g){
 		g.translate(ON_SCREEN_X, ON_SCREEN_Y);
 		world.draw(g);
 		g.translate(-ON_SCREEN_X, -ON_SCREEN_Y);
 		userInterface.draw(g);
 	}
-	public void update(){
+	public final void update(){
 		world.update();
 		userInterface.update();
 	}
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public final void keyPressed(final KeyEvent e) {
 		world.keyPressed(e);
 		userInterface.keyPressed(e);
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public final void keyReleased(final KeyEvent e) {
 		world.keyReleased(e);
 		userInterface.keyReleased(e);
 	}
-	public void mouseClicked(MouseEvent e) {
+	public final void mouseClicked(final MouseEvent e) {
 		userInterface.mouseClicked(e);
 	}
-	public void mousePressed(MouseEvent e) {
+	public final void mousePressed(final MouseEvent e) {
 		userInterface.mousePressed(e);
 	}
-	public void mouseDragged(MouseEvent e) {
+	public final void mouseDragged(final MouseEvent e) {
 		userInterface.mouseDragged(e);
 	}
-	public void mouseReleased(MouseEvent e) {
+	public final void mouseReleased(final MouseEvent e) {
 		userInterface.mouseReleased(e);
 	}
 }

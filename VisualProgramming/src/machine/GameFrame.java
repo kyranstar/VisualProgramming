@@ -6,7 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class GameFrame extends JFrame{
 	private static final long serialVersionUID = -7562412320398374620L;
-	public static void main(String[] args){
+	public static void main(final String[] args){
 		setPLAF("Nimbus");
 		new GameFrame();
 	}
@@ -21,7 +21,7 @@ public class GameFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	private static void setPLAF(String string) {
+	private static void setPLAF(final String string) {
 		try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

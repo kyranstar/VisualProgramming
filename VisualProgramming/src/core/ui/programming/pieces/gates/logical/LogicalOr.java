@@ -13,7 +13,7 @@ public class LogicalOr extends Piece{
 	private ValueBoolean input1;
 	private ValueBoolean input2;
 	private ValueBoolean output;
-	public LogicalOr(int x, int y) {
+	public LogicalOr(final int x, final int y) {
 		super(x,y,150,75, 2, 1);
 		title = new Title("Logical Or", this);
 		input1 = new ValueBoolean(false);
@@ -22,27 +22,30 @@ public class LogicalOr extends Piece{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(output != null)
+		if(output != null) {
 			g.drawString(output.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return output;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
-		if(!(v instanceof ValueBoolean))
+	public final void recieve(final int inputPort, final Value v) {
+		if(!(v instanceof ValueBoolean)) {
 			return;
-		if(inputPort == 0)
+		}
+		if(inputPort == 0) {
 			input1 = (ValueBoolean) v;
-		else
+		} else {
 			input2 = (ValueBoolean) v;
+		}
 		
 		output = new ValueBoolean(input1.val || input2.val);
 	}

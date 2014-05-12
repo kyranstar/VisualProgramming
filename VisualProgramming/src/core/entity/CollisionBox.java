@@ -11,72 +11,74 @@ public class CollisionBox {
 
 	private Rectangle2D rect;
 	
-	public CollisionBox(double x, double y, double width, double height) {
+	public CollisionBox(final double x, final double y, final double width, final double height) {
 		rect = new Rectangle2D.Double(x, y, width, height);
 	}
 	
-	public CollisionBox(Rectangle2D rect) {
+	public CollisionBox(final Rectangle2D rect) {
 		this.rect = rect;
 	}
 
-	public boolean isColliding(CollisionBox other){
-		if(other == null)
+	public final boolean isColliding(final CollisionBox other){
+		if(other == null) {
 			return false;
+		}
 		return rect.intersects(other.rect);
 	}
-	public boolean isColliding(Line2D line){
-		if(line == null)
+	public final boolean isColliding(final Line2D line){
+		if(line == null) {
 			return false;
+		}
 		return line.intersects(rect);
 	}
-	public Vec2D getUpperLeft(){
+	public final Vec2D getUpperLeft(){
 		return new Vec2D(rect.getX(), rect.getY());
 	}
-	public Vec2D getCenter(){
+	public final Vec2D getCenter(){
 		return new Vec2D(rect.getCenterX(), rect.getCenterY());
 	}
-	public void setPosition(Vec2D pos){
+	public final void setPosition(final Vec2D pos){
 		this.rect.setRect(pos.x, pos.y, rect.getWidth(), rect.getHeight());
 	}
 
-	public Rectangle2D getRect2D() {
+	public final Rectangle2D getRect2D() {
 		return rect;
 	}
 
-	public Vec2D getBottomRight() {
+	public final Vec2D getBottomRight() {
 		return new Vec2D(rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight());
 	}
 
-	public Vec2D getUpperRight() {
+	public final Vec2D getUpperRight() {
 		return new Vec2D(rect.getX() + rect.getWidth(), rect.getY());
 	}
-	public Vec2D getBottomLeft() {
+	public final Vec2D getBottomLeft() {
 		return new Vec2D(rect.getX(), rect.getY() + rect.getHeight());
 	}
 
-	public void setY(double y) {
+	public final void setY(final double y) {
 		this.rect.setFrame(rect.getX(), y, rect.getWidth(), rect.getHeight());
 	}
-	public void setX(double x) {
+	public final void setX(final double x) {
 		this.rect.setFrame(x, rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 
-	public double getWidth() {
+	public final double getWidth() {
 		return rect.getWidth();
 	}
-	public double getHeight(){
+	public final double getHeight(){
 		return rect.getHeight();
 	}
 
-	public void setPosition(double x, double y) {
+	public final void setPosition(final double x, final double y) {
 		rect.setRect(x, y, rect.getWidth(), rect.getHeight());
 	}
 
-	public void setSize(Vec2D size) {
+	public final void setSize(final Vec2D size) {
 		this.rect.setFrame(rect.getX(), rect.getY(), size.x, size.y);
 	}
 
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 	}

@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 	protected boolean affectedByGravity;
 	private double restitution;
 	
-	public AbstractEntity(GameMap map){
+	public AbstractEntity(final GameMap map){
 		this.map = map;
 		this.moveData = new MoveData();
 		isDead = false;
@@ -31,53 +31,53 @@ public abstract class AbstractEntity {
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
 	
-	public boolean isDead() {
+	public final boolean isDead() {
 		return isDead;
 	}
 	public abstract void applyImpulse(Vec2D accel);
 	
-	public double getX(){
+	public final double getX(){
 		return moveData.collisionBox.getUpperLeft().x;
 	}
-	public double getY(){
+	public final double getY(){
 		return moveData.collisionBox.getUpperLeft().y;
 	}
-	public Vec2D getPosition(){
+	public final Vec2D getPosition(){
 		return moveData.collisionBox.getUpperLeft();
 	}
-	public Vec2D getSize(){
+	public final Vec2D getSize(){
 		return new Vec2D(moveData.collisionBox.getHeight(), moveData.collisionBox.getWidth());
 	}
 
-	protected void setSize(Vec2D size) {
+	protected final void setSize(final Vec2D size) {
 		this.moveData.collisionBox.setSize(size);
 	}
-	protected void setRect(double x, double y, double width, double height){
+	protected final void setRect(final double x, final double y, final double width, final double height){
 		moveData.collisionBox = new CollisionBox(x,y,width,height);
 	}
-	public void setPosition(Vec2D position){
+	public final void setPosition(final Vec2D position){
 		moveData.collisionBox.setPosition(position);
 	}
-	public Vec2D getVelocity(){
+	public final Vec2D getVelocity(){
 		return moveData.velocity;
 	}
-	protected void setVelocity(Vec2D velocity){
+	protected final void setVelocity(final Vec2D velocity){
 		moveData.velocity = velocity;
 	}
-	public boolean isColliding(AbstractEntity other){
+	public final boolean isColliding(final AbstractEntity other){
 		return moveData.collisionBox.isColliding(other.moveData.collisionBox);
 	}
-	public boolean isColliding(Line2D other){
+	public final boolean isColliding(final Line2D other){
 		return moveData.collisionBox.isColliding(other);
 	}
-	public Vec2D getCenter(){
+	public final Vec2D getCenter(){
 		return moveData.collisionBox.getCenter();
 	}
 
-	public Rectangle2D getRect2D() {
+	public final Rectangle2D getRect2D() {
 		return moveData.collisionBox.getRect2D();
 	}
-	public Corners getCornersAreSolid(double x, double y) {
+	public final Corners getCornersAreSolid(final double x, final double y) {
 		int leftTile = (int)(x / Tile.SIZE);
 		int rightTile = (int)((x + moveData.collisionBox.getWidth()) / Tile.SIZE);
 		int topTile = (int)(y / Tile.SIZE);
@@ -95,7 +95,7 @@ public abstract class AbstractEntity {
 		solidCorners.bottomLeft = bottomLeft;
 		return solidCorners;
 	}
-	private boolean hasAttribute(GameMap map, Attribute attribute, int tileY, int tileX) {
+	private boolean hasAttribute(final GameMap map, final Attribute attribute, final int tileY, final int tileX) {
 		  boolean result = false;
 
 		  if (tileX >= 0 && tileX < map.getWidthInTiles() && tileY >= 0 && tileY < map.getHeightInTiles()) {
@@ -103,7 +103,7 @@ public abstract class AbstractEntity {
 		  }
 		  return result;
 		}
-	public Vec2D getNextPosition() {
+	public final Vec2D getNextPosition() {
 		
 		int currCol = (int) (getX() / Tile.SIZE);
 		int currRow = (int) (getY() / Tile.SIZE);
@@ -182,22 +182,22 @@ public abstract class AbstractEntity {
 			bottomRight = false;
 		}		
 	}
-	public CollisionBox getCollisionBox(){
+	public final CollisionBox getCollisionBox(){
 		return moveData.collisionBox;
 	}
-	public boolean isAffectedByGravity() {
+	public final boolean isAffectedByGravity() {
 		return affectedByGravity;
 	}
 
-	protected void drawCollisionBox(Graphics2D g) {
+	protected final void drawCollisionBox(final Graphics2D g) {
 		this.moveData.collisionBox.draw(g);
 	}
 
-	public double getRestitution() {
+	public final double getRestitution() {
 		return restitution;
 	}
 
-	public void setRestitution(double restitution) {
+	public final void setRestitution(final double restitution) {
 		this.restitution = restitution;
 	}
 

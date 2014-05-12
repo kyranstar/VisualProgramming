@@ -13,35 +13,37 @@ import core.ui.programming.values.ValueInteger;
 public class ConstantNumber extends Piece{
 	private static final long serialVersionUID = 4696555063901811023L;
 	private ValueInteger output;
-	public ConstantNumber(int x, int y){
+	public ConstantNumber(final int x, final int y){
 		super(x,y,150,75, 0, 5);
 		this.output = new ValueInteger(0);
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return output;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
+	public void recieve(final int inputPort, final Value v) {
 		
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(output != null)
+		if(output != null) {
 			g.drawString(output.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public void doubleClicked() {
+	public final void doubleClicked() {
 		String result = JOptionPane.showInputDialog("Value: ");
-		if(result == null)
+		if(result == null) {
 			return;
+		}
 		
 		output = new ValueInteger(Integer.parseInt(result));
 		update();

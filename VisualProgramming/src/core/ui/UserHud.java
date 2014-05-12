@@ -11,31 +11,31 @@ import core.ui.programming.ProgrammingSpace;
 public class UserHud {
 	private ProgrammingSpace space;
 	
-	public UserHud(Rectangle pos, GamePanel panel){
-		space = new ProgrammingSpace(pos, panel);
+	public UserHud(final Rectangle pos, final int opacity, final GamePanel panel){
+		space = new ProgrammingSpace(pos, opacity, panel);
 	}
-	public void draw(Graphics2D g){
+	public final void draw(final Graphics2D g){
 		space.draw(g);
 	}
-	public void update(){
+	public final void update(){
 		space.update();
 	}
-	public void keyReleased(KeyEvent e) {
+	public final void keyReleased(final KeyEvent e) {
 		space.keyReleased(e);
 	}
-	public void keyPressed(KeyEvent e) {
+	public final void keyPressed(final KeyEvent e) {
 		space.keyPressed(e);
 	}
-	public void mouseClicked(MouseEvent e) {
+	public final void mouseClicked(final MouseEvent e) {
 		space.mouseClicked(e);
 	}
-	public void mousePressed(MouseEvent e) {
+	public final void mousePressed(final MouseEvent e) {
 		space.mousePressed(e);
 	}
-	public void mouseDragged(MouseEvent e) {
+	public final void mouseDragged(final MouseEvent e) {
 		space.mouseDragged(e);
 	}
-	public void mouseReleased(MouseEvent e) {
+	public final void mouseReleased(final MouseEvent e) {
 		space.mouseReleased(e);
 	}
 }

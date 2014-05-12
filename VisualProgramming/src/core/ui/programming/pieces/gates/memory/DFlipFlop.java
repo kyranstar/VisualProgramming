@@ -12,30 +12,32 @@ public class DFlipFlop extends Piece{
 	//v1 + v2 = v
 	private boolean writeIsOn;
 	private ValueBoolean output;
-	public DFlipFlop(int x, int y) {
+	public DFlipFlop(final int x, final int y) {
 		super(x,y,150,75, 2, 1);
 		writeIsOn = false;
 		output = new ValueBoolean(false);
 	}
 	
 	@Override
-	public void draw(Graphics2D g) {
+	public final void draw(final Graphics2D g) {
 		drawBackground(g);
 		title.draw(g);
 		g.setColor(Color.BLUE);
-		if(output != null)
+		if(output != null) {
 			g.drawString(output.toString(), x + 10, y + 20);
+		}
 	}
 
 	@Override
-	public Value send(int outputPort) {
+	public final Value send(final int outputPort) {
 		return output;
 	}
 
 	@Override
-	public void recieve(int inputPort, Value v) {
-		if(!(v instanceof ValueBoolean))
+	public final void recieve(final int inputPort, final Value v) {
+		if(!(v instanceof ValueBoolean)) {
 			return;
+		}
 		boolean val = ((ValueBoolean) v).val;
 		if(inputPort == 0){
 			writeIsOn = val;
