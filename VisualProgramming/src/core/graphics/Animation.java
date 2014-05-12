@@ -25,7 +25,7 @@ public class Animation {
 	}
 
 	public final Animation setFrames(final BufferedImage[] frames) {
-		this.frames = frames;
+		this.frames = frames.clone();
 		currentFrame = 0;
 		count = 0;
 		timesPlayed = 0;
