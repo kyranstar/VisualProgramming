@@ -13,7 +13,7 @@ public final class LevelManager implements KeyControllable{
 	private int currentLevel;
 		
 	public LevelManager(final int width, final int height){
-		levels = new LevelList(width, height);
+		levels = new LevelList(width, height, this);
 		currentLevel = 0;
 	}
 	public void goToLevel(final LEVEL level){
@@ -48,7 +48,7 @@ public final class LevelManager implements KeyControllable{
 		Constructor<? extends AbstractLevel> level;
 		private LEVEL(final Class<? extends AbstractLevel> level){
 			try {
-				this.level = level.getDeclaredConstructor(int.class, int.class);
+				this.level = level.getDeclaredConstructor(int.class, int.class, LevelManager.class);
 			} catch (NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
@@ -57,12 +57,12 @@ public final class LevelManager implements KeyControllable{
 	private static class LevelList{
 			private AbstractLevel[] levels;
 			
-			public LevelList(final int width, final int height){
+			public LevelList(final int width, final int height, final LevelManager levelManager){
 				LEVEL[] levelList = LEVEL.values();
 				levels = new AbstractLevel[levelList.length];
 				for(int i = 0; i < levelList.length; i++){
 					try {
-						levels[i] = levelList[i].level.newInstance(width, height);
+						levels[i] = levelList[i].level.newInstance(width, height, levelManager);
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 						e.printStackTrace();
 					}

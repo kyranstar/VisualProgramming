@@ -18,13 +18,16 @@ import core.ui.KeyControllable;
 import core.world.MapViewport;
 
 public abstract class AbstractLevel {
+	protected LevelManager levelManager;
+	
 	protected Vec2D ambientForce; //Gravity
 	protected List<AbstractEntity> entities;
 	protected List<KeyControllable> controllableEntities;
 	protected MapViewport mapViewport;
 	protected GameMap map;
 	
-	protected AbstractLevel(final String filename, final int screenWidth, final int screenHeight){
+	protected AbstractLevel(final String filename, final int screenWidth, final int screenHeight, final LevelManager levelManager){
+		this.levelManager = levelManager;
 		try {
 			map = MapLoader.loadMap(filename);
 		} catch (ParserConfigurationException | SAXException | IOException e) {

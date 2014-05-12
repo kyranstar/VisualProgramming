@@ -44,6 +44,10 @@ public class ProgrammingSpace {
 		sidePanel = new SidePanel(this, pos.y);
 	}
 
+	public void setPieces(List<Piece> pieces){
+		this.pieces = pieces;
+	}
+	
 	public void draw(Graphics2D g) {
 		final int roundness = 50;
 		

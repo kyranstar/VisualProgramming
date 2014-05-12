@@ -10,9 +10,16 @@ import core.ui.programming.ProgrammingSpace;
 
 public class UserHud {
 	private ProgrammingSpace space;
+	private static final int PROGRAMMING_SPACE_DEFAULT_WIDTH = 550;
+	private static final int PROGRAMMING_SPACE_DEFAULT_HEIGHT = 200;
+	private static final int BUFFER_SPACE = 50;
 	
-	public UserHud(final Rectangle pos, final int opacity, final GamePanel panel){
-		space = new ProgrammingSpace(pos, opacity, panel);
+	public UserHud(final int opacity, final GamePanel panel){
+		space = new ProgrammingSpace(new Rectangle(BUFFER_SPACE, 
+							GamePanel.HEIGHT - PROGRAMMING_SPACE_DEFAULT_HEIGHT - BUFFER_SPACE, 
+							PROGRAMMING_SPACE_DEFAULT_WIDTH,
+							PROGRAMMING_SPACE_DEFAULT_HEIGHT), 
+							opacity, panel);
 	}
 	public final void draw(final Graphics2D g){
 		space.draw(g);

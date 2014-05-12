@@ -14,8 +14,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
 	private PlayerEntity player;
 	
-	public LevelOne(final int width, final int height) {
-		super(LEVEL_FILE, width, height);
+	public LevelOne(final int width, final int height, final LevelManager levelManager) {
+		super(LEVEL_FILE, width, height, levelManager);
 	}
 	@Override
 	public void reset() {

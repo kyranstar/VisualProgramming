@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 		thread = new Thread(this);
-		game = new MainGame(0, 0, this);
+		game = new MainGame(this);
 
 
 		this.addKeyListener(this);
