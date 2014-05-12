@@ -4,10 +4,10 @@ public class ValueBoolean implements Value{
 	private static final long serialVersionUID = -7417740274849279829L;
 	
 	public final Boolean val;
-	public ValueBoolean(boolean v){
+	public ValueBoolean(final boolean v){
 		this.val = v;
 	}
-	public String toString(){
+	public final String toString(){
 		return val.toString();
 	}
 }
