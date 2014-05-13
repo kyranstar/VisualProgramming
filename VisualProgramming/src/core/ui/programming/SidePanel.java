@@ -23,10 +23,10 @@ public final class SidePanel{ //TODO open close w/ animation
 	private float bottomBound;
 	private float positionY;
 	private float positionX;
-	private final ProgrammingSpace space;
+	private final ProgrammingSpaceInterface space;
 	private List<Piece> pieces;
 	private List<Color> colors;
-	public SidePanel(final ProgrammingSpace space, final int coordY){
+	public SidePanel(final ProgrammingSpaceInterface space, final int coordY){
 		super();
 		this.space = space;
 		this.openPositionX = space.getWidth() - WIDTH- 20;

@@ -6,16 +6,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import machine.GamePanel;
-import core.ui.programming.ProgrammingSpace;
+import core.ui.programming.ProgrammingSpaceInterface;
 
 public class UserHud {
-	private ProgrammingSpace space;
+	private ProgrammingSpaceInterface space;
 	private static final int PROGRAMMING_SPACE_DEFAULT_WIDTH = 550;
 	private static final int PROGRAMMING_SPACE_DEFAULT_HEIGHT = 200;
 	private static final int BUFFER_SPACE = 50;
 	
 	public UserHud(final int opacity, final GamePanel panel){
-		space = new ProgrammingSpace(new Rectangle(
+		space = new ProgrammingSpaceInterface(new Rectangle(
 							BUFFER_SPACE, 
 							GamePanel.HEIGHT - PROGRAMMING_SPACE_DEFAULT_HEIGHT - BUFFER_SPACE, 
 							PROGRAMMING_SPACE_DEFAULT_WIDTH,

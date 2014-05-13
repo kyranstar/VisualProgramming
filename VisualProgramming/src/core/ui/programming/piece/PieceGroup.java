@@ -9,6 +9,7 @@ import java.util.Set;
 
 import machine.GamePanel;
 import core.ui.programming.ProgrammingSpace;
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.pieces.ConstantBoolean;
 import core.ui.programming.pieces.ConstantNumber;
 import core.ui.programming.pieces.Timer;
@@ -67,7 +68,7 @@ public enum PieceGroup{
            classSet.add(pieceClass);
         }
     }
-    public static Piece getInstanceOf(final Class<? extends Piece> pieceClass, final ProgrammingSpace space){
+    public static Piece getInstanceOf(final Class<? extends Piece> pieceClass, final ProgrammingSpaceInterface space){
     	 try {
              Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class);
              return ((Piece) construtor.newInstance(space.getX() + space.getWidth()/2, space.getY() + space.getHeight()/2));
