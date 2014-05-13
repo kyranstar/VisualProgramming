@@ -60,12 +60,4 @@ public enum Tile {
 		SOLID; //entities collide with this
 	}
 }
-class TileNotFoundException extends RuntimeException{
-	private static final long serialVersionUID = -710367481963659500L;
-	public TileNotFoundException(){
-		super();
-	}
-	public TileNotFoundException(final String s){
-		super(s);
-	}
-}
+

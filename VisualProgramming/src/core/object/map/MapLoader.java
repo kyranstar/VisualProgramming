@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import core.object.Tile;
+import core.object.TileNotFoundException;
 
 /*
  * In charge of producing maps from file
@@ -39,7 +40,12 @@ public final class MapLoader {
 				Node nNode = nList.item((y * width) + x);	 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-					Tile tile = Tile.getByID(Integer.parseInt(eElement.getAttribute("gid")));
+					Tile tile = null;
+					try{
+						tile = Tile.getByID(Integer.parseInt(eElement.getAttribute("gid")));
+					}catch (TileNotFoundException e){
+						throw new TileNotFoundException("X: " + x + " Y: " + y + " ",e);
+					}
 					tiles[x][y] = tile;
 				}
 			}

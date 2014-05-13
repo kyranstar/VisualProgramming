@@ -10,7 +10,7 @@ import core.object.Tile.Attribute;
 import core.object.map.GameMap;
 
 public abstract class AbstractEntity {
-
+	
 	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
@@ -199,6 +199,14 @@ public abstract class AbstractEntity {
 
 	public final void setRestitution(final double restitution) {
 		this.restitution = restitution;
+	}
+
+	public void setX(double x) {
+		this.moveData.collisionBox.setX(x);
+	}
+
+	public void setY(double y) {
+		this.moveData.collisionBox.setY(y);
 	}
 
 }

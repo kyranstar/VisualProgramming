@@ -1,2 +1,6 @@
 Bug list:
 	-Collision only checks corners, so entities clip blocks smaller than then which are not touching the corners
+	-Tile drawing draws halfblock sometimes
+TODO:
+	Tween the background class
+	Build test suite

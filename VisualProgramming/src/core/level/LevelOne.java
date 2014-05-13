@@ -7,19 +7,21 @@ import java.util.ArrayList;
 import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
 import core.entity.player.PlayerEntity;
+import core.graphics.Background;
 import core.math.Vec2D;
 import core.ui.KeyControllable;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
 	private PlayerEntity player;
+	private Background background;
 	
 	public LevelOne(final int width, final int height, final LevelManager levelManager) {
 		super(LEVEL_FILE, width, height, levelManager);
 	}
 	@Override
 	public void reset() {
-
+		background = new Background("/backgrounds/background.png");
 		this.entities = new ArrayList<AbstractEntity>();
 		controllableEntities = new ArrayList<KeyControllable>();
 		
@@ -31,6 +33,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void draw(final Graphics2D g) {
+
+		background.draw(g);
 		this.mapViewport.lockFrame(map);
 		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
@@ -53,7 +57,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 					i--;
 				}
 			}
-		this.mapViewport.centerX(player.getX());
+			this.mapViewport.centerX(player.getX());
+			background.update();
 	}
 	@Override
 	public void keyPressed(final KeyEvent e) {

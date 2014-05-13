@@ -14,8 +14,8 @@ import core.entity.AbstractEntity;
 import core.math.Vec2D;
 import core.object.map.GameMap;
 import core.object.map.MapLoader;
+import core.object.map.MapViewport;
 import core.ui.KeyControllable;
-import core.world.MapViewport;
 
 public abstract class AbstractLevel {
 	protected LevelManager levelManager;

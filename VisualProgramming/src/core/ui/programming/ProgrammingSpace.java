@@ -128,6 +128,18 @@ public class ProgrammingSpace {
 		}		
 		if (selected != null && relativeLocation != null){
 			selected.setPosition(new Point(e.getPoint().x + relativeLocation.x, e.getPoint().y + relativeLocation.y));
+			
+			if(selected.getX() < -MAX_X){
+				selected.setX(-MAX_X);
+			}else if (selected.getX() + selected.getWidth() > MAX_X + this.getWidth()){
+				selected.setX(MAX_X - selected.getWidth() + this.getWidth());
+			}
+			if(selected.getY() < -MAX_Y){
+				selected.setY(-MAX_Y);
+			}else if (selected.getY() + selected.getHeight() > MAX_Y + this.getHeight()){
+				selected.setY(MAX_Y - selected.getHeight() + this.getHeight());
+			}
+			
 		}
 		if(relativeBackgroundLocation != null){
 			this.x = relativeBackgroundLocation.x - e.getPoint().x;

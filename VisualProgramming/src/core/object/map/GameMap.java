@@ -9,7 +9,7 @@ public class GameMap {
 	private CollisionBox[][] collisionMap;
 	private Tile[][] tiles;
 	public GameMap(final Tile[][] tiles){
-		this.tiles = tiles;
+		this.tiles = tiles.clone();
 		this.width = tiles.length;
 		this.height = tiles[0].length;
 		

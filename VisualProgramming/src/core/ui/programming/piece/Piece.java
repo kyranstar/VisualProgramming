@@ -95,4 +95,16 @@ public abstract class Piece implements Serializable{
 	public final Rectangle getRectangle() {
 		return new Rectangle(x, y, width, height);
 	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public void setY(int y){
+		this.y = y;
+	}
+	public int getWidth() {
+		return this.width;
+	}
+	public int getHeight(){
+		return this.height;
+	}
 }

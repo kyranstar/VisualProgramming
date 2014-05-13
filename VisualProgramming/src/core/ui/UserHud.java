@@ -15,7 +15,8 @@ public class UserHud {
 	private static final int BUFFER_SPACE = 50;
 	
 	public UserHud(final int opacity, final GamePanel panel){
-		space = new ProgrammingSpace(new Rectangle(BUFFER_SPACE, 
+		space = new ProgrammingSpace(new Rectangle(
+							BUFFER_SPACE, 
 							GamePanel.HEIGHT - PROGRAMMING_SPACE_DEFAULT_HEIGHT - BUFFER_SPACE, 
 							PROGRAMMING_SPACE_DEFAULT_WIDTH,
 							PROGRAMMING_SPACE_DEFAULT_HEIGHT), 
