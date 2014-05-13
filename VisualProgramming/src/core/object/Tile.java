@@ -24,7 +24,7 @@ public enum Tile {
 		this.gid = gid;
 		this.hardness = hardness;
 		try {
-			this.image = ImageLoader.loadImage(imageFile);
+			this.image = ImageLoader.loadAndBufferImage(imageFile);
 		} catch (IOException e) {
 			throw new TileNotFoundException("Tile image not found: " + imageFile);
 		} catch(IllegalArgumentException e){

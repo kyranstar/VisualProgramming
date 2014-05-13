@@ -3,6 +3,8 @@ package core.level;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
@@ -21,8 +23,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	}
 	@Override
 	public void reset() {
-		background = new Background("/backgrounds/background.png");
-		this.entities = new ArrayList<AbstractEntity>();
+		background = new Background("/backgrounds/background.png", 2);
+		this.entities = new LinkedList<AbstractEntity>();
 		controllableEntities = new ArrayList<KeyControllable>();
 		
 		this.ambientForce = new Vec2D(0, 0.6);
@@ -35,30 +37,31 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	public void draw(final Graphics2D g) {
 
 		background.draw(g);
-		this.mapViewport.lockFrame(map);
 		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
-		for(AbstractEntity e : this.entities){
-			e.draw(g);
+		Iterator<AbstractEntity> it = this.entities.iterator();
+		while(it.hasNext()){
+			it.next().draw(g);
 		}
 		g.translate(mapViewport.getX(), mapViewport.getY());
 	}
 	
 	@Override
 	public void update() {
-			for(int i = 0; i < entities.size(); i++){
-				AbstractEntity e = entities.get(i);
+			Iterator<AbstractEntity> it = entities.iterator();
+			while(it.hasNext()){
+				AbstractEntity e = it.next();
 				e.update();
 				if(e.isAffectedByGravity()) {
 					e.applyImpulse(ambientForce);
 				}
 				if(e.isDead()){
-					entities.remove(i);
-					i--;
+					it.remove();
 				}
 			}
 			this.mapViewport.centerX(player.getX());
-			background.update();
+			this.mapViewport.lockFrame(map);
+			background.setRelativePosition(mapViewport.getX(), background.getY());
 	}
 	@Override
 	public void keyPressed(final KeyEvent e) {

@@ -14,7 +14,7 @@ public final class ImageLoader { //TODO implement image buffer
 	private static int imagesInBuffer = 0;
 	private static final int MAX_IMAGES_IN_BUFFER = 50;
 	
-	public static BufferedImage loadImage(final String filename) throws IOException{
+	public static BufferedImage loadAndBufferImage(final String filename) throws IOException{
 		BufferedImage inBuffer = buffer.get(filename);
 		if(inBuffer != null) {
 			return inBuffer;
@@ -28,7 +28,7 @@ public final class ImageLoader { //TODO implement image buffer
 		return loaded;
 	}
 	public static BufferedImage[][] loadTilesheet(final String filename, final int spriteWidth, final int spriteHeight) throws IOException{
-		final BufferedImage spritesheet = loadImage(filename);
+		final BufferedImage spritesheet = loadAndBufferImage(filename);
 		final int cols = spritesheet.getWidth() / spriteWidth;
 		final int rows = spritesheet.getHeight() / spriteHeight;
 		BufferedImage[][] tiles = new BufferedImage[cols][rows];
