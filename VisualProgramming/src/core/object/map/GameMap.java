@@ -1,14 +1,19 @@
 package core.object.map;
 
+import java.util.List;
+
 import core.entity.CollisionBox;
+import core.graphics.lighting.Light;
 import core.object.Tile;
 
 public class GameMap {
 	private final int width, height;
 	
+	private List<Light> ligths;
 	private CollisionBox[][] collisionMap;
 	private Tile[][] tiles;
-	public GameMap(final Tile[][] tiles){
+	public GameMap(final Tile[][] tiles, final List<Light> lights){
+		this.ligths = lights;
 		this.tiles = tiles.clone();
 		this.width = tiles.length;
 		this.height = tiles[0].length;

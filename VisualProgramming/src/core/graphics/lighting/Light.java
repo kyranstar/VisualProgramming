@@ -12,6 +12,11 @@ public class Light {
 		this.radius = radius;
 		this.color = color;
 	}
+	public Light(Point2D pos, double lightRadius, Color col) {
+		this.position = pos;
+		this.radius = radius;
+		this.color = color;
+	}
 	public Point2D getPosition() {
 		return position;
 	}
