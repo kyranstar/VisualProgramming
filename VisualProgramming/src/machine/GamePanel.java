@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 
 	private void init() {
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(Color.DARK_GRAY);
