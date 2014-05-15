@@ -100,7 +100,11 @@ public final class MapLoader {
 		
 		if(colorProperty == null)
 			throw new RuntimeException("Color property not found");
-		String[] colorVals = colorProperty.getAttribute("value").split(",");
+		String[] colorVals = colorProperty.getAttribute("value").replaceAll("[()]*", "").split(",");
+		
+		if(colorVals.length != 3)
+			throw new IllegalArgumentException("Color value is not correct pattern");
+		
 		for(int j = 0; j < colorVals.length; j++)
 			colorVals[j] = colorVals[j].trim();
 	
