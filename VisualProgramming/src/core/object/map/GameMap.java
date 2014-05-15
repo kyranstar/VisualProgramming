@@ -9,11 +9,13 @@ import core.object.Tile;
 public class GameMap {
 	private final int width, height;
 	
-	private List<Light> ligths;
+	private List<Light> lights;
 	private CollisionBox[][] collisionMap;
 	private Tile[][] tiles;
-	public GameMap(final Tile[][] tiles, final List<Light> lights){
-		this.ligths = lights;
+	private int ambientLight;
+	public GameMap(final Tile[][] tiles, final List<Light> lights, final int ambientLight){
+		this.ambientLight = ambientLight;
+		this.lights = lights;
 		this.tiles = tiles.clone();
 		this.width = tiles.length;
 		this.height = tiles[0].length;
@@ -41,5 +43,15 @@ public class GameMap {
 	}
 	public final CollisionBox getCollisionBoxAt(final int x, final int y) {
 		return collisionMap[x][y];
+	}
+
+
+	public List<Light> getLights() {
+		return lights;
+	}
+
+
+	public int getAmbientLight() {
+		return ambientLight;
 	}
 }

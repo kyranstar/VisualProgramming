@@ -1,18 +1,15 @@
 package core.level;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
 import core.entity.player.PlayerEntity;
 import core.graphics.Background;
-import core.graphics.lighting.Light;
 import core.graphics.lighting.LightMap;
 import core.math.Vec2D;
 import core.object.Tile;
@@ -38,14 +35,9 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		entities.add(new BlockEntity(32,32,32,32, map));
 		entities.add(player);
 		this.controllableEntities.add(player);
-		this.lightMap = new LightMap(map.getWidthInTiles() * Tile.SIZE, map.getHeightInTiles() * Tile.SIZE, 190);
+		this.lightMap = new LightMap(map.getWidthInTiles() * Tile.SIZE, map.getHeightInTiles() * Tile.SIZE, map.getAmbientLight());
 		
-		List<Light> lights = new ArrayList<Light>();
-		lights.add(new Light(50,50, 900, Color.RED));
-		lights.add(new Light(850,150, 300, Color.YELLOW));
-		lights.add(new Light(650,20, 200, Color.YELLOW));
-		
-		this.lightMap.setLights(lights);
+		this.lightMap.setLights(map.getLights());
 	}
 	@Override
 	public void draw(final Graphics2D g) {
