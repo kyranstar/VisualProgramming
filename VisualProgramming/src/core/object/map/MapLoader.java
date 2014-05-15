@@ -1,11 +1,9 @@
 package core.object.map;
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -65,7 +63,7 @@ public final class MapLoader {
 			if(property.getAttribute("name").replaceAll("\\s+", "").equalsIgnoreCase("ambientLight")){
 				return Integer.parseInt(property.getAttribute("value"));
 			}
-		}
+	}
 		throw new RuntimeException("Ambient Light property not found");
 	}
 	private static List<Light> getLights(Document doc){
@@ -77,36 +75,39 @@ public final class MapLoader {
 			
 			if(objectNode.getNodeType() == Node.ELEMENT_NODE){
 				Element object = (Element) objectNode;
-				int x = Integer.parseInt(object.getAttribute("x"));
-				int y = Integer.parseInt(object.getAttribute("y"));
-				
-				//average width and height to get radius
-				int radius = (int) ((Float.parseFloat(object.getAttribute("width")) + Float.parseFloat(object.getAttribute("height"))) / 2); 
-			
-				NodeList properties = object.getElementsByTagName("property");
-				Element colorProperty = null;
-				for(int j = 0; j < properties.getLength(); j++){
-					Element property = (Element)properties.item(j);
-					if(property.getAttribute("name").equalsIgnoreCase("color")){
-						colorProperty = property;
-						break;
-					}
-				}
-				
-				if(colorProperty == null)
-					throw new RuntimeException("Color property not found");
-				String[] colorVals = colorProperty.getAttribute("value").split(",");
-				for(int j = 0; j < colorVals.length; j++)
-					colorVals[j] = colorVals[j].trim();
-			
-				int r = Integer.parseInt(colorVals[0]);
-				int g = Integer.parseInt(colorVals[1]);
-				int b = Integer.parseInt(colorVals[2]);
-				lights.add(new Light(x + radius/2, y + radius/2, radius, new Color(r,g,b)));
+				lights.add(getLight(object));
 			}
 		}
 		
 		return lights;
+	}
+	private static Light getLight(Element lightElement){
+		int x = Integer.parseInt(lightElement.getAttribute("x"));
+		int y = Integer.parseInt(lightElement.getAttribute("y"));
+		
+		//average width and height to get radius
+		int radius = (int) ((Float.parseFloat(lightElement.getAttribute("width")) + Float.parseFloat(lightElement.getAttribute("height"))) / 2); 
+	
+		NodeList properties = lightElement.getElementsByTagName("property");
+		Element colorProperty = null;
+		for(int j = 0; j < properties.getLength(); j++){
+			Element property = (Element)properties.item(j);
+			if(property.getAttribute("name").equalsIgnoreCase("color")){
+				colorProperty = property;
+				break;
+			}
+		}
+		
+		if(colorProperty == null)
+			throw new RuntimeException("Color property not found");
+		String[] colorVals = colorProperty.getAttribute("value").split(",");
+		for(int j = 0; j < colorVals.length; j++)
+			colorVals[j] = colorVals[j].trim();
+	
+		int r = Integer.parseInt(colorVals[0]);
+		int g = Integer.parseInt(colorVals[1]);
+		int b = Integer.parseInt(colorVals[2]);
+		 return new Light(x + radius/2, y + radius/2, radius, new Color(r,g,b));
 	}
 	private static Document getDocumentFromFile(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
