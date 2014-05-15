@@ -59,7 +59,14 @@ public final class MapLoader {
 		return new GameMap(tiles, getLights(doc), getAmbientLight(doc));
 	}
 	private static int getAmbientLight(Document doc){
-		return Integer.parseInt(((Element)doc.getElementsByTagName("property").item(0)).getAttribute("value"));
+		NodeList properties = doc.getElementsByTagName("property");
+		for(int i = 0;i < properties.getLength(); i++){
+			Element property = (Element)properties.item(i);
+			if(property.getAttribute("name").replaceAll("\\s+", "").equalsIgnoreCase("ambientLight")){
+				return Integer.parseInt(property.getAttribute("value"));
+			}
+		}
+		throw new RuntimeException("Ambient Light property not found");
 	}
 	private static List<Light> getLights(Document doc){
 		List<Light> lights = new ArrayList<Light>();
@@ -76,7 +83,19 @@ public final class MapLoader {
 				//average width and height to get radius
 				int radius = (int) ((Float.parseFloat(object.getAttribute("width")) + Float.parseFloat(object.getAttribute("height"))) / 2); 
 			
-				String[] colorVals = ((Element)object.getElementsByTagName("property").item(0)).getAttribute("value").split(",");
+				NodeList properties = object.getElementsByTagName("property");
+				Element colorProperty = null;
+				for(int j = 0; j < properties.getLength(); j++){
+					Element property = (Element)properties.item(j);
+					if(property.getAttribute("name").equalsIgnoreCase("color")){
+						colorProperty = property;
+						break;
+					}
+				}
+				
+				if(colorProperty == null)
+					throw new RuntimeException("Color property not found");
+				String[] colorVals = colorProperty.getAttribute("value").split(",");
 				for(int j = 0; j < colorVals.length; j++)
 					colorVals[j] = colorVals[j].trim();
 			
