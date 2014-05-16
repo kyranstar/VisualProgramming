@@ -6,14 +6,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import core.ui.KeyControllable;
+import core.ui.UserHud;
 
 public final class LevelManager implements KeyControllable{
 	
 	private LevelList levels;
 	private int currentLevel;
-		
-	public LevelManager(final int width, final int height){
+	private final UserHud userHud;	
+	
+	public LevelManager(final int width, final int height, final UserHud userHud){
 		levels = new LevelList(width, height, this);
+		this.userHud = userHud;
 		currentLevel = 0;
 	}
 	public void goToLevel(final LEVEL level){
@@ -41,6 +44,9 @@ public final class LevelManager implements KeyControllable{
 		if(levels.getLevel(currentLevel) instanceof KeyControllable) {
 			((KeyControllable) levels.getLevel(currentLevel)).keyReleased(e);
 		}
+	}
+	public UserHud getUserHud() {
+		return this.userHud;
 	}
 	public enum LEVEL{
 		LEVEL_ONE(LevelOne.class);

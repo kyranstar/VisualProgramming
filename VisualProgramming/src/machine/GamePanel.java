@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public static final double MAX_FPS = 60;
 	private int fps;
 	public static final int WIDTH = 1024;
-	public static final int HEIGHT = 700;
+	public static final int HEIGHT = 800;
 	//image
 	private BufferedImage image;
 	private Graphics2D g;

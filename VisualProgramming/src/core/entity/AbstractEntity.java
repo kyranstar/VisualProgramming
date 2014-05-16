@@ -3,11 +3,13 @@ package core.entity;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import core.math.Vec2D;
 import core.object.Tile;
 import core.object.Tile.Attribute;
 import core.object.map.GameMap;
+import core.ui.programming.piece.Piece;
 
 public abstract class AbstractEntity {
 	
@@ -33,6 +35,9 @@ public abstract class AbstractEntity {
 	
 	public final boolean isDead() {
 		return isDead;
+	}
+	public final void kill(){
+		this.isDead = true;
 	}
 	public abstract void applyImpulse(Vec2D accel);
 	
@@ -208,5 +213,7 @@ public abstract class AbstractEntity {
 	public void setY(double y) {
 		this.moveData.collisionBox.setY(y);
 	}
+
+	public abstract List<Piece> getProgrammingPieces();
 
 }

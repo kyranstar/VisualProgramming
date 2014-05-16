@@ -64,7 +64,7 @@ public final class MapLoader {
 				return Integer.parseInt(property.getAttribute("value"));
 			}
 	}
-		throw new RuntimeException("Ambient Light property not found");
+		throw new PropertyNotFoundException("Ambient Light property not found");
 	}
 	private static List<Light> getLights(Document doc){
 		List<Light> lights = new ArrayList<Light>();
@@ -99,7 +99,7 @@ public final class MapLoader {
 		}
 		
 		if(colorProperty == null)
-			throw new RuntimeException("Color property not found");
+			throw new PropertyNotFoundException("Color property not found");
 		String[] colorVals = colorProperty.getAttribute("value").replaceAll("[()]*", "").split(",");
 		
 		if(colorVals.length != 3)

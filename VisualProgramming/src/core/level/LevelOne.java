@@ -14,24 +14,28 @@ import core.graphics.lighting.LightMap;
 import core.math.Vec2D;
 import core.object.Tile;
 import core.ui.KeyControllable;
+import core.ui.UserHud;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
 	private PlayerEntity player;
 	private Background background;
 	private LightMap lightMap;
+	private UserHud userHud;
 	
 	public LevelOne(final int width, final int height, final LevelManager levelManager) {
 		super(LEVEL_FILE, width, height, levelManager);
 	}
 	@Override
 	public void reset() {
+		this.userHud = levelManager.getUserHud();
+		
 		background = new Background("/backgrounds/background.png", 2);
 		this.entities = new LinkedList<AbstractEntity>();
 		controllableEntities = new ArrayList<KeyControllable>();
 		
 		this.ambientForce = new Vec2D(0, 0.6);
-		player = new PlayerEntity(50, 50, this.map);
+		player = new PlayerEntity(50, 50, entities, userHud, this.map);
 		entities.add(new BlockEntity(32,32,32,32, map));
 		entities.add(player);
 		this.controllableEntities.add(player);

@@ -5,13 +5,13 @@ import java.awt.event.KeyEvent;
 
 import core.level.LevelManager;
 import core.ui.KeyControllable;
+import core.ui.UserHud;
 
 public class World implements KeyControllable{
-	LevelManager levelManager;
+	private LevelManager levelManager;
 	
-	
-	public World(final int width, final int height){
-		this.levelManager = new LevelManager(width, height);
+	public World(final int width, final int height, final UserHud userHud){
+		this.levelManager = new LevelManager(width, height, userHud);
 		levelManager.goToLevel(LevelManager.LEVEL.LEVEL_ONE);
 	}
 	public final void draw(final Graphics2D g){

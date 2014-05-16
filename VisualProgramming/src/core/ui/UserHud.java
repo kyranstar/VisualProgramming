@@ -46,4 +46,7 @@ public class UserHud {
 	public final void mouseReleased(final MouseEvent e) {
 		space.mouseReleased(e);
 	}
+	public ProgrammingSpaceInterface getProgrammingSpaceInterface() {
+		return space;
+	}
 }

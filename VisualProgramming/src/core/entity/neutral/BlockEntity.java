@@ -2,33 +2,31 @@ package core.entity.neutral;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import core.entity.ai.AIUpAndDown;
-import core.entity.programmable.ProgrammingSurface;
 import core.math.Vec2D;
 import core.object.map.GameMap;
+import core.ui.programming.piece.Piece;
 import core.ui.programming.pieces.gates.arithmetic.Add;
 
-public class BlockEntity extends NeutralEntity{
+public final class BlockEntity extends NeutralEntity{
 
-	public ProgrammingSurface surface;
 	private AIUpAndDown artificialIntelligence;
+	private List<Piece> pieces;
 	public BlockEntity(final int x, final int y, final double width, final double height, final GameMap map) {
 		super(map);
 		this.setRect(x, y, width, height);
 		artificialIntelligence = new AIUpAndDown(y, y + 64, 5);
 		this.affectedByGravity = false;
 		this.setRestitution(0.1f);
-		
-		surface = new ProgrammingSurface(){
-			@Override
-			public void addAllPieces(){
-				this.pieces.add(new Add(0, 0));
-			}
-		};
-		surface.reset();
+		this.pieces = new ArrayList<Piece>();
+		addAllPieces();
 	}
-
+	public void addAllPieces(){
+		pieces.add(new Add(0,0));
+	}
 	@Override
 	public final void draw(final Graphics2D g) {
 		g.setColor(Color.RED);
@@ -45,6 +43,11 @@ public class BlockEntity extends NeutralEntity{
 	@Override
 	public final void applyImpulse(final Vec2D accel) {
 		this.setVelocity(this.getVelocity().add(accel));
+	}
+
+	@Override
+	public List<Piece> getProgrammingPieces() {
+		return pieces;
 	}
 
 }

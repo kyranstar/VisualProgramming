@@ -16,8 +16,9 @@ public class MainGame implements KeyControllable{
 	private World world;
 	
 	public MainGame(final GamePanel gamePanel){
-		world = new World(WIDTH, HEIGHT);
+
 		userInterface = new UserHud(150, gamePanel);
+		world = new World(WIDTH, HEIGHT, userInterface);
 	}
 	public final void draw(final Graphics2D g){
 		world.draw(g);
