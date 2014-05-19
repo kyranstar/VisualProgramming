@@ -5,17 +5,18 @@ import java.awt.Graphics2D;
 
 import javax.swing.JOptionPane;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
-import core.ui.programming.values.ValueInteger;
+import core.ui.programming.values.ValueDouble;
 
 
 public class ConstantNumber extends Piece{
 	private static final long serialVersionUID = 4696555063901811023L;
-	private ValueInteger output;
-	public ConstantNumber(final int x, final int y){
-		super(x,y,150,75, 0, 5);
-		this.output = new ValueInteger(0);
+	private ValueDouble output;
+	public ConstantNumber(final int x, final int y, final ProgrammingSpaceInterface space){
+		super(x,y,150,75, 0, 5, space);
+		this.output = new ValueDouble(0);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class ConstantNumber extends Piece{
 			return;
 		}
 		
-		output = new ValueInteger(Integer.parseInt(result));
+		output = new ValueDouble(Double.parseDouble(result));
 		update();
 	}
 }

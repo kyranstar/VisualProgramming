@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="64" height="24" tilewidth="30" tileheight="30">
  <properties>
-  <property name="ambient light" value="190"/>
+  <property name="ambient light" value="100"/>
  </properties>
  <tileset firstgid="1" name="Untitled" tilewidth="44" tileheight="37">
   <image source="../Untitled.png" width="309" height="222"/>
@@ -1547,15 +1547,15 @@
   </data>
  </layer>
  <objectgroup name="lights" width="64" height="24">
-  <object name="light" x="438" y="19" width="300" height="300">
+  <object name="light" x="729" y="-6" width="300" height="300">
    <properties>
-    <property name="color" value="0, 255, 255"/>
+    <property name="color" value="255, 255, 255"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="light2" x="146" y="75" width="450" height="420">
+  <object name="light2" x="287" y="163" width="450" height="420">
    <properties>
-    <property name="color" value="255,0,255"/>
+    <property name="color" value="155,155,155"/>
    </properties>
    <ellipse/>
   </object>

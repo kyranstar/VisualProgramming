@@ -3,6 +3,7 @@ package core.ui.programming.pieces.gates.memory;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -12,8 +13,8 @@ public class DFlipFlop extends Piece{
 	//v1 + v2 = v
 	private boolean writeIsOn;
 	private ValueBoolean output;
-	public DFlipFlop(final int x, final int y) {
-		super(x,y,150,75, 2, 1);
+	public DFlipFlop(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 2, 1, space);
 		writeIsOn = false;
 		output = new ValueBoolean(false);
 	}

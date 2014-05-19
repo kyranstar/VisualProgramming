@@ -3,6 +3,7 @@ package core.ui.programming.pieces.gates.memory;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -11,8 +12,8 @@ public class RSNor extends Piece{
 	private static final long serialVersionUID = 7313371345155882797L;
 	//v1 + v2 = v
 	private ValueBoolean output;
-	public RSNor(final int x, final int y) {
-		super(x,y,150,75, 2, 1);
+	public RSNor(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 2, 1, space);
 		output = new ValueBoolean(false);
 	}
 	

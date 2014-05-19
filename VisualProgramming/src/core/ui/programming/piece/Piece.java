@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.values.Value;
 
 
@@ -18,7 +19,9 @@ public abstract class Piece implements Serializable{
 	protected Input input;
 	protected Output output;
 	protected Title title;
-	public Piece(final int x, final int y, final int width, final int height, final int inputs, final int outputs){
+	protected ProgrammingSpaceInterface space;
+	
+	public Piece(final int x, final int y, final int width, final int height, final int inputs, final int outputs, final ProgrammingSpaceInterface space){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -26,6 +29,7 @@ public abstract class Piece implements Serializable{
 		this.input = new Input(inputs, this);
 		this.output = new Output(outputs, this);
 		this.title = new Title(this.getClass().getSimpleName(), this);
+		this.space = space;
 	}
 	public abstract void draw(Graphics2D g);
 	public final void drawBackground(final Graphics2D g){

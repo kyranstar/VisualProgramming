@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006 Romain Guy <romain.guy@mac.com>
+  * Copyright (c) 2006 Romain Guy <romain.guy@mac.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,75 +35,43 @@ import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public final class BlendComposite implements Composite {
-    public enum BlendingMode {
-        NORMAL,
-        AVERAGE,
-        MULTIPLY,
-        SCREEN,
-        DARKEN,
-        LIGHTEN,
-        OVERLAY,
-        HARD_LIGHT,
-        SOFT_LIGHT,
-        DIFFERENCE,
-        NEGATION,
-        EXCLUSION,
-        COLOR_DODGE,
-        INVERSE_COLOR_DODGE,
-        SOFT_DODGE,
-        COLOR_BURN,
-        INVERSE_COLOR_BURN,
-        SOFT_BURN,
-        REFLECT,
-        GLOW,
-        FREEZE,
-        HEAT,
-        ADD,
-        SUBTRACT,
-        STAMP,
-        RED,
-        GREEN,
-        BLUE,
-        HUE,
-        SATURATION,
-        COLOR,
-        LUMINOSITY
-    }
+public enum BlendComposite implements Composite {
+	
+		 		NORMAL(BlendingMode.NORMAL),
+		 		AVERAGE(BlendingMode.AVERAGE),
+		 		MULTIPLY(BlendingMode.MULTIPLY),
+		 		SCREEN(BlendingMode.SCREEN),
+		 		DARKEN(BlendingMode.DARKEN),
+			    LIGHTEN(BlendingMode.LIGHTEN),
+			    OVERLAY(BlendingMode.OVERLAY),
+			    HARD_LIGHT(BlendingMode.HARD_LIGHT),
+			    SOFT_LIGHT(BlendingMode.SOFT_LIGHT),
+			    DIFFERENCE(BlendingMode.DIFFERENCE),
+			    NEGATION(BlendingMode.NEGATION),
+			    EXCLUSION(BlendingMode.EXCLUSION),
+			    COLOR_DODGE(BlendingMode.COLOR_DODGE),
+			    INVERSE_COLOR_DODGE(BlendingMode.INVERSE_COLOR_DODGE),
+			    SOFT_DODGE(BlendingMode.SOFT_DODGE),
+			    COLOR_BURN(BlendingMode.COLOR_BURN),
+			    INVERSE_COLOR_BURN(BlendingMode.INVERSE_COLOR_BURN),
+			    SOFT_BURN(BlendingMode.SOFT_BURN),
+			    REFLECT(BlendingMode.REFLECT),
+			    GLOW(BlendingMode.GLOW),
+			    FREEZE(BlendingMode.FREEZE),
+			    HEAT(BlendingMode.HEAT),
+			    ADD(BlendingMode.ADD),
+			    SUBTRACT(BlendingMode.SUBTRACT),
+			    STAMP(BlendingMode.STAMP),
+			    RED(BlendingMode.RED),
+			    GREEN(BlendingMode.GREEN),
+			    BLUE(BlendingMode.BLUE),
+			    HUE(BlendingMode.HUE),
+			    SATURATION(BlendingMode.SATURATION),
+			    COLOR(BlendingMode.COLOR),
+			    LUMINOSITY(BlendingMode.LUMINOSITY);
 
-    public static final BlendComposite Normal = new BlendComposite(BlendingMode.NORMAL);
-    public static final BlendComposite Average = new BlendComposite(BlendingMode.AVERAGE);
-    public static final BlendComposite Multiply = new BlendComposite(BlendingMode.MULTIPLY);
-    public static final BlendComposite Screen = new BlendComposite(BlendingMode.SCREEN);
-    public static final BlendComposite Darken = new BlendComposite(BlendingMode.DARKEN);
-    public static final BlendComposite Lighten = new BlendComposite(BlendingMode.LIGHTEN);
-    public static final BlendComposite Overlay = new BlendComposite(BlendingMode.OVERLAY);
-    public static final BlendComposite HardLight = new BlendComposite(BlendingMode.HARD_LIGHT);
-    public static final BlendComposite SoftLight = new BlendComposite(BlendingMode.SOFT_LIGHT);
-    public static final BlendComposite Difference = new BlendComposite(BlendingMode.DIFFERENCE);
-    public static final BlendComposite Negation = new BlendComposite(BlendingMode.NEGATION);
-    public static final BlendComposite Exclusion = new BlendComposite(BlendingMode.EXCLUSION);
-    public static final BlendComposite ColorDodge = new BlendComposite(BlendingMode.COLOR_DODGE);
-    public static final BlendComposite InverseColorDodge = new BlendComposite(BlendingMode.INVERSE_COLOR_DODGE);
-    public static final BlendComposite SoftDodge = new BlendComposite(BlendingMode.SOFT_DODGE);
-    public static final BlendComposite ColorBurn = new BlendComposite(BlendingMode.COLOR_BURN);
-    public static final BlendComposite InverseColorBurn = new BlendComposite(BlendingMode.INVERSE_COLOR_BURN);
-    public static final BlendComposite SoftBurn = new BlendComposite(BlendingMode.SOFT_BURN);
-    public static final BlendComposite Reflect = new BlendComposite(BlendingMode.REFLECT);
-    public static final BlendComposite Glow = new BlendComposite(BlendingMode.GLOW);
-    public static final BlendComposite Freeze = new BlendComposite(BlendingMode.FREEZE);
-    public static final BlendComposite Heat = new BlendComposite(BlendingMode.HEAT);
-    public static final BlendComposite Add = new BlendComposite(BlendingMode.ADD);
-    public static final BlendComposite Subtract = new BlendComposite(BlendingMode.SUBTRACT);
-    public static final BlendComposite Stamp = new BlendComposite(BlendingMode.STAMP);
-    public static final BlendComposite Red = new BlendComposite(BlendingMode.RED);
-    public static final BlendComposite Green = new BlendComposite(BlendingMode.GREEN);
-    public static final BlendComposite Blue = new BlendComposite(BlendingMode.BLUE);
-    public static final BlendComposite Hue = new BlendComposite(BlendingMode.HUE);
-    public static final BlendComposite Saturation = new BlendComposite(BlendingMode.SATURATION);
-    public static final BlendComposite Color = new BlendComposite(BlendingMode.COLOR);
-    public static final BlendComposite Luminosity = new BlendComposite(BlendingMode.LUMINOSITY);
-
+	
+	
     private float alpha;
     private BlendingMode mode;
 
@@ -117,19 +85,12 @@ public final class BlendComposite implements Composite {
     }
 
     public static BlendComposite getInstance(final BlendingMode mode) {
-        return new BlendComposite(mode);
-    }
-
-    public static BlendComposite getInstance(final BlendingMode mode, final float alpha) {
-        return new BlendComposite(mode, alpha);
-    }
-
-    public BlendComposite derive(final BlendingMode mode) {
-        return this.mode == mode ? this : new BlendComposite(mode, getAlpha());
-    }
-
-    public BlendComposite derive(final float alpha) {
-        return this.alpha == alpha ? this : new BlendComposite(getMode(), alpha);
+    	for(BlendComposite bc : values()){
+    		if(bc.mode == mode) {
+				return bc;
+			}
+    	}
+    	return null;
     }
 
     public float getAlpha() {
@@ -145,30 +106,8 @@ public final class BlendComposite implements Composite {
             throw new IllegalArgumentException(
                     "alpha must be comprised between 0.0f and 1.0f");
         }
-
         this.alpha = alpha;
     }
-
-    @Override
-    public int hashCode() {
-        return Float.floatToIntBits(alpha) * 31 + mode.ordinal();
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (!(obj instanceof BlendComposite)) {
-            return false;
-        }
-
-        BlendComposite bc = (BlendComposite) obj;
-
-        if (mode != bc.mode) {
-            return false;
-        }
-
-        return alpha == bc.alpha;
-    }
-
     public CompositeContext createContext(final ColorModel srcColorModel,
                                           final ColorModel dstColorModel,
                                           final RenderingHints hints) {
@@ -236,54 +175,91 @@ public final class BlendComposite implements Composite {
         }
     }
 
+    public enum BlendingMode {
+        NORMAL,
+        AVERAGE,
+        MULTIPLY,
+        SCREEN,
+        DARKEN,
+        LIGHTEN,
+        OVERLAY,
+        HARD_LIGHT,
+        SOFT_LIGHT,
+        DIFFERENCE,
+        NEGATION,
+        EXCLUSION,
+        COLOR_DODGE,
+        INVERSE_COLOR_DODGE,
+        SOFT_DODGE,
+        COLOR_BURN,
+        INVERSE_COLOR_BURN,
+        SOFT_BURN,
+        REFLECT,
+        GLOW,
+        FREEZE,
+        HEAT,
+        ADD,
+        SUBTRACT,
+        STAMP,
+        RED,
+        GREEN,
+        BLUE,
+        HUE,
+        SATURATION,
+        COLOR,
+        LUMINOSITY
+    }
+
+  
+
     private abstract static class Blender {
         public abstract int[] blend(int[] src, int[] dst);
 
         private static void RGBtoHSL(final int r, final int g, final int b, final float[] hsl) {
-            float var_R = (r / 255f);
-            float var_G = (g / 255f);
-            float var_B = (b / 255f);
+            float varR = (r / 255f);
+            float varG = (g / 255f);
+            float varB = (b / 255f);
 
-            float var_Min;
-            float var_Max;
-            float del_Max;
+            float varMin;
+            float varMax;
+            float delMax;
 
-            if (var_R > var_G) {
-                var_Min = var_G;
-                var_Max = var_R;
+            if (varR > varG) {
+                varMin = varG;
+                varMax = varR;
             } else {
-                var_Min = var_R;
-                var_Max = var_G;
+                varMin = varR;
+                varMax = varG;
             }
-            if (var_B > var_Max) {
-                var_Max = var_B;
+            if (varB > varMax) {
+                varMax = varB;
             }
-            if (var_B < var_Min) {
-                var_Min = var_B;
+            if (varB < varMin) {
+                varMin = varB;
             }
 
-            del_Max = var_Max - var_Min;
+            delMax = varMax - varMin;
 
             float H, S, L;
-            L = (var_Max + var_Min) / 2f;
+            L = (varMax + varMin) / 2f;
 
-            if (del_Max - 0.01f <= 0.0f) {
+            if (delMax - 0.01f <= 0.0f) {
                 H = 0;
                 S = 0;
             } else {
                 if (L < 0.5f) {
-                    S = del_Max / (var_Max + var_Min);
+                    S = delMax / (varMax + varMin);
                 } else {
-                    S = del_Max / (2 - var_Max - var_Min);
+                    S = delMax / (2 - varMax - varMin);
                 }
 
-                float del_R = (((var_Max - var_R) / 6f) + (del_Max / 2f)) / del_Max;
-                float del_G = (((var_Max - var_G) / 6f) + (del_Max / 2f)) / del_Max;
-                float del_B = (((var_Max - var_B) / 6f) + (del_Max / 2f)) / del_Max;
+                float del_R = (((varMax - varR) / 6f) + (delMax / 2f)) / delMax;
+                float del_G = (((varMax - varG) / 6f) + (delMax / 2f)) / delMax;
+                float del_B = (((varMax - varB) / 6f) + (delMax / 2f)) / delMax;
 
-                if (var_R == var_Max) {
+                if (varR == varMax) {
                     H = del_B - del_G;
-                } else if (var_G == var_Max) {
+                } else if (varG == varMax) {
                     H = (1 / 3f) + del_R - del_B;
                 } else {
                     H = (2 / 3f) + del_G - del_R;
@@ -772,7 +748,7 @@ public final class BlendComposite implements Composite {
 			default:
 				break;
             }
-            throw new IllegalArgumentException("Blender not implement for " +
+            throw new IllegalArgumentException("Blender not implemented for " +
                                                composite.getMode().name());
         }
     }

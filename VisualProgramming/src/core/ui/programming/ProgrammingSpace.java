@@ -5,14 +5,19 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.entity.AbstractEntity;
 import core.ui.programming.piece.Piece;
+import core.ui.programming.piece.PieceGroup;
 import core.ui.programming.piece.Updatable;
 
 public class ProgrammingSpace {	
 	
 	private List<Piece>  pieces = new ArrayList<Piece>();
+	private AbstractEntity entity;
+	private ProgrammingSpaceInterface programmingInterface;
 	
-	public ProgrammingSpace() {
+	public ProgrammingSpace(ProgrammingSpaceInterface programmingInterface) {
+		this.programmingInterface = programmingInterface;
 	}
 
 	public void setPieces(List<Piece> pieces){
@@ -45,8 +50,22 @@ public class ProgrammingSpace {
 			pieces.add(pieceCreated);
 		}
 	}
+	public AbstractEntity getEntity(){
+		return this.entity;
+	}
+	public void setEntity(final AbstractEntity entity) {
+		this.entity = entity;
+		pieces.clear();
+		for(Class<? extends Piece> pieceClass : entity.getProgrammingPieces()){
+			this.addPiece(PieceGroup.getInstanceOf(pieceClass, this.getInterface()));
+		}
+	}
+	private ProgrammingSpaceInterface getInterface() {
+		return this.programmingInterface;
+	}
 
 	public List<Piece> getPieces() {
 		return pieces;
 	}
 }
+ 

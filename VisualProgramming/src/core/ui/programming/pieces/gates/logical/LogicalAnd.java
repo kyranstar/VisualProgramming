@@ -3,6 +3,7 @@ package core.ui.programming.pieces.gates.logical;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -12,8 +13,8 @@ public class LogicalAnd extends Piece{
 	private ValueBoolean input1;
 	private ValueBoolean input2;
 	private ValueBoolean output;
-	public LogicalAnd(final int x, final int y) {
-		super(x,y,150,75, 2, 1);
+	public LogicalAnd(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 2, 1, space);
 		input1 = new ValueBoolean(false);
 		input2 = new ValueBoolean(false);
 		output = new ValueBoolean(false);

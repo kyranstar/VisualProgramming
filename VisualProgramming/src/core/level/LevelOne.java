@@ -17,7 +17,7 @@ import core.ui.KeyControllable;
 import core.ui.UserHud;
 
 public final class LevelOne extends AbstractLevel implements KeyControllable{
-	private static final String LEVEL_FILE = "./res/maps/asd.tmx";
+	private static final String LEVEL_FILE = "/maps/asd.tmx";
 	private PlayerEntity player;
 	private Background background;
 	private LightMap lightMap;
@@ -48,9 +48,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		background.draw(g);
 		g.translate(-mapViewport.getX(), -mapViewport.getY());
 		this.mapViewport.draw(g, map);
-		Iterator<AbstractEntity> it = this.entities.iterator();
-		while(it.hasNext()){
-			it.next().draw(g);
+		for(AbstractEntity e : entities){
+			e.draw(g);
 		}
 		lightMap.draw(g);
 		g.translate(mapViewport.getX(), mapViewport.getY());

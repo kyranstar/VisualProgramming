@@ -3,6 +3,7 @@ package core.ui.programming.pieces.gates.logical;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -10,8 +11,8 @@ import core.ui.programming.values.ValueBoolean;
 public class LogicalNot extends Piece{
 	private static final long serialVersionUID = 2587447950396803241L;
 	private ValueBoolean output;
-	public LogicalNot(final int x, final int y) {
-		super(x,y,150,75, 1, 1);
+	public LogicalNot(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 1, 1, space);
 		output = new ValueBoolean(true);
 	}
 

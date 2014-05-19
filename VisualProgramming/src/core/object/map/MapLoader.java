@@ -1,8 +1,8 @@
 package core.object.map;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import core.graphics.lighting.Light;
@@ -115,7 +116,8 @@ public final class MapLoader {
 	}
 	private static Document getDocumentFromFile(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document doc = dBuilder.parse(new File(filename));
+		Document doc = null;
+		doc = dBuilder.parse(new InputSource(MapLoader.class.getResourceAsStream(filename)));
 		doc.getDocumentElement().normalize();
 		return doc;
 	}

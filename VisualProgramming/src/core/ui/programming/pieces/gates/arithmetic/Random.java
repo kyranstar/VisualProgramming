@@ -3,24 +3,25 @@ package core.ui.programming.pieces.gates.arithmetic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
-import core.ui.programming.values.ValueInteger;
+import core.ui.programming.values.ValueDouble;
 
 public class Random extends Piece{
 	private static final long serialVersionUID = -8074729307443999281L;
 
 	private static java.util.Random rand = new java.util.Random();
 	
-	private ValueInteger max;
-	private ValueInteger[] last;
-	public Random(final int x, final int y) {
-		super(x,y,150,75, 2, 5);
-		max = new ValueInteger(0);
-		last = new ValueInteger[5];
+	private ValueDouble max;
+	private ValueDouble[] last;
+	public Random(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 2, 5, space);
+		max = new ValueDouble(0);
+		last = new ValueDouble[5];
 		for(int i = 0; i < last.length; i++) {
-			last[i] = new ValueInteger(0);
+			last[i] = new ValueDouble(0);
 		}
 	}
 
@@ -44,17 +45,17 @@ public class Random extends Piece{
 			if(v instanceof ValueBoolean && ((ValueBoolean)v).val == true){
 				if(max.val != 0) {
 					for(int i = 0; i < last.length; i++)
-						last[i] = new ValueInteger(rand.nextInt(max.val));
+						last[i] = new ValueDouble(rand.nextDouble() * max.val);
 				}
 				update();
 			}
 		}
 		else if (inputPort == 1){
-			if(!(v instanceof ValueInteger)) {
+			if(!(v instanceof ValueDouble)) {
 				return;
 			}
 			
-			this.max = (ValueInteger) v;
+			this.max = (ValueDouble) v;
 		}
 	}
 

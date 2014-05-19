@@ -54,7 +54,7 @@ public abstract class AbstractEntity {
 		return new Vec2D(moveData.collisionBox.getHeight(), moveData.collisionBox.getWidth());
 	}
 
-	protected final void setSize(final Vec2D size) {
+	public final void setSize(final Vec2D size) {
 		this.moveData.collisionBox.setSize(size);
 	}
 	protected final void setRect(final double x, final double y, final double width, final double height){
@@ -214,6 +214,6 @@ public abstract class AbstractEntity {
 		this.moveData.collisionBox.setY(y);
 	}
 
-	public abstract List<Piece> getProgrammingPieces();
+	public abstract List<Class<? extends Piece>> getProgrammingPieces();
 
 }

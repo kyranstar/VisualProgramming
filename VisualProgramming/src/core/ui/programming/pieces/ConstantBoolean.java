@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JOptionPane;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -14,8 +15,8 @@ public class ConstantBoolean extends Piece{
 	private static final long serialVersionUID = 8843262932473240600L;
 	
 	private ValueBoolean output;
-	public ConstantBoolean(final int x, final int y){
-		super(x,y,150,75, 0, 5);
+	public ConstantBoolean(final int x, final int y, final ProgrammingSpaceInterface space){
+		super(x,y,150,75, 0, 5, space);
 		this.output = new ValueBoolean(false);
 	}
 

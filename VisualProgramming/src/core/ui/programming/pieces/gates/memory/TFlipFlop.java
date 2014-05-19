@@ -3,6 +3,7 @@ package core.ui.programming.pieces.gates.memory;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
 import core.ui.programming.values.ValueBoolean;
@@ -11,8 +12,8 @@ public class TFlipFlop extends Piece{
 	private static final long serialVersionUID = 7336110108397567541L;
 	//v1 + v2 = v
 	private ValueBoolean output;
-	public TFlipFlop(final int x, final int y) {
-		super(x,y,150,75, 1, 1);
+	public TFlipFlop(final int x, final int y, final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 1, 1, space);
 		output = new ValueBoolean(false);
 	}
 	

@@ -82,7 +82,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 					continue;
 				if(connection.getCollisionBox().isColliding(e.getCollisionBox())){
 					connection.kill();
-					userHud.getProgrammingSpaceInterface().setPieces(e.getProgrammingPieces());
+					userHud.getProgrammingSpaceInterface().setEntity(e);
 				}					
 			}
 		}
@@ -137,7 +137,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable{
 		}
 	}
 	@Override
-	public List<Piece> getProgrammingPieces() {
-		throw new RuntimeException("Should not be asking player for pieces");
+	public List<Class<? extends Piece>> getProgrammingPieces() {
+		throw new UnsupportedOperationException("Should not be asking player for pieces");
 	}
 }

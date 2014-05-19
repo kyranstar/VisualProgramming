@@ -9,14 +9,13 @@ import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
 import machine.GamePanel;
+import core.entity.AbstractEntity;
 import core.ui.programming.piece.Piece;
-import core.ui.programming.piece.Updatable;
 
 public class ProgrammingSpaceInterface {	
 	
@@ -38,7 +37,7 @@ public class ProgrammingSpaceInterface {
 	
 	public ProgrammingSpaceInterface(Rectangle pos, int opacity, GamePanel component) {
 		this.component = component;
-		programmingSpace = new ProgrammingSpace();
+		programmingSpace = new ProgrammingSpace(this);
 		this.location = new Rectangle(pos.x, pos.y, pos.width, pos.height);
 		this.opacity = opacity;
 		sidePanel = new SidePanel(this, pos.y);
@@ -248,4 +247,13 @@ public class ProgrammingSpaceInterface {
 	public int getHeight() {
 		return location.height;
 	}
+
+	public void setEntity(AbstractEntity e) {
+		this.programmingSpace.setEntity(e);
+	}
+
+	public AbstractEntity getEntity() {
+		return this.programmingSpace.getEntity();
+	}
+
 }

@@ -38,7 +38,7 @@ public class PlayerConnection extends AbstractEntity{
 	}
 
 	@Override
-	public List<Piece> getProgrammingPieces() {
-		throw new RuntimeException("Should not be asking connector for pieces");
+	public List<Class<? extends Piece>> getProgrammingPieces() {
+		throw new UnsupportedOperationException("Should not be asking connector for pieces");
 	}
 }

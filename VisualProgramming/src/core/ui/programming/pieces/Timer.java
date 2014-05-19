@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JOptionPane;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.piece.Updatable;
 import core.ui.programming.values.Value;
@@ -20,8 +21,8 @@ public class Timer extends Piece implements Updatable{
 	private boolean outputting;
 	private boolean waiting;
 	private static final int WAITING_SEGMENT = 100; //outputs true for 100 millis
-	public Timer(final int x, final int y){
-		super(x,y,150,75, 0, 1);
+	public Timer(final int x, final int y, final ProgrammingSpaceInterface space){
+		super(x,y,150,75, 0, 1, space);
 		this.current = 0;
 		running = false;
 	}

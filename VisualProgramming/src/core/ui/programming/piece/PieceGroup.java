@@ -24,6 +24,7 @@ import core.ui.programming.pieces.gates.comparison.GreaterThan;
 import core.ui.programming.pieces.gates.comparison.GreaterThanOrEqual;
 import core.ui.programming.pieces.gates.comparison.LessThan;
 import core.ui.programming.pieces.gates.comparison.LessThanOrEqual;
+import core.ui.programming.pieces.gates.entity.ScaleSize;
 import core.ui.programming.pieces.gates.logical.LogicalAnd;
 import core.ui.programming.pieces.gates.logical.LogicalNot;
 import core.ui.programming.pieces.gates.logical.LogicalOr;
@@ -57,7 +58,8 @@ public enum PieceGroup{
     MISC(new Color(120,120,120),
     		ConstantNumber.class,
     		ConstantBoolean.class,
-    		Timer.class);
+    		Timer.class,
+    		ScaleSize.class);
 
     private Set<Class<? extends Piece>> classSet = new HashSet<Class<? extends Piece>>();
     private Color c;
@@ -70,8 +72,8 @@ public enum PieceGroup{
     }
     public static Piece getInstanceOf(final Class<? extends Piece> pieceClass, final ProgrammingSpaceInterface space){
     	 try {
-             Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class);
-             return ((Piece) construtor.newInstance(space.getX() + space.getWidth()/2, space.getY() + space.getHeight()/2));
+             Constructor<? extends Piece> construtor = pieceClass.getDeclaredConstructor(int.class, int.class, ProgrammingSpaceInterface.class);
+             return ((Piece) construtor.newInstance(space.getX() + space.getWidth()/2, space.getY() + space.getHeight()/2, space));
          } catch (NoSuchMethodException ex) {
              processException();
          } catch (SecurityException ex) {

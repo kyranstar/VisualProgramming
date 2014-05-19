@@ -40,7 +40,7 @@ public class LightMap {
 	public void draw(Graphics2D g){
 		Composite before = g.getComposite();
 		
-		g.setComposite(BlendComposite.Multiply);
+		g.setComposite(BlendComposite.MULTIPLY);
 		g.drawImage(lightMap, 0, 0, null);
 		
 		g.setComposite(before);

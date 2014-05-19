@@ -3,21 +3,22 @@ package core.ui.programming.pieces.gates.arithmetic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
-import core.ui.programming.values.ValueInteger;
+import core.ui.programming.values.ValueDouble;
 
 public class Divide extends Piece{
 	private static final long serialVersionUID = -6253347872094141539L;
 	//v1 - v2 = v
-	private ValueInteger v1;
-	private ValueInteger v2;
-	private ValueInteger v;
-	public Divide(final int x, final int y) {
-		super(x,y,150,75, 2, 1);
-		v1 = new ValueInteger(0);
-		v = new ValueInteger(0);
-		v2 = new ValueInteger(0);
+	private ValueDouble v1;
+	private ValueDouble v2;
+	private ValueDouble v;
+	public Divide(final int x, final int y,  final ProgrammingSpaceInterface space) {
+		super(x,y,150,75, 2, 1, space);
+		v1 = new ValueDouble(0);
+		v = new ValueDouble(0);
+		v2 = new ValueDouble(0);
 	}
 
 	@Override
@@ -37,16 +38,16 @@ public class Divide extends Piece{
 
 	@Override
 	public final void recieve(final int inputPort, final Value v) {
-		if(!(v instanceof ValueInteger)) {
+		if(!(v instanceof ValueDouble)) {
 			return;
 		}
 		
 		if(inputPort == 0) {
-			v1 = (ValueInteger) v;
+			v1 = (ValueDouble) v;
 		} else if (inputPort == 1) {
-			v2 = (ValueInteger) v;
+			v2 = (ValueDouble) v;
 		}
-		this.v = new ValueInteger(v1.val / v2.val);
+		this.v = new ValueDouble(v1.val / v2.val);
 	}
 
 	@Override
