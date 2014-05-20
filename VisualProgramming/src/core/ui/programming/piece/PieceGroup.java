@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import machine.GamePanel;
-import core.ui.programming.ProgrammingSpace;
 import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.pieces.ConstantBoolean;
 import core.ui.programming.pieces.ConstantNumber;
@@ -18,13 +16,13 @@ import core.ui.programming.pieces.gates.arithmetic.Divide;
 import core.ui.programming.pieces.gates.arithmetic.Modulo;
 import core.ui.programming.pieces.gates.arithmetic.Multiply;
 import core.ui.programming.pieces.gates.arithmetic.Random;
+import core.ui.programming.pieces.gates.arithmetic.SineWave;
 import core.ui.programming.pieces.gates.arithmetic.Subtract;
 import core.ui.programming.pieces.gates.comparison.Equals;
 import core.ui.programming.pieces.gates.comparison.GreaterThan;
 import core.ui.programming.pieces.gates.comparison.GreaterThanOrEqual;
 import core.ui.programming.pieces.gates.comparison.LessThan;
 import core.ui.programming.pieces.gates.comparison.LessThanOrEqual;
-import core.ui.programming.pieces.gates.entity.ScaleSize;
 import core.ui.programming.pieces.gates.logical.LogicalAnd;
 import core.ui.programming.pieces.gates.logical.LogicalNot;
 import core.ui.programming.pieces.gates.logical.LogicalOr;
@@ -40,7 +38,8 @@ public enum PieceGroup{
     		Multiply.class, 
     		Divide.class, 
     		Modulo.class, 
-    		Random.class),
+    		Random.class,
+    		SineWave.class),
     COMPARISON(new Color(200,60,60),
     		LessThan.class,
     		GreaterThan.class,
@@ -58,8 +57,7 @@ public enum PieceGroup{
     MISC(new Color(120,120,120),
     		ConstantNumber.class,
     		ConstantBoolean.class,
-    		Timer.class,
-    		ScaleSize.class);
+    		Timer.class);
 
     private Set<Class<? extends Piece>> classSet = new HashSet<Class<? extends Piece>>();
     private Color c;

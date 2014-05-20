@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import machine.GamePanel;
 import core.entity.ai.AIUpAndDown;
 import core.math.Vec2D;
 import core.object.map.GameMap;
@@ -38,6 +39,7 @@ public final class BlockEntity extends NeutralEntity{
 	public final void update() {
 		this.setPosition(this.getNextPosition());
 		this.applyImpulse(this.artificialIntelligence.getNextImpulse(this));
+		this.getTweenManager().update((float) (1f / GamePanel.MAX_FPS));
 	}
 
 	@Override

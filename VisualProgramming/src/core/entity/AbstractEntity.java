@@ -5,6 +5,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 import core.math.Vec2D;
 import core.object.Tile;
 import core.object.Tile.Attribute;
@@ -12,7 +14,9 @@ import core.object.map.GameMap;
 import core.ui.programming.piece.Piece;
 
 public abstract class AbstractEntity {
-	
+	static{
+		Tween.registerAccessor(AbstractEntity.class, new TweenAccessorEntity());
+	}
 	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
@@ -21,6 +25,7 @@ public abstract class AbstractEntity {
 	protected int framesSinceLastLeftCollision;
 	protected int framesSinceLastRightCollision;
 	protected boolean affectedByGravity;
+	private TweenManager tweenManager;
 	private double restitution;
 	
 	public AbstractEntity(final GameMap map){
@@ -28,11 +33,15 @@ public abstract class AbstractEntity {
 		this.moveData = new MoveData();
 		isDead = false;
 		affectedByGravity = false;
+		this.tweenManager = new TweenManager();
 	}
 	
 	public abstract void draw(Graphics2D g);
 	public abstract void update();
 	
+	public final TweenManager getTweenManager(){
+		return this.tweenManager;
+	}
 	public final boolean isDead() {
 		return isDead;
 	}

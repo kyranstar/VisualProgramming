@@ -3,6 +3,10 @@ package core.ui.programming.pieces.gates.entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.equations.Quad;
+import aurelienribon.tweenengine.equations.Quart;
+import core.entity.TweenAccessorEntity;
 import core.ui.programming.ProgrammingSpaceInterface;
 import core.ui.programming.piece.Piece;
 import core.ui.programming.values.Value;
@@ -36,10 +40,21 @@ public class ScaleSize extends Piece{
 			
 			if(val == 0){
 				return;
-			}else if (val > 0){
-				this.space.getEntity().setSize(space.getEntity().getSize().multiply(val));
-			}else{
-				this.space.getEntity().setSize(space.getEntity().getSize().multiply(1f / Math.abs(val)));
+			}
+			else {
+				float sizeX = 0, sizeY = 0;
+				if (val > 0){
+					sizeX = (float) (space.getEntity().getSize().x * val);
+					sizeY = (float) (space.getEntity().getSize().y * val);
+				}else{
+					sizeX = (float) (space.getEntity().getSize().x * (1f / -val));
+					sizeY = (float) (space.getEntity().getSize().y * (1f / -val));
+				}
+				
+				Tween.to(space.getEntity(), TweenAccessorEntity.SIZE_XY, 1.0f)
+			    .target(sizeX, sizeY)
+			    .ease(Quart.INOUT)
+			    .start(space.getEntity().getTweenManager());
 			}
 		}
 	}
