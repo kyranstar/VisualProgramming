@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import core.graphics.BlendComposite;
+import core.graphics.imageutil.BlendComposite;
 
 public class LightMap {
 	private final Color TRANSPARENT = new Color(0,0,0,0);

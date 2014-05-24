@@ -1,5 +1,8 @@
 package machine;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -30,7 +33,7 @@ public class GameFrame extends JFrame{
                 }
             }
         } catch (ClassNotFoundException|InstantiationException|IllegalAccessException|UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 	}     
 }

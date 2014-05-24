@@ -25,7 +25,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package core.graphics;
+package core.graphics.imageutil;
 
 import java.awt.Composite;
 import java.awt.CompositeContext;
@@ -215,7 +215,7 @@ public enum BlendComposite implements Composite {
     private abstract static class Blender {
         public abstract int[] blend(int[] src, int[] dst);
 
-        private static void RGBtoHSL(final int r, final int g, final int b, final float[] hsl) {
+        private static void convertRGBtoHSL(final int r, final int g, final int b, final float[] hsl) {
             float varR = (r / 255f);
             float varG = (g / 255f);
             float varB = (b / 255f);
@@ -240,67 +240,72 @@ public enum BlendComposite implements Composite {
 
             delMax = varMax - varMin;
 
-            float H, S, L;
-            L = (varMax + varMin) / 2f;
+            float hue;
+            float saturation;
+            float lightness;
+            lightness = (varMax + varMin) / 2f;
 
             if (delMax - 0.01f <= 0.0f) {
-                H = 0;
-                S = 0;
+                hue = 0;
+                saturation = 0;
             } else {
-                if (L < 0.5f) {
-                    S = delMax / (varMax + varMin);
+                if (lightness < 0.5f) {
+                    saturation = delMax / (varMax + varMin);
                 } else {
-                    S = delMax / (2 - varMax - varMin);
+                    saturation = delMax / (2 - varMax - varMin);
                 }
 
-                float del_R = (((varMax - varR) / 6f) + (delMax / 2f)) / delMax;
-                float del_G = (((varMax - varG) / 6f) + (delMax / 2f)) / delMax;
-                float del_B = (((varMax - varB) / 6f) + (delMax / 2f)) / delMax;
+                float delRed = (((varMax - varR) / 6f) + (delMax / 2f)) / delMax;
+                float delGreen = (((varMax - varG) / 6f) + (delMax / 2f)) / delMax;
+                float delBlue = (((varMax - varB) / 6f) + (delMax / 2f)) / delMax;
 
                 if (varR == varMax) {
-                    H = del_B - del_G;
+                    hue = delBlue - delGreen;
                 } else if (varG == varMax) {
-                    H = (1 / 3f) + del_R - del_B;
+                    hue = (1 / 3f) + delRed - delBlue;
                 } else {
-                    H = (2 / 3f) + del_G - del_R;
+                    hue = (2 / 3f) + delGreen - delRed;
                 }
-                if (H < 0) {
-                    H += 1;
+                if (hue < 0) {
+                    hue += 1;
                 }
-                if (H > 1) {
-                    H -= 1;
+                if (hue > 1) {
+                    hue -= 1;
                 }
             }
 
-            hsl[0] = H;
-            hsl[1] = S;
-            hsl[2] = L;
+            hsl[0] = hue;
+            hsl[1] = saturation;
+            hsl[2] = lightness;
         }
 
-        private static void HSLtoRGB(final float h, final float s, final float l, final int[] rgb) {
-            int R, G, B;
+        private static void convertHSLtoRGB(final float h, final float s, final float l, final int[] rgb) {
+            int red;
+            int green;
+            int blue;
 
             if (s - 0.01f <= 0.0f) {
-                R = (int) (l * 255.0f);
-                G = (int) (l * 255.0f);
-                B = (int) (l * 255.0f);
+                red = (int) (l * 255.0f);
+                green = (int) (l * 255.0f);
+                blue = (int) (l * 255.0f);
             } else {
-                float var_1, var_2;
+                float var1;
+                float var2;
                 if (l < 0.5f) {
-                    var_2 = l * (1 + s);
+                    var2 = l * (1 + s);
                 } else {
-                    var_2 = (l + s) - (s * l);
+                    var2 = (l + s) - (s * l);
                 }
-                var_1 = 2 * l - var_2;
+                var1 = 2 * l - var2;
 
-                R = (int) (255.0f * hue2RGB(var_1, var_2, h + (1.0f / 3.0f)));
-                G = (int) (255.0f * hue2RGB(var_1, var_2, h));
-                B = (int) (255.0f * hue2RGB(var_1, var_2, h - (1.0f / 3.0f)));
+                red = (int) (255.0f * hue2RGB(var1, var2, h + (1.0f / 3.0f)));
+                green = (int) (255.0f * hue2RGB(var1, var2, h));
+                blue = (int) (255.0f * hue2RGB(var1, var2, h - (1.0f / 3.0f)));
             }
 
-            rgb[0] = R;
-            rgb[1] = G;
-            rgb[2] = B;
+            rgb[0] = red;
+            rgb[1] = green;
+            rgb[2] = blue;
         }
 
         private static float hue2RGB(final float v1, final float v2, float vH) {
@@ -372,12 +377,12 @@ public enum BlendComposite implements Composite {
                         @Override
                         public int[] blend(final int[] src, final int[] dst) {
                             float[] srcHSL = new float[3];
-                            RGBtoHSL(src[0], src[1], src[2], srcHSL);
+                            convertRGBtoHSL(src[0], src[1], src[2], srcHSL);
                             float[] dstHSL = new float[3];
-                            RGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
+                            convertRGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
 
                             int[] result = new int[4];
-                            HSLtoRGB(srcHSL[0], srcHSL[1], dstHSL[2], result);
+                            convertHSLtoRGB(srcHSL[0], srcHSL[1], dstHSL[2], result);
                             result[3] = Math.min(255, src[3] + dst[3]);
 
                             return result;
@@ -517,12 +522,12 @@ public enum BlendComposite implements Composite {
                         @Override
                         public int[] blend(final int[] src, final int[] dst) {
                             float[] srcHSL = new float[3];
-                            RGBtoHSL(src[0], src[1], src[2], srcHSL);
+                            convertRGBtoHSL(src[0], src[1], src[2], srcHSL);
                             float[] dstHSL = new float[3];
-                            RGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
+                            convertRGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
 
                             int[] result = new int[4];
-                            HSLtoRGB(srcHSL[0], dstHSL[1], dstHSL[2], result);
+                            convertHSLtoRGB(srcHSL[0], dstHSL[1], dstHSL[2], result);
                             result[3] = Math.min(255, src[3] + dst[3]);
 
                             return result;
@@ -575,12 +580,12 @@ public enum BlendComposite implements Composite {
                         @Override
                         public int[] blend(final int[] src, final int[] dst) {
                             float[] srcHSL = new float[3];
-                            RGBtoHSL(src[0], src[1], src[2], srcHSL);
+                            convertRGBtoHSL(src[0], src[1], src[2], srcHSL);
                             float[] dstHSL = new float[3];
-                            RGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
+                            convertRGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
 
                             int[] result = new int[4];
-                            HSLtoRGB(dstHSL[0], dstHSL[1], srcHSL[2], result);
+                            convertHSLtoRGB(dstHSL[0], dstHSL[1], srcHSL[2], result);
                             result[3] = Math.min(255, src[3] + dst[3]);
 
                             return result;
@@ -654,12 +659,12 @@ public enum BlendComposite implements Composite {
                         @Override
                         public int[] blend(final int[] src, final int[] dst) {
                             float[] srcHSL = new float[3];
-                            RGBtoHSL(src[0], src[1], src[2], srcHSL);
+                            convertRGBtoHSL(src[0], src[1], src[2], srcHSL);
                             float[] dstHSL = new float[3];
-                            RGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
+                            convertRGBtoHSL(dst[0], dst[1], dst[2], dstHSL);
 
                             int[] result = new int[4];
-                            HSLtoRGB(dstHSL[0], srcHSL[1], dstHSL[2], result);
+                            convertHSLtoRGB(dstHSL[0], srcHSL[1], dstHSL[2], result);
                             result[3] = Math.min(255, src[3] + dst[3]);
 
                             return result;

@@ -8,6 +8,8 @@ import java.util.LinkedList;
 
 import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
+import core.entity.particle.FireParticleSystem;
+import core.entity.particle.ParticleSystem;
 import core.entity.player.PlayerEntity;
 import core.graphics.Background;
 import core.graphics.lighting.LightMap;
@@ -22,6 +24,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 	private Background background;
 	private LightMap lightMap;
 	private UserHud userHud;
+	private ParticleSystem particleSystem;
 	
 	public LevelOne(final int width, final int height, final LevelManager levelManager) {
 		super(LEVEL_FILE, width, height, levelManager);
@@ -42,6 +45,9 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		this.lightMap = new LightMap(map.getWidthInTiles() * Tile.SIZE, map.getHeightInTiles() * Tile.SIZE, map.getAmbientLight());
 		
 		this.lightMap.setLights(map.getLights());
+		
+		this.particleSystem = new FireParticleSystem(map);
+		this.particleSystem.setPosition(new Vec2D(100,200));
 	}
 	@Override
 	public void draw(final Graphics2D g) {
@@ -51,6 +57,7 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 		for(AbstractEntity e : entities){
 			e.draw(g);
 		}
+		this.particleSystem.draw(g);
 		lightMap.draw(g);
 		g.translate(mapViewport.getX(), mapViewport.getY());
 	}
@@ -68,6 +75,8 @@ public final class LevelOne extends AbstractLevel implements KeyControllable{
 					it.remove();
 				}
 			}
+			this.particleSystem.update();
+			this.particleSystem.applyImpulse(ambientForce);
 			this.mapViewport.centerX(player.getX());
 			this.mapViewport.lockFrame(map);
 			background.setRelativePosition(mapViewport.getX(), background.getY());

@@ -33,9 +33,10 @@ public class ProgrammingSpaceInterface {
 	private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
 	private static final Color BORDER_COLOR = Color.CYAN;
 	private static final Color LINE_COLOR = Color.LIGHT_GRAY;
-	private int opacity;
+	private final int opacity;
+	private final int INTERFACE_ROUNDNESS = 50;
 	
-	public ProgrammingSpaceInterface(Rectangle pos, int opacity, GamePanel component) {
+	public ProgrammingSpaceInterface(final Rectangle pos, final int opacity, final GamePanel component) {
 		this.component = component;
 		programmingSpace = new ProgrammingSpace(this);
 		this.location = new Rectangle(pos.x, pos.y, pos.width, pos.height);
@@ -43,25 +44,24 @@ public class ProgrammingSpaceInterface {
 		sidePanel = new SidePanel(this, pos.y);
 	}
 
-	public void setPieces(List<Piece> pieces){
+	public final void setPieces(final List<Piece> pieces){
 		this.programmingSpace.setPieces(pieces);
 	}
 	
-	public void draw(Graphics2D g) {
-		final int roundness = 50;
+	public final void draw(final Graphics2D g) {
 		
 		g.setColor(new Color(BACKGROUND_COLOR.getRed(), BACKGROUND_COLOR.getGreen(), BACKGROUND_COLOR.getBlue(), opacity));
-		g.fillRoundRect(location.x, location.y, location.width, location.height, roundness, roundness);
+		g.fillRoundRect(location.x, location.y, location.width, location.height, INTERFACE_ROUNDNESS, INTERFACE_ROUNDNESS);
 		
 		g.setColor(new Color(BORDER_COLOR.getRed(), BORDER_COLOR.getGreen(), BORDER_COLOR.getBlue(), opacity));
-		g.drawRoundRect(location.x - 1, location.y - 1, location.width + 1, location.height + 1, roundness, roundness);
+		g.drawRoundRect(location.x - 1, location.y - 1, location.width + 1, location.height + 1, INTERFACE_ROUNDNESS, INTERFACE_ROUNDNESS);
 		
 		g.translate(location.x, location.y);
 		g.setColor(Color.GREEN);
 		g.drawString("X: " + x + " Y: " + y, 10, 30);
 
 		Shape originalClip = g.getClip();
-		g.clip(new RoundRectangle2D.Double(0,0, location.width,  location.height, roundness, roundness));
+		g.clip(new RoundRectangle2D.Double(0,0, location.width,  location.height, INTERFACE_ROUNDNESS, INTERFACE_ROUNDNESS));
 		
 		g.setColor(new Color(LINE_COLOR.getRed(), LINE_COLOR.getGreen(), LINE_COLOR.getBlue(), opacity));
 		for(int i = 0 - (x % LINE_SPACING); i < location.width ; i += LINE_SPACING){
@@ -83,18 +83,19 @@ public class ProgrammingSpaceInterface {
 		g.translate(-location.x, -location.y);
 	}
 
-	public void update() {
+	public final void update() {
 		programmingSpace.update();
 	}
 
-	private void drawSelected(Graphics2D g) {
-		if (portSelectedPiece == null)
+	private void drawSelected(final Graphics2D g) {
+		if (portSelectedPiece == null) {
 			return;
+		}
 		Point port = portSelectedPiece.getPointFromOutputPort(portSelected);
 		Point mouse = MouseInfo.getPointerInfo().getLocation();
 		mouse.translate(-component.getLocationOnScreen().x, -component.getLocationOnScreen().y);
 
-		g.drawLine(port.x, port.y, mouse.x + x - this.location.x, mouse.y + y - this.location.y);
+		g.drawLine(port.x - x, port.y - y, mouse.x  - this.location.x, mouse.y  - this.location.y);
 	}
 
 	private Piece selected;
@@ -104,7 +105,7 @@ public class ProgrammingSpaceInterface {
 	
 	private Point relativeBackgroundLocation;
 
-	public void mouseDragged(MouseEvent e) {
+	public final void mouseDragged(final MouseEvent e) {
 		e.translatePoint(-location.x, -location.y);
 		sidePanel.mouseDragged(e);
 
@@ -144,12 +145,13 @@ public class ProgrammingSpaceInterface {
 		}
 	}
 
-	public void mousePressed(MouseEvent e) {
+	public final void mousePressed(final MouseEvent e) {
 		e.translatePoint(-location.x, -location.y);
 		sidePanel.mousePressed(e);
 		
-		if(sidePanel.containsPoint(e.getPoint()))
+		if(sidePanel.containsPoint(e.getPoint())) {
 			return;
+		}
 		Point point = e.getPoint();
 		for (Piece p : programmingSpace.getPieces()) {
 			if (p.contains(new Point(point.x + x, point.y + y))) {
@@ -162,25 +164,26 @@ public class ProgrammingSpaceInterface {
 		relativeBackgroundLocation = new Point(x + point.x, y + point.y);
 	}
 
-	public void mouseReleased(MouseEvent e) {
+	public final void mouseReleased(final MouseEvent e) {
 		selected = null;
 		relativeLocation = null;
 		sidePanel.mouseReleased(e);
 	}
 
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 
 	}
 
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 
 	}
 
-	public void mouseClicked(MouseEvent e) { // TODO fix so that connections can be made from inputs to outputs too
+	public final void mouseClicked(final MouseEvent e) { // TODO fix so that connections can be made from inputs to outputs too
 		e.translatePoint(-location.x, -location.y);
 		sidePanel.mouseClicked(e);
-		if(sidePanel.containsPoint(e.getPoint()))
+		if(sidePanel.containsPoint(e.getPoint())) {
 			return;
+		}
 		
 		Point point = e.getPoint();
 		for (Piece p : programmingSpace.getPieces()) {
@@ -200,16 +203,18 @@ public class ProgrammingSpaceInterface {
 			}
 		}
 	}
-	public void handleLeftClick(Piece p, MouseEvent e){
+	private final void handleLeftClick(final Piece p, final MouseEvent e){
 		if (e.getClickCount() > 1) {
 			p.doubleClicked();
 			return;
 		}
-		if (p == portSelectedPiece)
+		if (p == portSelectedPiece) {
 			return;
+		}
 		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
-		if (portSelectedPiece != null && port == null)
+		if (portSelectedPiece != null && port == null) {
 			port = p.getInputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
+		}
 		if (port != null) {
 			if (portSelectedPiece != null) {
 				portSelectedPiece.disconnect(portSelected);
@@ -223,7 +228,7 @@ public class ProgrammingSpaceInterface {
 		}
 		return;
 	}
-	public void handleRightClick(Piece p, MouseEvent e){
+	private final void handleRightClick(final Piece p, final MouseEvent e){
 		Integer port = p.getOutputPortFromPoint(new Point(e.getPoint().x + x, e.getPoint().y + y));
 		if(port != null){
 			p.disconnect(port);
@@ -231,28 +236,28 @@ public class ProgrammingSpaceInterface {
 		}
 	}
 
-	public void addPiece(Piece pieceCreated) {
+	public final void addPiece(final Piece pieceCreated) {
 		programmingSpace.addPiece(pieceCreated);
 	}
 
-	public int getX() {
+	public final int getX() {
 		return x;
 	}
-	public int getY() {
+	public final int getY() {
 		return y;
 	}
-	public int getWidth() {
+	public final int getWidth() {
 		return location.width;
 	}
-	public int getHeight() {
+	public final int getHeight() {
 		return location.height;
 	}
 
-	public void setEntity(AbstractEntity e) {
+	public final void setEntity(final AbstractEntity e) {
 		this.programmingSpace.setEntity(e);
 	}
 
-	public AbstractEntity getEntity() {
+	public final AbstractEntity getEntity() {
 		return this.programmingSpace.getEntity();
 	}
 

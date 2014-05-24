@@ -14,9 +14,6 @@ import core.object.map.GameMap;
 import core.ui.programming.piece.Piece;
 
 public abstract class AbstractEntity {
-	static{
-		Tween.registerAccessor(AbstractEntity.class, new TweenAccessorEntity());
-	}
 	private MoveData moveData;
 	protected boolean isDead;
 	protected GameMap map;
@@ -27,6 +24,10 @@ public abstract class AbstractEntity {
 	protected boolean affectedByGravity;
 	private TweenManager tweenManager;
 	private double restitution;
+	
+	static{
+		Tween.registerAccessor(AbstractEntity.class, new TweenAccessorEntity());
+	}
 	
 	public AbstractEntity(final GameMap map){
 		this.map = map;
@@ -215,11 +216,11 @@ public abstract class AbstractEntity {
 		this.restitution = restitution;
 	}
 
-	public void setX(double x) {
+	public final void setX(double x) {
 		this.moveData.collisionBox.setX(x);
 	}
 
-	public void setY(double y) {
+	public final void setY(double y) {
 		this.moveData.collisionBox.setY(y);
 	}
 

@@ -26,21 +26,21 @@ public enum Tile {
 		try {
 			this.image = ImageLoader.loadAndBufferImage(imageFile);
 		} catch (IOException e) {
-			throw new TileNotFoundException("Tile image not found: " + imageFile);
+			throw new TileNotFoundException("Tile image not found: " + imageFile, e);
 		} catch(IllegalArgumentException e){
 			throw new IllegalArgumentException(imageFile, e);
 		}
 		
 		this.attributes = new HashMap<Attribute, Boolean>();
-		for(Attribute att : Attribute.values()) //initialize all to false
+		for(final Attribute att : Attribute.values()){ //initialize all attributes to false
 			this.attributes.put(att, false);
-		
-		for(Attribute att : attributes){
+		}		
+		for(final Attribute att : attributes){
 			this.attributes.put(att, true);
 		}
 	}
 	public static Tile getByID(final int gid){
-		for(Tile t : values()){
+		for(final Tile t : values()){
 			if(t.gid == gid){
 				return t;
 			}
@@ -50,13 +50,13 @@ public enum Tile {
 	public int getHardness(){
 		return hardness;
 	}
-	public boolean getAttribute(final Attribute at){
-		return attributes.get(at);
+	public boolean getAttribute(final Attribute attribute){
+		return attributes.get(attribute);
 	}
 	public BufferedImage getImage(){
 		return this.image;
 	}
-	public enum Attribute{
+	public static enum Attribute{
 		SOLID; //entities collide with this
 	}
 }

@@ -85,7 +85,7 @@ public final class SidePanel{ //TODO open close w/ animation
 	public boolean containsPoint(final Point point){
 		return getPieceAt(point) != null;
 	}
-	Point pressedLocation;
+	private Point pressedLocation;
 	//dragging methods
 	public void mouseDragged(final MouseEvent e){
 		if(pressedLocation != null){

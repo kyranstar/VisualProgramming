@@ -2,7 +2,6 @@ package core.object.map;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +28,14 @@ public final class MapLoader {
 	
 	public static GameMap loadMap(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		Tile[][] tiles;
-		int width, height;
+		int width;
+		int height;
 		
-		Document doc = getDocumentFromFile(filename);
+		final Document doc = getDocumentFromFile(filename);
 		
 		Element map = (Element) doc.getElementsByTagName("map").item(0);
-		width = Integer.parseInt(map.getAttribute("width"));
-		height = Integer.parseInt(map.getAttribute("height"));
+		width = Integer.parseInt(getAttribute(map, "width"));
+		height = Integer.parseInt(getAttribute(map, "height"));
 		
 		
 		NodeList nList = doc.getElementsByTagName("tile");
@@ -47,7 +47,7 @@ public final class MapLoader {
 					Element eElement = (Element) nNode;
 					Tile tile = null;
 					try{
-						tile = Tile.getByID(Integer.parseInt(eElement.getAttribute("gid")));						
+						tile = Tile.getByID(Integer.parseInt(getAttribute(eElement, "gid")));						
 					}catch (TileNotFoundException e){
 						throw new TileNotFoundException("X: " + x + " Y: " + y + " ",e);
 					}
@@ -61,8 +61,8 @@ public final class MapLoader {
 		NodeList properties = doc.getElementsByTagName("property");
 		for(int i = 0;i < properties.getLength(); i++){
 			Element property = (Element)properties.item(i);
-			if(property.getAttribute("name").replaceAll("\\s+", "").equalsIgnoreCase("ambientLight")){
-				return Integer.parseInt(property.getAttribute("value"));
+			if(getAttribute(property, "name").replaceAll("\\s+", "").equalsIgnoreCase("ambientLight")){
+				return Integer.parseInt(getAttribute(property, "value"));
 			}
 	}
 		throw new PropertyNotFoundException("Ambient Light property not found");
@@ -83,17 +83,17 @@ public final class MapLoader {
 		return lights;
 	}
 	private static Light getLight(Element lightElement){
-		int x = Integer.parseInt(lightElement.getAttribute("x"));
-		int y = Integer.parseInt(lightElement.getAttribute("y"));
+		int x = Integer.parseInt(getAttribute(lightElement, "x"));
+		int y = Integer.parseInt(getAttribute(lightElement, "y"));
 		
 		//average width and height to get radius
-		int radius = (int) ((Float.parseFloat(lightElement.getAttribute("width")) + Float.parseFloat(lightElement.getAttribute("height"))) / 2); 
+		int radius = (int) ((Float.parseFloat(getAttribute(lightElement, "width")) + Float.parseFloat(getAttribute(lightElement, "height"))) / 2); 
 	
 		NodeList properties = lightElement.getElementsByTagName("property");
 		Element colorProperty = null;
 		for(int j = 0; j < properties.getLength(); j++){
 			Element property = (Element)properties.item(j);
-			if(property.getAttribute("name").equalsIgnoreCase("color")){
+			if(getAttribute(property, "name").equalsIgnoreCase("color")){
 				colorProperty = property;
 				break;
 			}
@@ -101,7 +101,7 @@ public final class MapLoader {
 		
 		if(colorProperty == null)
 			throw new PropertyNotFoundException("Color property not found");
-		String[] colorVals = colorProperty.getAttribute("value").replaceAll("[()]*", "").split(",");
+		String[] colorVals = getAttribute(colorProperty, "value").replaceAll("[()]*", "").split(",");
 		
 		if(colorVals.length != 3)
 			throw new IllegalArgumentException("Color value is not correct pattern");
@@ -109,10 +109,10 @@ public final class MapLoader {
 		for(int j = 0; j < colorVals.length; j++)
 			colorVals[j] = colorVals[j].trim();
 	
-		int r = Integer.parseInt(colorVals[0]);
-		int g = Integer.parseInt(colorVals[1]);
-		int b = Integer.parseInt(colorVals[2]);
-		 return new Light(x + radius/2, y + radius/2, radius, new Color(r,g,b));
+		int red = Integer.parseInt(colorVals[0]);
+		int green = Integer.parseInt(colorVals[1]);
+		int blue = Integer.parseInt(colorVals[2]);
+		 return new Light(x + radius/2, y + radius/2, radius, new Color(red,green,blue));
 	}
 	private static Document getDocumentFromFile(final String filename) throws ParserConfigurationException, SAXException, IOException{
 		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -120,5 +120,12 @@ public final class MapLoader {
 		doc = dBuilder.parse(new InputSource(MapLoader.class.getResourceAsStream(filename)));
 		doc.getDocumentElement().normalize();
 		return doc;
+	}
+	private static String getAttribute(Element element, String attribute){
+		String s = element.getAttribute(attribute);
+		if(s.equals("")){
+			throw new PropertyNotFoundException("Property " + attribute + " not found in element ");
+		}
+		return s;
 	}
 }
