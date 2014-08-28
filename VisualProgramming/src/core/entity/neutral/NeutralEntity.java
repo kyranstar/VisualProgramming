@@ -1,12 +1,12 @@
 package core.entity.neutral;
 
 import core.entity.AbstractEntity;
-import core.object.map.GameMap;
+import core.level.AbstractLevel;
 
-public abstract class NeutralEntity extends AbstractEntity{
+public abstract class NeutralEntity extends AbstractEntity {
 
-	public NeutralEntity(final GameMap map) {
-		super(map);
-	}
+    public NeutralEntity(final AbstractLevel level) {
+        super(level);
+    }
 
 }

@@ -1,12 +1,12 @@
 package core.entity.enemy;
 
 import core.entity.AbstractEntity;
-import core.object.map.GameMap;
+import core.level.AbstractLevel;
 
-public abstract class EnemyEntity extends AbstractEntity{
+public abstract class EnemyEntity extends AbstractEntity {
 
-	public EnemyEntity(final GameMap map) {
-		super(map);
-	}
+    public EnemyEntity(final AbstractLevel level) {
+        super(level);
+    }
 
 }

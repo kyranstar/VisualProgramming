@@ -3,69 +3,63 @@ package core.entity.particle;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.util.List;
 
 import core.entity.AbstractEntity;
+import core.level.AbstractLevel;
 import core.math.Vec2D;
-import core.object.map.GameMap;
-import core.ui.programming.piece.Piece;
 
 public abstract class Particle extends AbstractEntity {
-	private float life;
-	private Shape shape;
-	private Color color;
-	private float size;
-	private float opacity;
-	
-	public Particle(GameMap map, float size, float opacity, float life, Shape shape, Color color) {
-		super(map);
-		this.life = life;
-		this.shape = shape;
-		this.opacity = opacity;
-		setColor(color);
-		this.size = size;
-		this.setSize(new Vec2D(shape.getBounds().width, shape.getBounds().height));
-	}
 
-	@Override
-	public final void draw(Graphics2D g) {
-		g.setColor(color);
-		
-		g.translate(getX(), getY());
-		g.scale(size, size);
-		g.fill(shape);
-		g.scale(1/size, 1/size);
-		g.translate(-getX(), -getY());
-	}
+    private float life;
+    private final Shape shape;
+    private Color color;
+    private final float size;
+    private float opacity;
 
-	@Override
-	public void update() {
-		life--;
-		if(life <= 0){
-			this.isDead = true;
-		}
-		this.setPosition(this.getNextPosition());
-	}
-	protected final void setColor(Color col){
-		this.color = new Color(((float)col.getRed()) / 255, ((float)col.getGreen()) / 255, ((float)col.getBlue()) / 255, opacity);
-	}
-	protected final void setOpacity(float op){
-		this.opacity = op;
-		this.color = new Color(((float)color.getRed()) / 255, ((float)color.getGreen()) / 255, ((float)color.getBlue()) / 255, opacity);
-	}
+    public Particle(final AbstractLevel level, final float size, final float opacity, final float life,
+            final Shape shape, final Color color) {
+        super(level);
+        this.life = life;
+        this.shape = shape;
+        this.opacity = opacity;
+        setColor(color);
+        this.size = size;
+        setSize(new Vec2D(shape.getBounds().width, shape.getBounds().height));
+    }
 
-	@Override
-	public final void applyImpulse(Vec2D accel) {
-		this.setVelocity(this.getVelocity().add(accel));
-	}
+    @Override
+    public final void draw(final Graphics2D g) {
+        g.setColor(color);
 
-	@Override
-	public final List<Class<? extends Piece>> getProgrammingPieces() {
-		return null;
-	}
+        g.translate(getX(), getY());
+        g.scale(size, size);
+        g.fill(shape);
+        g.scale(1 / size, 1 / size);
+        g.translate(-getX(), -getY());
+    }
 
-	public float getLife() {
-		return life;
-	}
+    @Override
+    public void update() {
+        life--;
+        if (life <= 0) {
+            kill();
+        }
+        setPosition(getNextPosition());
+    }
+
+    protected final void setColor(final Color col) {
+        color = new Color(((float) col.getRed()) / 255, ((float) col.getGreen()) / 255, ((float) col.getBlue()) / 255,
+                opacity);
+    }
+
+    protected final void setOpacity(final float op) {
+        opacity = op;
+        color = new Color(((float) color.getRed()) / 255, ((float) color.getGreen()) / 255,
+                ((float) color.getBlue()) / 255, opacity);
+    }
+
+    public float getLife() {
+        return life;
+    }
 
 }
