@@ -10,13 +10,13 @@ import core.math.MathUtils;
 import core.math.Vec2D;
 
 public class FireParticleSystem extends ParticleSystem {
-    private static final int MIN_WAIT = 1;
-    private static final int MAX_WAIT = 3;
+    private static final int MIN_WAIT = 0;
+    private static final int MAX_WAIT = 2;
     private int nextParticle;
 
     public FireParticleSystem(final int x, final int y, final AbstractLevel level) {
         super(level);
-
+        setAffectedByGravity(true);
         setPosition(new Vec2D(x, y));
     }
 
@@ -31,13 +31,14 @@ public class FireParticleSystem extends ParticleSystem {
 
             final float size = MathUtils.getRandomFloat(10, 20);
 
-            final Particle p = new CircleParticle(parentLevel, x, y, size, size, MathUtils.getRandomInt(100, 255),
+            final Particle p = new CircleParticle(parentLevel, x, y, size, size, MathUtils.getRandomInt(50, 150),
                     GraphicsUtils.generateRandomColor(Color.RED));
             p.setAffectedByGravity(false);
             p.applyForce(new Vec2D((MathUtils.getRandomFloat(-2, 2)) / 2, 0));
             addParticle(p);
+        } else {
+            nextParticle--;
         }
-        nextParticle--;
         final Iterator<Particle> iterator = particles.iterator();
         while (iterator.hasNext()) {
             final Particle p = iterator.next();

@@ -15,6 +15,7 @@ public abstract class Particle extends AbstractEntity {
     private Color color;
     private final float size;
     private float opacity;
+    private boolean collision = true;
 
     public Particle(final AbstractLevel level, final float size, final float opacity, final float life,
             final Shape shape, final Color color) {
@@ -44,18 +45,30 @@ public abstract class Particle extends AbstractEntity {
         if (life <= 0) {
             kill();
         }
-        setPosition(getNextPosition());
+        if (collision) {
+            setPosition(getNextPosition());
+        } else {
+            setPosition(getPosition().add(getVelocity()));
+        }
     }
 
-    protected final void setColor(final Color col) {
+    public final void setColor(final Color col) {
         color = new Color(((float) col.getRed()) / 255, ((float) col.getGreen()) / 255, ((float) col.getBlue()) / 255,
                 opacity);
     }
 
-    protected final void setOpacity(final float op) {
+    public final void setOpacity(final float op) {
         opacity = op;
         color = new Color(((float) color.getRed()) / 255, ((float) color.getGreen()) / 255,
                 ((float) color.getBlue()) / 255, opacity);
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(final boolean collision) {
+        this.collision = collision;
     }
 
     public float getLife() {

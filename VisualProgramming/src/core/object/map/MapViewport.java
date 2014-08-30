@@ -18,11 +18,15 @@ public class MapViewport {
     public final void draw(final Graphics2D g, final GameMap map, final Rectangle2D view) {
         final int SIZE = Tile.SIZE;
 
-        for (double x = MathUtils.floor(view.getX(), SIZE); x < MathUtils.ceil(view.getX() + view.getWidth(), SIZE); x += SIZE) {
-            for (double y = MathUtils.floor(view.getY(), SIZE); y < MathUtils
-                    .ceil(view.getY() + view.getHeight(), SIZE); y += SIZE) {
+        final int viewportLeft = (int) (MathUtils.floor(view.getX(), SIZE) / SIZE);
+        final int viewportRight = (int) (MathUtils.ceil(view.getX() + view.getWidth(), SIZE) / SIZE);
 
-                g.drawImage(map.getTileAt((int) (x / SIZE), (int) (y / SIZE)).getImage(), (int) x, (int) y, null);
+        final int viewportTop = (int) (MathUtils.floor(view.getY(), SIZE) / SIZE);
+        final int viewportBottom = (int) (MathUtils.ceil(view.getY() + view.getHeight(), SIZE) / SIZE);
+
+        for (int x = viewportLeft; x < viewportRight; x++) {
+            for (int y = viewportTop; y < viewportBottom; y++) {
+                g.drawImage(map.getTileAt(x, y).getImage(), x * SIZE, y * SIZE, null);
             }
         }
     }

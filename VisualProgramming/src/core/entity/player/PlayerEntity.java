@@ -38,10 +38,10 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable, Mou
         super(level);
         animations = new AnimationSet();
         try {
-            animations.addAnimation("moveRight", AnimationLoader.getFromSpritesheet("/sprites/test.png", 64)
+            animations.addAnimation("moveRight", AnimationLoader.getFromVerticalSpritesheet("/sprites/sprites.png", 97)
                     .setDelay(6));
-            animations.addAnimation("moveLeft", AnimationLoader.getFromSpritesheet("/sprites/test.png", 64).setDelay(6)
-                    .getAnimationFlippedOnX());
+            animations.addAnimation("moveLeft", AnimationLoader.getFromVerticalSpritesheet("/sprites/sprites.png", 97)
+                    .setDelay(6).getAnimationFlippedOnX());
         } catch (final IOException e) {
             Logger.getLogger(PlayerEntity.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -49,7 +49,7 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable, Mou
         this.level = level;
         setRect(x, y, animations.getCurrentWidth(), animations.getCurrentHeight());
         setAffectedByGravity(true);
-        light = Light.createRoundLight((int) getCenter().x, (int) getCenter().y, 100, new Color(150, 150, 00));
+        light = Light.createRoundLight((int) getCenter().x, (int) getCenter().y, 100, new Color(200, 150, 10));
     }
 
     @Override
@@ -118,9 +118,9 @@ public class PlayerEntity extends AbstractEntity implements KeyControllable, Mou
         case KeyEvent.VK_SPACE:
             final BulletEntity bullet = new BulletEntity(getX(), getY(), level);
             if (direction == Direction.LEFT) {
-                bullet.applyForce(new Vec2D(-4, 0));
+                bullet.applyForce(new Vec2D(-4, -10));
             } else if (direction == Direction.RIGHT) {
-                bullet.applyForce(new Vec2D(4, 0));
+                bullet.applyForce(new Vec2D(4, -10));
             }
             level.addEntity(bullet);
             if (rope != null) {

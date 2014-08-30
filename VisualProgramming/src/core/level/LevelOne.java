@@ -11,8 +11,9 @@ import core.entity.AbstractEntity;
 import core.entity.neutral.BlockEntity;
 import core.entity.particle.FireParticleSystem;
 import core.entity.player.PlayerEntity;
-import core.entity.player.Rope;
-import core.graphics.Background;
+import core.graphics.background.AbstractBackground;
+import core.graphics.background.ImageBackground;
+import core.graphics.background.SnowBackground;
 import core.graphics.imageutil.GraphicsUtils;
 import core.graphics.lighting.LightMap;
 import core.input.KeyControllable;
@@ -24,7 +25,8 @@ import core.object.Tile;
 public final class LevelOne extends AbstractLevel {
     private static final String LEVEL_FILE = "/maps/asd.tmx";
     private PlayerEntity player;
-    private Background background;
+    private AbstractBackground background;
+    private AbstractBackground background1;
     private LightMap lightMap;
 
     public LevelOne(final int width, final int height, final LevelManager levelManager) {
@@ -36,15 +38,16 @@ public final class LevelOne extends AbstractLevel {
 
         resetEntities();
 
-        background = new Background("/backgrounds/background.png", 2);
+        background = new ImageBackground("/backgrounds/background.png", 2);
+        background1 = new SnowBackground(this, (int) getMapViewport().getRect2D().getWidth(), (int) getMapViewport()
+                .getRect2D().getHeight(), 1, 1);
 
         setGravityForce(new Vec2D(0, 0.6));
         player = new PlayerEntity(800, 00, this);
 
-        addEntity(new FireParticleSystem(100, 200, this));
+        addEntity(new FireParticleSystem(200, 400, this));
         addEntity(new BlockEntity(32, 32, 32, 32, this));
         addEntity(player);
-        addEntity(new Rope(this, 300));
         lightMap = new LightMap(getMap().getWidthInTiles() * Tile.SIZE, getMap().getHeightInTiles() * Tile.SIZE,
                 getMap().getAmbientLight(), getMap().getLights());
     }
@@ -67,15 +70,16 @@ public final class LevelOne extends AbstractLevel {
         }
         final long entityAfter = System.nanoTime() - entityBefore;
 
+        background1.draw(g);
         g.translate(getMapViewport().getX(), getMapViewport().getY());
 
         final long lightmapBefore = System.nanoTime();
-        lightMap.addDynamicLight(player.light);
+        // lightMap.addDynamicLight(player.light);
         lightMap.draw(g, getMapViewport().getRect2D());
         final long lightmapAfter = System.nanoTime() - lightmapBefore;
 
         final long glowBefore = System.nanoTime();
-        GraphicsUtils.glowFilter(image, 0.3f);
+        GraphicsUtils.glowFilter(image, 1f);
         final long glowAfter = System.nanoTime() - glowBefore;
 
         if (Debug.ON) {
@@ -117,7 +121,10 @@ public final class LevelOne extends AbstractLevel {
         }
         getMapViewport().centerX(player.getX());
         getMapViewport().lockFrame(getMap());
-        background.setRelativePosition(getMapViewport().getX(), background.getY());
+        background.update();
+        background.viewportMoved(getMapViewport().getX(), getMapViewport().getY());
+        background1.update();
+        background1.viewportMoved(getMapViewport().getX(), getMapViewport().getY());
     }
 
     @Override

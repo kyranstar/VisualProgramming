@@ -13,7 +13,7 @@ public class BulletEntity extends AbstractEntity {
     public BulletEntity(final double d, final double e, final AbstractLevel level) {
         super(level);
         setRect(d, e, SIZE, SIZE);
-        setAffectedByGravity(false);
+        setAffectedByGravity(true);
     }
 
     @Override
