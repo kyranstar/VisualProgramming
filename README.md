@@ -1,7 +1,7 @@
 VisualProgramming
 =================
 
-A 2D puzzle platformer game based on an in game programming system
+A 2D puzzle platformer game
 
 Screenshot:
-![Particles, Programming UI, and lighting](http://i.imgur.com/rbAsiYb.jpg)
+![Particles, entities and lighting](http://i.imgur.com/iEvUcez.png)
